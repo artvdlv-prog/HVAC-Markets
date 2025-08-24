@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(start http://localhost:8000)",
+      "Bash(start http://localhost:8000/index.html)",
+      "Bash(start index.html)",
+      "Bash(git add:*)",
+      "Bash(gh repo create:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
