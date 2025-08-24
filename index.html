@@ -81,14 +81,14 @@
 
         .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
         }
 
         .nav-item {
             text-decoration: none;
             color: var(--deep-graphite);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
@@ -277,6 +277,128 @@
             padding-top: 100px;
             min-height: 100vh;
             background: var(--warm-gray);
+            display: flex;
+            position: relative;
+        }
+
+        /* Equipment Type Sidebar */
+        .equipment-sidebar {
+            background: var(--warm-gray);
+            padding: 1rem 0.5rem;
+            border-right: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 600px;
+        }
+
+        /* Search layout positioning */
+        .search-layout {
+            position: relative;
+            margin-left: 0;
+        }
+
+        .equipment-type-item {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: transparent;
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .equipment-type-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Equipment Icon Colors - Light Outline Style */
+        .equipment-icon {
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            line-height: 1;
+            color: #d0d0d0;
+            font-weight: 300;
+        }
+
+        .equipment-type-item:hover .equipment-icon {
+            transform: scale(1.1);
+            color: #a0a0a0;
+        }
+
+        /* Air Conditioning Equipment - Blue Colors on Active */
+        .equipment-type-item[data-subcategory="split-systems"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="multi-split"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="vrf"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="accessories"].active .equipment-icon {
+            color: var(--signature-blue);
+            transform: scale(1.1);
+        }
+
+
+        /* Ventilation Equipment - Dark Blue Colors on Active */
+        .equipment-type-item[data-subcategory="supply-ventilation"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="exhaust-ventilation"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="heat-recovery"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="air-handling"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="fans"].active .equipment-icon {
+            color: #0d47a1;
+            transform: scale(1.1);
+        }
+
+
+        /* Heating Equipment - Red Colors on Active */
+        .equipment-type-item[data-subcategory="heat-pumps"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="boilers"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="radiators"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="floor-heating"].active .equipment-icon,
+        .equipment-type-item[data-subcategory="heat-exchangers"].active .equipment-icon {
+            color: #f44336;
+            transform: scale(1.1);
+        }
+
+
+
+        .equipment-tooltip {
+            position: absolute;
+            left: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--deep-graphite);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .equipment-tooltip::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 4px solid transparent;
+            border-right-color: var(--deep-graphite);
+        }
+
+        .equipment-type-item:hover .equipment-tooltip {
+            opacity: 1;
+        }
+
+        /* Main content area with sidebar offset */
+        .main-content-area {
+            flex: 1;
+            margin-left: 80px;
         }
 
         .dashboard-header {
@@ -1202,6 +1324,90 @@
             border-color: var(--signature-blue);
         }
 
+        /* Horizontal Filters Layout */
+        .horizontal-filters {
+            background: var(--warm-gray);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .horizontal-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            min-width: 120px;
+        }
+
+        .horizontal-filter label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--deep-graphite);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            background: var(--primary-white);
+            min-width: 120px;
+        }
+
+        .price-range-compact,
+        .area-range-compact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-input-compact,
+        .area-input-compact {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .unit {
+            font-size: 0.8rem;
+            color: var(--deep-graphite);
+            font-weight: 500;
+        }
+
+        .clear-filters-btn-compact {
+            padding: 0.5rem 1rem;
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .clear-filters-btn-compact:hover {
+            background: #1976d2;
+            transform: translateY(-1px);
+        }
+
         /* Responsive Category Row */
         @media (max-width: 768px) {
             .catalog-categories-row {
@@ -1403,11 +1609,12 @@
             }
         }
 
-        /* Search Layout */
-        .search-layout {
+        /* Products Layout */
+        .products-layout {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 80px 1fr;
             gap: 0;
+            margin-top: 1rem;
         }
 
         /* Filters Sidebar */
@@ -1715,8 +1922,8 @@
         .action-btn {
             width: 32px;
             height: 32px;
-            border: 2px solid var(--light-gray);
-            background: var(--primary-white);
+            border: none;
+            background: transparent;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1727,47 +1934,39 @@
         }
 
         .action-icon {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--deep-graphite);
+            font-size: 1rem;
+            font-weight: 400;
+            color: #9e9e9e;
+            transition: all 0.3s ease;
         }
 
         .action-btn:hover {
-            border-color: var(--signature-blue);
-            background: var(--signature-blue);
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .action-btn:hover .action-icon {
-            color: var(--primary-white);
+            color: #757575;
         }
 
-        /* Specific button states */
-        .btn-select.selected {
-            background: var(--success-green);
-            border-color: var(--success-green);
-        }
-
+        /* Specific button states - Monochrome Active States */
         .btn-select.selected .action-icon {
-            color: var(--primary-white);
-        }
-
-        .btn-favorite.favorited {
-            background: var(--orange);
-            border-color: var(--orange);
+            color: #4caf50;
+            transform: scale(1.1);
         }
 
         .btn-favorite.favorited .action-icon {
-            color: var(--primary-white);
-        }
-
-        .btn-compare.comparing {
-            background: var(--turquoise);
-            border-color: var(--turquoise);
+            color: #f44336;
+            transform: scale(1.1);
         }
 
         .btn-compare.comparing .action-icon {
-            color: var(--primary-white);
+            color: #2196f3;
+            transform: scale(1.1);
+        }
+
+        .btn-details.active .action-icon {
+            color: #ff9800;
+            transform: scale(1.1);
         }
 
         /* Tooltip enhancement */
@@ -2026,10 +2225,10 @@
             text-align: right;
         }
 
-        /* Responsive Design for Search */
+        /* Responsive Design for Products */
         @media (max-width: 1366px) {
-            .search-layout {
-                grid-template-columns: 220px 1fr;
+            .products-layout {
+                grid-template-columns: 70px 1fr;
             }
 
             .filters-sidebar {
@@ -2060,8 +2259,8 @@
                 display: none;
             }
 
-            .search-layout {
-                grid-template-columns: 200px 1fr;
+            .products-layout {
+                grid-template-columns: 60px 1fr;
             }
         }
 
@@ -2095,13 +2294,22 @@
         }
 
         @media (max-width: 768px) {
-            .search-layout {
+            .products-layout {
                 grid-template-columns: 1fr;
             }
 
-            .filters-sidebar {
-                border-right: none;
-                border-bottom: 1px solid var(--light-gray);
+            .equipment-sidebar {
+                display: none;
+            }
+
+            .horizontal-filters .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+
+            .horizontal-filter {
+                min-width: auto;
             }
 
             .product-info {
@@ -2412,6 +2620,17 @@
             background: var(--deep-graphite);
         }
 
+        /* Medium screens - hide some menu items */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .nav {
@@ -2424,6 +2643,19 @@
 
             .mobile-menu-toggle {
                 display: flex;
+            }
+
+            .equipment-sidebar {
+                display: none;
+            }
+
+            .main-content-area {
+                margin-left: 0;
+            }
+
+            .dashboard-container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
             }
             
             .nav-right {
@@ -2618,10 +2850,13 @@
     <nav class="nav">
         <a href="index.html" class="nav-logo">HVAC MARKETS</a>
         <div class="nav-menu">
-            <a href="index.html" class="nav-item active" data-en="DASHBOARD" data-ru="ПАНЕЛЬ">DASHBOARD</a>
-            <a href="catalog.html" class="nav-item" data-en="CATALOG" data-ru="КАТАЛОГ">CATALOG</a>
-            <a href="quote.html" class="nav-item" data-en="QUOTES" data-ru="ПРЕДЛОЖЕНИЯ">QUOTES</a>
-            <a href="request.html" class="nav-item" data-en="REQUESTS" data-ru="ЗАПРОСЫ">REQUESTS</a>
+            <a href="#" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="#" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="#" class="nav-item" data-module="negotiator" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="#" class="nav-item" data-module="designer" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="#" class="nav-item" data-module="service" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="#" class="nav-item" data-module="forecast" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="#" class="nav-item" data-module="install" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <a href="account.html" class="profile-icon" title="Personal Account / Личный кабинет">
@@ -2644,39 +2879,28 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-content">
-            <a href="index.html" class="mobile-menu-item" data-en="DASHBOARD" data-ru="ПАНЕЛЬ">DASHBOARD</a>
-            <a href="catalog.html" class="mobile-menu-item" data-en="CATALOG" data-ru="КАТАЛОГ">CATALOG</a>
-            <a href="quote.html" class="mobile-menu-item" data-en="QUOTES" data-ru="ПРЕДЛОЖЕНИЯ">QUOTES</a>
-            <a href="request.html" class="mobile-menu-item" data-en="REQUESTS" data-ru="ЗАПРОСЫ">REQUESTS</a>
+            <a href="#" class="mobile-menu-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="#" class="mobile-menu-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="#" class="mobile-menu-item" data-module="negotiator" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="#" class="mobile-menu-item" data-module="designer" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="#" class="mobile-menu-item" data-module="service" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="#" class="mobile-menu-item" data-module="forecast" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="#" class="mobile-menu-item" data-module="install" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
     </div>
 
     <!-- Dashboard Container -->
     <div class="dashboard-container">
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <h1 class="dashboard-title" data-en="Dealer Platform" data-ru="Платформа дилера">Dealer Platform</h1>
-            <p class="dashboard-subtitle" data-en="HVAC Markets intelligent modules" data-ru="Интеллектуальные модули HVAC Markets">HVAC Markets intelligent modules</p>
-        </div>
 
-        <!-- Module Tabs -->
-        <div class="module-tabs">
-            <button class="module-tab active" data-module="scout" data-en="AIR Scout" data-ru="AIR Поиск">AIR Scout</button>
-            <button class="module-tab" data-module="match" data-en="AIR Match" data-ru="AIR Анализ">AIR Match</button>
-            <button class="module-tab" data-module="negotiator" data-en="AIR Negotiator" data-ru="AIR Продажа">AIR Negotiator</button>
-            <button class="module-tab" data-module="designer" data-en="AIR Designer" data-ru="AIR Проект">AIR Designer</button>
-            <button class="module-tab" data-module="service" data-en="AIR Service" data-ru="AIR Сервис">AIR Service</button>
-            <button class="module-tab" data-module="forecast" data-en="AIR Forecast" data-ru="AIR Прогноз">AIR Forecast</button>
-            <button class="module-tab" data-module="install" data-en="AIR Install" data-ru="AIR Монтаж">AIR Install</button>
-        </div>
-
-        <!-- AIR Scout Module -->
-        <div class="module-content active" data-content="scout">
+        <!-- Main Content Area -->
+        <div class="main-content-area">
+            <!-- Search Module -->
+            <div class="module-content active" data-content="scout">
             <!-- Scout Sub-tabs -->
             <div class="scout-tabs">
                 <button class="scout-tab active" data-scout-module="product-search" data-en="Product Search System" data-ru="Система поиска продуктов">Product Search System</button>
                 <button class="scout-tab" data-scout-module="smart-search" data-en="Smart AI Search" data-ru="Умный поиск ИИ">Smart AI Search</button>
-                <button class="scout-tab" data-scout-module="analytics" data-en="Analytics Dashboard" data-ru="Панель аналитики">Analytics Dashboard</button>
+                <button class="scout-tab" data-scout-module="analytics" data-en="Analytics Overview" data-ru="Аналитический обзор">Analytics Overview</button>
             </div>
 
             <!-- Product Search System -->
@@ -2702,51 +2926,6 @@
                         </div>
                     </div>
 
-                <!-- Catalog Categories Row -->
-                <div class="catalog-categories-row">
-                    <!-- Air Conditioning Dropdown -->
-                    <div class="category-dropdown">
-                        <button class="category-btn active" data-category="air-conditioning">
-                            <span class="category-label" data-en="Air Conditioning" data-ru="Кондиционирование">Air Conditioning</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="category-menu">
-                            <button class="subcategory-option exclude-option" data-subcategory="exclude" data-en="Exclude" data-ru="Исключить">Exclude</button>
-                            <button class="subcategory-option active" data-subcategory="domestic" data-en="Domestic" data-ru="Бытовые">Domestic</button>
-                            <button class="subcategory-option" data-subcategory="multi-split" data-en="Multi-Split" data-ru="Мульти-сплит">Multi-Split</button>
-                            <button class="subcategory-option" data-subcategory="semi-industrial" data-en="Semi-Industrial" data-ru="Полупромышленные">Semi-Industrial</button>
-                            <button class="subcategory-option" data-subcategory="industrial" data-en="Industrial" data-ru="Промышленные">Industrial</button>
-                        </div>
-                    </div>
-
-                    <!-- Ventilation Dropdown -->
-                    <div class="category-dropdown">
-                        <button class="category-btn" data-category="ventilation">
-                            <span class="category-label" data-en="Ventilation" data-ru="Вентиляция">Ventilation</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="category-menu">
-                            <button class="subcategory-option exclude-option" data-subcategory="exclude" data-en="Exclude" data-ru="Исключить">Exclude</button>
-                            <button class="subcategory-option active" data-subcategory="supply" data-en="Supply Systems" data-ru="Приточные системы">Supply Systems</button>
-                            <button class="subcategory-option" data-subcategory="exhaust" data-en="Exhaust Systems" data-ru="Вытяжные системы">Exhaust Systems</button>
-                            <button class="subcategory-option" data-subcategory="recuperation" data-en="Heat Recovery" data-ru="Рекуперация">Heat Recovery</button>
-                        </div>
-                    </div>
-
-                    <!-- Heating Dropdown -->
-                    <div class="category-dropdown">
-                        <button class="category-btn" data-category="heating">
-                            <span class="category-label" data-en="Heating" data-ru="Отопление">Heating</span>
-                            <span class="dropdown-arrow">▼</span>
-                        </button>
-                        <div class="category-menu">
-                            <button class="subcategory-option exclude-option" data-subcategory="exclude" data-en="Exclude" data-ru="Исключить">Exclude</button>
-                            <button class="subcategory-option active" data-subcategory="heat-pumps" data-en="Heat Pumps" data-ru="Тепловые насосы">Heat Pumps</button>
-                            <button class="subcategory-option" data-subcategory="boilers" data-en="Boilers" data-ru="Котлы">Boilers</button>
-                            <button class="subcategory-option" data-subcategory="radiators" data-en="Radiators" data-ru="Радиаторы">Radiators</button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Brand Tabs -->
                 <div class="brand-tabs">
@@ -2804,147 +2983,148 @@
                     </div>
                 </div>
 
-                <!-- Search Layout -->
-                <div class="search-layout">
-                    <!-- Filters Sidebar -->
-                    <div class="filters-sidebar">
+                <!-- Horizontal Filters -->
+                <div class="horizontal-filters">
+                    <div class="filter-row">
                         <!-- Price Range Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Price Range" data-ru="Диапазон цен">Price Range</h3>
-                            <div class="filter-group">
-                                <div class="price-range">
-                                    <input type="number" class="price-input" id="priceFrom" placeholder="0" data-en-placeholder="From" data-ru-placeholder="От" />
-                                    <span class="price-separator">—</span>
-                                    <input type="number" class="price-input" id="priceTo" placeholder="50000" data-en-placeholder="To" data-ru-placeholder="До" />
-                                </div>
-                                <div class="price-range-slider">
-                                    <div class="range-track"></div>
-                                    <div class="range-progress"></div>
-                                </div>
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Price" data-ru="Цена">Price</label>
+                            <div class="price-range-compact">
+                                <input type="number" class="price-input-compact" id="priceFromH" placeholder="0" />
+                                <span>—</span>
+                                <input type="number" class="price-input-compact" id="priceToH" placeholder="50000" />
                             </div>
                         </div>
 
                         <!-- Technology Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Technology" data-ru="Технология">Technology</h3>
-                            <div class="filter-group">
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="full-dc-inverter" data-filter="full-dc-inverter">
-                                    <label class="filter-label" for="full-dc-inverter" data-en="Full DC Inverter" data-ru="Full DC Инвертор">Full DC Inverter</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="inverter" data-filter="inverter">
-                                    <label class="filter-label" for="inverter" data-en="Inverter" data-ru="Инвертор">Inverter</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="on-off" data-filter="on-off">
-                                    <label class="filter-label" for="on-off" data-en="On/Off" data-ru="Вкл/Выкл">On/Off</label>
-                                </div>
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Technology" data-ru="Технология">Technology</label>
+                            <select class="filter-select" id="technologyFilter">
+                                <option value="" data-en="All" data-ru="Все">All</option>
+                                <option value="full-dc-inverter" data-en="Full DC Inverter" data-ru="Full DC Инвертор">Full DC Inverter</option>
+                                <option value="inverter" data-en="Inverter" data-ru="Инвертор">Inverter</option>
+                                <option value="on-off" data-en="On/Off" data-ru="Вкл/Выкл">On/Off</option>
+                            </select>
+                        </div>
+
+                        <!-- Room Area Filter -->
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Room Area" data-ru="Площадь">Room Area</label>
+                            <div class="area-range-compact">
+                                <input type="number" class="area-input-compact" id="areaFromH" placeholder="10" />
+                                <span>—</span>
+                                <input type="number" class="area-input-compact" id="areaToH" placeholder="200" />
+                                <span class="unit">м²</span>
                             </div>
                         </div>
 
                         <!-- Heat Pump Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Heat Pump" data-ru="Тепловой насос">Heat Pump</h3>
-                            <div class="filter-group">
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="heat-pump-yes" data-filter="heat-pump">
-                                    <label class="filter-label" for="heat-pump-yes" data-en="Yes" data-ru="Да">Yes</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="heat-pump-no" data-filter="no-heat-pump">
-                                    <label class="filter-label" for="heat-pump-no" data-en="No" data-ru="Нет">No</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Room Area Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Room Area" data-ru="Площадь помещения">Room Area</h3>
-                            <div class="filter-group">
-                                <div class="area-range">
-                                    <input type="number" class="area-input" id="areaFrom" placeholder="10" data-en-placeholder="From m²" data-ru-placeholder="От м²" />
-                                    <span class="area-separator">—</span>
-                                    <input type="number" class="area-input" id="areaTo" placeholder="200" data-en-placeholder="To m²" data-ru-placeholder="До м²" />
-                                    <span class="area-unit" data-en="m²" data-ru="м²">m²</span>
-                                </div>
-                            </div>
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Heat Pump" data-ru="Тепловой насос">Heat Pump</label>
+                            <select class="filter-select" id="heatPumpFilter">
+                                <option value="" data-en="All" data-ru="Все">All</option>
+                                <option value="yes" data-en="Yes" data-ru="Да">Yes</option>
+                                <option value="no" data-en="No" data-ru="Нет">No</option>
+                            </select>
                         </div>
 
                         <!-- Wi-Fi Management Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Wi-Fi Management" data-ru="Wi-Fi управление">Wi-Fi Management</h3>
-                            <div class="filter-group">
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="wifi-yes" data-filter="wifi">
-                                    <label class="filter-label" for="wifi-yes" data-en="Yes" data-ru="Да">Yes</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="wifi-no" data-filter="no-wifi">
-                                    <label class="filter-label" for="wifi-no" data-en="No" data-ru="Нет">No</label>
-                                </div>
-                            </div>
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Wi-Fi" data-ru="Wi-Fi">Wi-Fi</label>
+                            <select class="filter-select" id="wifiFilter">
+                                <option value="" data-en="All" data-ru="Все">All</option>
+                                <option value="yes" data-en="Yes" data-ru="Да">Yes</option>
+                                <option value="no" data-en="No" data-ru="Нет">No</option>
+                            </select>
                         </div>
 
                         <!-- Color Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Color" data-ru="Цвет">Color</h3>
-                            <div class="filter-group">
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="color-white" data-filter="white">
-                                    <label class="filter-label" for="color-white" data-en="White" data-ru="Белый">White</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="color-black" data-filter="black">
-                                    <label class="filter-label" for="color-black" data-en="Black" data-ru="Черный">Black</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="color-silver" data-filter="silver">
-                                    <label class="filter-label" for="color-silver" data-en="Silver" data-ru="Серебряный">Silver</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Refrigerant Type Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Refrigerant Type" data-ru="Тип хладагента">Refrigerant Type</h3>
-                            <div class="filter-group">
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="r32" data-filter="r32">
-                                    <label class="filter-label" for="r32">R-32</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="r410a" data-filter="r410a">
-                                    <label class="filter-label" for="r410a">R-410A</label>
-                                </div>
-                                <div class="filter-item">
-                                    <input type="checkbox" class="filter-checkbox" id="r134a" data-filter="r134a">
-                                    <label class="filter-label" for="r134a">R-134A</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cooling Capacity Filter -->
-                        <div class="filter-section">
-                            <h3 class="filter-title" data-en="Cooling Capacity" data-ru="Мощность охлаждения">Cooling Capacity</h3>
-                            <div class="filter-group">
-                                <div class="capacity-range">
-                                    <input type="number" class="capacity-input" id="capacityFrom" placeholder="2.0" data-en-placeholder="From kW" data-ru-placeholder="От кВт" />
-                                    <span class="capacity-separator">—</span>
-                                    <input type="number" class="capacity-input" id="capacityTo" placeholder="15.0" data-en-placeholder="To kW" data-ru-placeholder="До кВт" />
-                                    <span class="capacity-unit" data-en="kW" data-ru="кВт">kW</span>
-                                </div>
-                            </div>
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Color" data-ru="Цвет">Color</label>
+                            <select class="filter-select">
+                                <option value="" data-en="All" data-ru="Все">All</option>
+                                <option value="white" data-en="White" data-ru="Белый">White</option>
+                                <option value="black" data-en="Black" data-ru="Черный">Black</option>
+                                <option value="silver" data-en="Silver" data-ru="Серебряный">Silver</option>
+                            </select>
                         </div>
 
                         <!-- Clear Filters Button -->
-                        <div class="filter-actions">
-                            <button class="clear-filters-btn" onclick="clearAllFilters()" data-en="Clear All Filters" data-ru="Очистить все фильтры">Clear All Filters</button>
+                        <div class="horizontal-filter">
+                            <button class="clear-filters-btn-compact" onclick="clearAllFilters()" data-en="Clear" data-ru="Очистить">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Layout with Sidebar and List -->
+                <div class="products-layout">
+                    <!-- Equipment Type Sidebar -->
+                    <div class="equipment-sidebar">
+                        <!-- Air Conditioning Equipment -->
+                        <div class="equipment-type-item active" data-subcategory="split-systems">
+                            <div class="equipment-icon">◯</div>
+                            <div class="equipment-tooltip" data-en="Split Systems" data-ru="Сплит-системы">Split Systems</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="multi-split">
+                            <div class="equipment-icon">◉</div>
+                            <div class="equipment-tooltip" data-en="Multi-Split" data-ru="Мульти-сплит">Multi-Split</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="vrf">
+                            <div class="equipment-icon">⬢</div>
+                            <div class="equipment-tooltip" data-en="VRF Systems" data-ru="VRF системы">VRF Systems</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="accessories">
+                            <div class="equipment-icon">⚙</div>
+                            <div class="equipment-tooltip" data-en="AC Accessories" data-ru="Аксессуары">AC Accessories</div>
+                        </div>
+                        
+                        <!-- Ventilation Equipment -->
+                        <div class="equipment-type-item" data-subcategory="supply-ventilation">
+                            <div class="equipment-icon">→</div>
+                            <div class="equipment-tooltip" data-en="Supply Ventilation" data-ru="Приточная вентиляция">Supply Ventilation</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="exhaust-ventilation">
+                            <div class="equipment-icon">←</div>
+                            <div class="equipment-tooltip" data-en="Exhaust Ventilation" data-ru="Вытяжная вентиляция">Exhaust Ventilation</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="heat-recovery">
+                            <div class="equipment-icon">↻</div>
+                            <div class="equipment-tooltip" data-en="Heat Recovery" data-ru="Рекуперация">Heat Recovery</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="air-handling">
+                            <div class="equipment-icon">□</div>
+                            <div class="equipment-tooltip" data-en="Air Handling Units" data-ru="Приточные установки">Air Handling Units</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="fans">
+                            <div class="equipment-icon">○</div>
+                            <div class="equipment-tooltip" data-en="Fans" data-ru="Вентиляторы">Fans</div>
+                        </div>
+                        
+                        <!-- Heating Equipment -->
+                        <div class="equipment-type-item" data-subcategory="heat-pumps">
+                            <div class="equipment-icon">◐</div>
+                            <div class="equipment-tooltip" data-en="Heat Pumps" data-ru="Тепловые насосы">Heat Pumps</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="boilers">
+                            <div class="equipment-icon">◯</div>
+                            <div class="equipment-tooltip" data-en="Boilers" data-ru="Котлы">Boilers</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="radiators">
+                            <div class="equipment-icon">▢</div>
+                            <div class="equipment-tooltip" data-en="Radiators" data-ru="Радиаторы">Radiators</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="floor-heating">
+                            <div class="equipment-icon">⬜</div>
+                            <div class="equipment-tooltip" data-en="Floor Heating" data-ru="Теплый пол">Floor Heating</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="heat-exchangers">
+                            <div class="equipment-icon">◇</div>
+                            <div class="equipment-tooltip" data-en="Heat Exchangers" data-ru="Теплообменники">Heat Exchangers</div>
                         </div>
                     </div>
 
                     <!-- Results Area -->
-                    <div class="results-area">
+                <div class="results-area">
                         <div class="results-header">
                             <div class="results-count" data-en="Found 247 products" data-ru="Найдено 247 товаров">Found 247 products</div>
                             <select class="sort-select">
@@ -3048,13 +3228,13 @@
                 </div>
             </div>
 
-            <!-- Analytics Dashboard -->
+            <!-- Analytics Overview -->
             <div class="scout-content" data-scout-content="analytics">
                 <div class="analytics-block">
                     <div class="search-header">
                         <div class="header-content">
                             <div class="header-text">
-                                <h2 class="search-title" data-en="Analytics Dashboard" data-ru="Панель аналитики">Analytics Dashboard</h2>
+                                <h2 class="search-title" data-en="Analytics Overview" data-ru="Аналитический обзор">Analytics Overview</h2>
                                 <p class="search-subtitle" data-en="Advanced analytics and performance monitoring for search systems" data-ru="Продвинутая аналитика и мониторинг производительности поисковых систем">Advanced analytics and performance monitoring for search systems</p>
                             </div>
                         </div>
@@ -3165,7 +3345,7 @@
             </div>
         </div>
 
-        <!-- AIR Match Module -->
+        <!-- Analysis Module -->
         <div class="module-content" data-content="match">
             <div class="module-grid">
                 <div class="module-card">
@@ -3233,7 +3413,7 @@
             </div>
         </div>
 
-        <!-- AIR Negotiator Module -->
+        <!-- Sales Module -->
         <div class="module-content" data-content="negotiator">
             <div class="module-grid">
                 <div class="module-card">
@@ -3301,7 +3481,7 @@
             </div>
         </div>
 
-        <!-- AIR Designer Module -->
+        <!-- Design Module -->
         <div class="module-content" data-content="designer">
             <div class="module-grid">
                 <div class="module-card">
@@ -3369,7 +3549,7 @@
             </div>
         </div>
 
-        <!-- AIR Service Module -->
+        <!-- Service Module -->
         <div class="module-content" data-content="service">
             <div class="module-grid">
                 <div class="module-card">
@@ -3437,7 +3617,7 @@
             </div>
         </div>
 
-        <!-- AIR Forecast Module -->
+        <!-- Forecast Module -->
         <div class="module-content" data-content="forecast">
             <div class="module-grid">
                 <div class="module-card">
@@ -3505,7 +3685,7 @@
             </div>
         </div>
 
-        <!-- AIR Install Module -->
+        <!-- Installation Module -->
         <div class="module-content" data-content="install">
             <div class="module-grid">
                 <div class="module-card">
@@ -3581,14 +3761,14 @@
             <div class="chatbot-header">
                 <div class="chatbot-avatar">AI</div>
                 <div class="chatbot-info">
-                    <h3>AIR Assistant</h3>
+                    <h3>HVAC Assistant</h3>
                     <p>Online</p>
                 </div>
             </div>
             <div class="chatbot-messages" id="chatMessages">
                 <div class="message">
-                    <div class="message-content" data-en="Hi! I'm AIR Assistant. How can I help with your modules?" data-ru="Привет! Я AIR Assistant. Чем могу помочь с вашими модулями?">
-                        Hi! I'm AIR Assistant. How can I help with your modules?
+                    <div class="message-content" data-en="Hi! I'm HVAC Assistant. How can I help with your modules?" data-ru="Привет! Я HVAC Assistant. Чем могу помочь с вашими модулями?">
+                        Hi! I'm HVAC Assistant. How can I help with your modules?
                     </div>
                 </div>
             </div>
@@ -3608,12 +3788,12 @@
         <button class="btn-quote" onclick="generateQuote()" data-en="Generate Quote" data-ru="Создать КП">Generate Quote</button>
         <button class="btn-request" onclick="generateRequest()" data-en="Request" data-ru="Запрос">Request</button>
         <button class="btn-catalog" onclick="openCatalog()" data-en="Catalog" data-ru="Каталог">Catalog</button>
+        </div> <!-- End Main Content Area -->
     </div>
 
     <script>
         // Dashboard JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            initModuleTabs();
             initChatbot();
             initAnimations();
             initLanguageToggle();
@@ -3622,7 +3802,29 @@
             initRangeSliders();
             initCheckboxFilters();
             initMobileMenu();
+            initNavMenu();
+            initEquipmentSidebar();
+            
+            // Initialize product list
+            filterProducts();
+            
+            // Handle hash navigation on page load
+            handleHashNavigation();
         });
+
+        // Handle hash-based navigation
+        function handleHashNavigation() {
+            const hash = window.location.hash.substring(1); // Remove #
+            if (hash) {
+                // Small delay to ensure page is fully loaded
+                setTimeout(() => {
+                    switchToModule(hash);
+                }, 100);
+            }
+        }
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashNavigation);
 
         // Equipment Search System
         function initEquipmentSearch() {
@@ -4211,16 +4413,16 @@
                         
                         <div class="product-actions">
                             <button class="action-btn btn-select" onclick="toggleProductSelection(${product.id})" title="${currentLang === 'en' ? 'Select product' : 'Выбрать продукт'}">
-                                <span class="action-icon">В</span>
+                                <span class="action-icon">✓</span>
                             </button>
                             <button class="action-btn btn-compare" onclick="toggleCompare(${product.id})" title="${currentLang === 'en' ? 'Add to comparison' : 'Добавить к сравнению'}">
-                                <span class="action-icon">С</span>
+                                <span class="action-icon">⚖</span>
                             </button>
-                            <button class="action-btn btn-details" onclick="showProductDetails(${product.id})" title="${currentLang === 'en' ? 'Detailed description' : 'Подробное описание'}">
-                                <span class="action-icon">П</span>
+                            <button class="action-btn btn-details" onclick="showProductDetails(${product.id})" title="${currentLang === 'en' ? 'Technical specifications' : 'Технические характеристики'}">
+                                <span class="action-icon">⚙</span>
                             </button>
                             <button class="action-btn btn-favorite" onclick="toggleFavorite(${product.id})" title="${currentLang === 'en' ? 'Add to favorites' : 'В избранное'}">
-                                <span class="action-icon">И</span>
+                                <span class="action-icon">♥</span>
                             </button>
                         </div>
                     </div>
@@ -4549,25 +4751,6 @@
             }
         }
 
-        // Module tabs functionality
-        function initModuleTabs() {
-            const tabs = document.querySelectorAll('.module-tab');
-            const contents = document.querySelectorAll('.module-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const module = this.getAttribute('data-module');
-                    
-                    // Remove active class from all tabs and contents
-                    tabs.forEach(t => t.classList.remove('active'));
-                    contents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    this.classList.add('active');
-                    document.querySelector(`[data-content="${module}"]`).classList.add('active');
-                });
-            });
-        }
 
         // Chatbot functionality
         function initChatbot() {
@@ -4619,16 +4802,16 @@
                 
                 if (lowerMessage.includes('scout') || lowerMessage.includes('поиск')) {
                     response = currentLang === 'en' ? 
-                        'AIR Scout processes product search with 94% accuracy. The module is active and serves 2.4k requests per day.' :
-                        'AIR Scout обрабатывает поиск продуктов с точностью 94%. Модуль активен и обслуживает 2,4к запросов в день.';
+                        'Search module processes product search with 94% accuracy. The module is active and serves 2.4k requests per day.' :
+                        'Модуль поиска обрабатывает поиск продуктов с точностью 94%. Модуль активен и обслуживает 2,4к запросов в день.';
                 } else if (lowerMessage.includes('match') || lowerMessage.includes('сопоставление')) {
                     response = currentLang === 'en' ? 
-                        'AIR Match shows 91% configuration accuracy. The system is active and works in real time.' :
-                        'AIR Match показывает 91% точности конфигурации. Система активна и работает в реальном времени.';
+                        'Analysis module shows 91% configuration accuracy. The system is active and works in real time.' :
+                        'Модуль анализа показывает 91% точности конфигурации. Система активна и работает в реальном времени.';
                 } else if (lowerMessage.includes('status') || lowerMessage.includes('статус')) {
                     response = currentLang === 'en' ? 
-                        'Active modules: AIR Scout and AIR Match. In development: Analytics Dashboard and Optimization AI.' :
-                        'Активные модули: AIR Scout и AIR Match. В разработке: Analytics Dashboard и Optimization AI.';
+                        'Active modules: Search and Analysis. In development: Analytics Overview and Optimization AI.' :
+                        'Активные модули: Поиск и Анализ. В разработке: Аналитический обзор и Optimization AI.';
                 } else if (lowerMessage.includes('help') || lowerMessage.includes('помощь')) {
                     response = currentLang === 'en' ? 
                         'I can help with information about modules, their status, metrics and development plans. Just ask about a specific module!' :
@@ -4981,6 +5164,211 @@
                     }
                 });
             }
+        }
+
+        // Navigation menu functionality
+        function initNavMenu() {
+            const navItems = document.querySelectorAll('.nav-item[data-module]');
+            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item[data-module]');
+            const moduleItems = [...navItems, ...mobileMenuItems];
+            
+            moduleItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetModule = this.getAttribute('data-module');
+                    
+                    // Switch to the module
+                    switchToModule(targetModule);
+                    
+                    // Close mobile menu if open
+                    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (mobileMenu && mobileMenuToggle) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+        }
+
+        // Function to switch to a specific module
+        function switchToModule(moduleId) {
+            // Remove active class from all nav items
+            const navItems = document.querySelectorAll('.nav-item[data-module]');
+            const mobileMenuItems = document.querySelectorAll('.mobile-menu-item[data-module]');
+            
+            navItems.forEach(item => item.classList.remove('active'));
+            mobileMenuItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to target nav items
+            const targetNavItems = document.querySelectorAll(`[data-module="${moduleId}"]`);
+            targetNavItems.forEach(item => item.classList.add('active'));
+            
+            // Switch module content directly
+            const moduleContent = document.querySelector(`[data-content="${moduleId}"].module-content`);
+            
+            if (moduleContent) {
+                // Remove active class from all module content
+                const allModuleContent = document.querySelectorAll('.module-content');
+                allModuleContent.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to target content
+                moduleContent.classList.add('active');
+            }
+        }
+
+        // Equipment Sidebar functionality
+        function initEquipmentSidebar() {
+            const equipmentItems = document.querySelectorAll('.equipment-type-item');
+            
+            equipmentItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const subcategory = this.getAttribute('data-subcategory');
+                    
+                    // Remove active class from all items
+                    equipmentItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Update filters based on equipment type
+                    updateFiltersForEquipmentType(subcategory);
+                    
+                    // Filter products
+                    filterProducts();
+                });
+            });
+        }
+
+        // Update filters based on selected equipment type
+        function updateFiltersForEquipmentType(subcategory) {
+            const technologyFilter = document.querySelector('#technologyFilter');
+            const heatPumpFilter = document.querySelector('#heatPumpFilter');
+            const wifiFilter = document.querySelector('#wifiFilter');
+            
+            if (!technologyFilter || !heatPumpFilter || !wifiFilter) return;
+            
+            // Clear current selections
+            technologyFilter.selectedIndex = 0;
+            heatPumpFilter.selectedIndex = 0;
+            wifiFilter.selectedIndex = 0;
+            
+            // Update filters based on equipment subcategory
+            if (['split-systems', 'multi-split', 'vrf', 'accessories'].includes(subcategory)) {
+                // Air Conditioning filters
+                updateTechnologyFilter(['full-dc-inverter', 'inverter', 'on-off']);
+                updateHeatPumpFilter(['yes', 'no']);
+                updateWifiFilter(['yes', 'no']);
+            } else if (['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'air-handling', 'fans'].includes(subcategory)) {
+                // Ventilation filters
+                updateTechnologyFilter(['ec-motor', 'ac-motor', 'variable-speed']);
+                updateHeatPumpFilter(['heat-recovery', 'no']);
+                updateWifiFilter(['yes', 'no']);
+            } else if (['heat-pumps', 'boilers', 'radiators', 'floor-heating', 'heat-exchangers'].includes(subcategory)) {
+                // Heating filters
+                updateTechnologyFilter(['inverter', 'modulating', 'on-off']);
+                updateHeatPumpFilter(['air-source', 'ground-source', 'no']);
+                updateWifiFilter(['yes', 'no']);
+            }
+        }
+
+        function updateTechnologyFilter(options) {
+            const technologyFilter = document.querySelector('#technologyFilter');
+            if (!technologyFilter) return;
+            
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            
+            // Clear existing options except "All"
+            technologyFilter.innerHTML = `<option value="">${currentLang === 'en' ? 'All' : 'Все'}</option>`;
+            
+            // Add new options based on equipment type
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                
+                if (option === 'full-dc-inverter') {
+                    optionElement.textContent = currentLang === 'en' ? 'Full DC Inverter' : 'Full DC Инвертор';
+                } else if (option === 'inverter') {
+                    optionElement.textContent = currentLang === 'en' ? 'Inverter' : 'Инвертор';
+                } else if (option === 'on-off') {
+                    optionElement.textContent = currentLang === 'en' ? 'On/Off' : 'Вкл/Выкл';
+                } else if (option === 'ec-motor') {
+                    optionElement.textContent = currentLang === 'en' ? 'EC Motor' : 'EC Двигатель';
+                } else if (option === 'ac-motor') {
+                    optionElement.textContent = currentLang === 'en' ? 'AC Motor' : 'AC Двигатель';
+                } else if (option === 'variable-speed') {
+                    optionElement.textContent = currentLang === 'en' ? 'Variable Speed' : 'Переменная скорость';
+                } else if (option === 'modulating') {
+                    optionElement.textContent = currentLang === 'en' ? 'Modulating' : 'Модулирующий';
+                }
+                
+                technologyFilter.appendChild(optionElement);
+            });
+        }
+
+        function updateHeatPumpFilter(options) {
+            const heatPumpFilter = document.querySelector('#heatPumpFilter');
+            if (!heatPumpFilter) return;
+            
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            
+            // Clear existing options except "All"
+            heatPumpFilter.innerHTML = `<option value="">${currentLang === 'en' ? 'All' : 'Все'}</option>`;
+            
+            // Add new options
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                
+                if (option === 'yes') {
+                    optionElement.textContent = currentLang === 'en' ? 'Yes' : 'Да';
+                } else if (option === 'no') {
+                    optionElement.textContent = currentLang === 'en' ? 'No' : 'Нет';
+                } else if (option === 'heat-recovery') {
+                    optionElement.textContent = currentLang === 'en' ? 'Heat Recovery' : 'Рекуперация';
+                } else if (option === 'air-source') {
+                    optionElement.textContent = currentLang === 'en' ? 'Air Source' : 'Воздух-вода';
+                } else if (option === 'ground-source') {
+                    optionElement.textContent = currentLang === 'en' ? 'Ground Source' : 'Земля-вода';
+                }
+                
+                heatPumpFilter.appendChild(optionElement);
+            });
+        }
+
+        function updateWifiFilter(options) {
+            const wifiFilter = document.querySelector('#wifiFilter');
+            if (!wifiFilter) return;
+            
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            
+            // Wi-Fi options are usually the same for all equipment types
+            wifiFilter.innerHTML = `
+                <option value="">${currentLang === 'en' ? 'All' : 'Все'}</option>
+                <option value="yes">${currentLang === 'en' ? 'Yes' : 'Да'}</option>
+                <option value="no">${currentLang === 'en' ? 'No' : 'Нет'}</option>
+            `;
+        }
+
+        // Update equipment category selection
+        function updateEquipmentCategory(category) {
+            console.log('Selected equipment category:', category);
+            
+            // Here you can add logic to filter products based on equipment category
+            // For example, update the product search results
+            filterProductsByCategory(category);
+        }
+
+        // Filter products by equipment category
+        function filterProductsByCategory(category) {
+            // This function would implement the filtering logic
+            // For now, just log the category for demonstration
+            console.log('Filtering products by category:', category);
+            
+            // You can implement actual product filtering here
+            // For example, show/hide product cards based on category
         }
     </script>
 </body>

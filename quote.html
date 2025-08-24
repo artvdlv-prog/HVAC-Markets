@@ -76,14 +76,14 @@
 
         .nav-menu {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
         }
 
         .nav-item {
             text-decoration: none;
             color: var(--deep-graphite);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
@@ -560,6 +560,17 @@
             }
         }
 
+        /* Medium screens - adjust menu spacing */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav {
                 padding: 0 1rem;
@@ -636,10 +647,13 @@
     <nav class="nav">
         <a href="index.html" class="nav-logo">HVAC MARKETS</a>
         <div class="nav-menu">
-            <a href="index.html" class="nav-item" data-en="DASHBOARD" data-ru="ПАНЕЛЬ">DASHBOARD</a>
-            <a href="catalog.html" class="nav-item" data-en="CATALOG" data-ru="КАТАЛОГ">CATALOG</a>
-            <a href="quote.html" class="nav-item active" data-en="QUOTES" data-ru="ПРЕДЛОЖЕНИЯ">QUOTES</a>
-            <a href="request.html" class="nav-item" data-en="REQUESTS" data-ru="ЗАПРОСЫ">REQUESTS</a>
+            <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="quote.html" class="nav-item active" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="index.html#designer" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="index.html#service" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="index.html#forecast" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="index.html#install" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <a href="account.html" class="profile-icon" title="Personal Account / Личный кабинет">
@@ -656,11 +670,6 @@
 
     <!-- Quote Container -->
     <div class="quote-container">
-        <!-- Quote Header -->
-        <div class="quote-header">
-            <h1 class="quote-title" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Commercial Proposal</h1>
-            <p class="quote-subtitle" data-en="Create and customize your quote" data-ru="Создание и настройка коммерческого предложения">Create and customize your quote</p>
-        </div>
 
         <!-- Currency Header -->
         <div class="currency-header">

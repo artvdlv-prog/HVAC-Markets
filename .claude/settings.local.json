@@ -6,7 +6,10 @@
       "Bash(start http://localhost:8000/index.html)",
       "Bash(start index.html)",
       "Bash(git add:*)",
-      "Bash(gh repo create:*)"
+      "Bash(gh repo create:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
