@@ -17,7 +17,8 @@
       "Bash(git restore:*)",
       "WebFetch(domain:www.hvac.market)",
       "Bash(start:*)",
-      "WebFetch(domain:www.aereco.com)"
+      "WebFetch(domain:www.aereco.com)",
+      "Bash(findstr:*)"
     ],
     "deny": [],
     "ask": []
