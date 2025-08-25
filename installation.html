@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Markets - Installation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1A1A1A;
+            background: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Color variables */
+        :root {
+            --primary-white: #FFFFFF;
+            --deep-graphite: #1A1A1A;
+            --signature-blue: #1464F4;
+            --warm-gray: #F4F4F4;
+            --lemon: #F4E146;
+            --turquoise: #46F4E1;
+            --light-gray: #E5E5E5;
+            --orange: #FF6B35;
+            --success-green: #4CAF50;
+            --warning-yellow: #FF9800;
+            --error-red: #F44336;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--signature-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--deep-graphite);
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--signature-blue);
+        }
+
+        .nav-item.active {
+            color: var(--signature-blue);
+        }
+
+        /* Navigation Right Side */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+            transform: scale(1.05);
+        }
+
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--warm-gray);
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .profile-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            transform: translateY(-1px);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--signature-blue);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 18px;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--light-gray);
+            color: var(--deep-graphite);
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--signature-blue);
+            color: var(--signature-blue);
+        }
+
+        .lang-btn.active {
+            background: var(--signature-blue);
+            border-color: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .lang-btn:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .lang-btn:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+
+        /* Main Container */
+        .installation-container {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--warm-gray);
+        }
+
+        .installation-header {
+            text-align: center;
+            padding: 3rem 0;
+            background: var(--primary-white);
+            margin-bottom: 3rem;
+        }
+
+        .installation-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--deep-graphite);
+        }
+
+        .installation-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        /* Installation Content */
+        .installation-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Module Cards Grid */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .module-card {
+            background: var(--primary-white);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--warm-gray);
+            border-radius: 12px;
+            color: var(--signature-blue);
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--deep-graphite);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-transform: none;
+            font-weight: 400;
+        }
+
+        .card-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--signature-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 1rem;
+        }
+
+        .status-planned {
+            background: rgba(244, 244, 244, 1);
+            color: #666;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 2rem;
+        }
+
+        .btn-action {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-graphite);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--signature-blue);
+            border: 2px solid var(--signature-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        /* Medium screens - adjust menu spacing */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .installation-container {
+                padding: 100px 1rem 2rem;
+            }
+
+            .installation-title {
+                font-size: 2rem;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 0.5rem;
+            }
+
+            .module-card {
+                padding: 1rem;
+                margin: 0;
+            }
+
+            .card-title {
+                font-size: 1rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .card-description {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+            }
+
+            .card-metrics {
+                gap: 0.75rem;
+            }
+
+            .metric {
+                padding: 0.5rem;
+            }
+
+            .metric-value {
+                font-size: 1.2rem;
+            }
+
+            .metric-label {
+                font-size: 0.7rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-action {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        body {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">HVAC MARKETS</a>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="index.html#negotiator" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="account.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="nav-item active" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+        </div>
+        <div class="nav-right">
+            <!-- AI Search Button -->
+            <button class="nav-icon" id="searchBtn" title="AI Search / ИИ Поиск">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+            
+            <!-- Personal Account -->
+            <a href="account.html" class="profile-icon" title="Personal Account / Личный кабинет">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </a>
+            
+            <!-- Quote Cart -->
+            <button class="nav-icon" id="cartBtn" title="Quote Cart / Корзина КП">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            
+            <div class="language-toggle">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Installation Container -->
+    <div class="installation-container">
+        <!-- Installation Header -->
+        <div class="installation-header">
+            <h1 class="installation-title" data-en="Installation Management" data-ru="Управление монтажом">Installation Management</h1>
+            <p class="installation-subtitle" data-en="Comprehensive tools for managing HVAC installation projects, crews, and timelines" data-ru="Комплексные инструменты для управления проектами монтажа HVAC, бригадами и временными рамками">Comprehensive tools for managing HVAC installation projects, crews, and timelines</p>
+        </div>
+
+        <!-- Installation Content -->
+        <div class="installation-content">
+            <!-- Installation Module Cards -->
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="card-header">
+                        <div class="card-icon">🔩</div>
+                        <div>
+                            <h3 class="card-title" data-en="Crew Management" data-ru="Управление бригадами">Crew Management</h3>
+                        </div>
+                    </div>
+                    <p class="card-description" data-en="Installation crew and resource management" data-ru="Управление монтажными бригадами и ресурсами">Installation crew and resource management</p>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">47</div>
+                            <div class="metric-label" data-en="Teams" data-ru="Команд">Teams</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">95%</div>
+                            <div class="metric-label" data-en="Utilization" data-ru="Загрузка">Utilization</div>
+                        </div>
+                    </div>
+                    <div class="card-status status-planned" data-en="Planned" data-ru="Запланировано">Planned</div>
+                </div>
+
+                <div class="module-card">
+                    <div class="card-header">
+                        <div class="card-icon">💵</div>
+                        <div>
+                            <h3 class="card-title" data-en="Cost Calculator" data-ru="Калькулятор стоимости">Cost Calculator</h3>
+                        </div>
+                    </div>
+                    <p class="card-description" data-en="Installation cost calculation and budgeting" data-ru="Калькулятор стоимости монтажных работ">Installation cost calculation and budgeting</p>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">247</div>
+                            <div class="metric-label" data-en="Calculations" data-ru="Расчетов">Calculations</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">±5%</div>
+                            <div class="metric-label" data-en="Accuracy" data-ru="Точность">Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="card-status status-planned" data-en="Planned" data-ru="Запланировано">Planned</div>
+                </div>
+
+                <div class="module-card">
+                    <div class="card-header">
+                        <div class="card-icon">⏱️</div>
+                        <div>
+                            <h3 class="card-title" data-en="Timeline Optimizer" data-ru="Оптимизатор сроков">Timeline Optimizer</h3>
+                        </div>
+                    </div>
+                    <p class="card-description" data-en="Project timeline optimization and scheduling" data-ru="Оптимизация временных рамок проектов">Project timeline optimization and scheduling</p>
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <div class="metric-value">89</div>
+                            <div class="metric-label" data-en="Projects" data-ru="Проектов">Projects</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-value">23%</div>
+                            <div class="metric-label" data-en="Time Saved" data-ru="Экономия времени">Time Saved</div>
+                        </div>
+                    </div>
+                    <div class="card-status status-planned" data-en="Planned" data-ru="Запланировано">Planned</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-action btn-primary" onclick="startNewInstallationProject()" data-en="Start New Installation Project" data-ru="Начать новый проект монтажа">Start New Installation Project</button>
+            <button class="btn-action btn-secondary" onclick="window.location.href='index.html'" data-en="Back to Platform" data-ru="Назад к платформе">Back to Platform</button>
+        </div>
+    </div>
+
+    <script>
+        // Installation page JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initLanguageToggle();
+            initAnimations();
+            initSearchAndCart();
+        });
+
+        // Language switching functionality
+        function initLanguageToggle() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
+            
+            let currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            switchLanguage(currentLang);
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const newLang = this.getAttribute('data-lang');
+                    if (newLang !== currentLang) {
+                        switchLanguage(newLang);
+                        currentLang = newLang;
+                        localStorage.setItem('preferredLanguage', newLang);
+                    }
+                });
+            });
+            
+            function switchLanguage(lang) {
+                elementsWithTranslations.forEach(element => {
+                    const translation = element.getAttribute(`data-${lang}`);
+                    if (translation) {
+                        if (element.tagName === 'INPUT' && element.type !== 'submit') {
+                            element.placeholder = translation;
+                        } else if (element.tagName === 'OPTION') {
+                            element.textContent = translation;
+                        } else {
+                            element.innerHTML = translation;
+                        }
+                    }
+                });
+                
+                langButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+            }
+        }
+
+        // Initialize animations
+        function initAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Add fade-in animation to module cards
+            document.querySelectorAll('.module-card').forEach((card, index) => {
+                card.classList.add('fade-in');
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+        }
+
+        // Initialize search and cart functionality
+        function initSearchAndCart() {
+            const searchBtn = document.getElementById('searchBtn');
+            const cartBtn = document.getElementById('cartBtn');
+            
+            searchBtn.addEventListener('click', function() {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'AI Search functionality would open here' :
+                    'Здесь откроется функция ИИ поиска';
+                alert(message);
+            });
+            
+            cartBtn.addEventListener('click', function() {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'Quote Cart would open here' :
+                    'Здесь откроется корзина КП';
+                alert(message);
+            });
+
+            // Update cart badge from localStorage
+            const cartCount = localStorage.getItem('cartCount') || '0';
+            document.getElementById('cartBadge').textContent = cartCount;
+        }
+
+        // Start new installation project function
+        function startNewInstallationProject() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const message = currentLang === 'en' ? 
+                'Installation project functionality would start here. This would open the installation management interface.' :
+                'Здесь запустится функция проекта монтажа. Откроется интерфейс управления монтажом.';
+            alert(message);
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.includes('#') && !href.startsWith('#')) {
+                    // This is a link to another page with hash, let it work normally
+                    return;
+                }
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

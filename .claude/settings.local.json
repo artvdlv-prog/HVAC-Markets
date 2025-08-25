@@ -9,7 +9,14 @@
       "Bash(gh repo create:*)",
       "Bash(git commit:*)",
       "Bash(git remote add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Read(/C:\\c\\Users\\art-s\\code/**)",
+      "Bash(start C:Usersart-scodehvac-platformindex.html)",
+      "Bash(start \"\" \"index.html\")",
+      "Bash(explorer:*)",
+      "Bash(git restore:*)",
+      "WebFetch(domain:www.hvac.market)",
+      "Bash(start:*)"
     ],
     "deny": [],
     "ask": []

@@ -103,6 +103,29 @@
             gap: 1.5rem;
         }
 
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+            transform: scale(1.05);
+        }
+
         .profile-icon {
             display: flex;
             align-items: center;
@@ -130,6 +153,23 @@
 
         .profile-icon:hover svg {
             transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--signature-blue);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 18px;
         }
 
         /* Language Toggle */
@@ -650,17 +690,34 @@
             <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
             <a href="quote.html" class="nav-item active" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="index.html#designer" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="index.html#service" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="index.html#forecast" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="index.html#install" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="account.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
+            <!-- AI Search Button -->
+            <button class="nav-icon" id="searchBtn" title="AI Search / ИИ Поиск">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+            
+            <!-- Personal Account -->
             <a href="account.html" class="profile-icon" title="Personal Account / Личный кабинет">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
             </a>
+            
+            <!-- Quote Cart -->
+            <button class="nav-icon" id="cartBtn" title="Quote Cart / Корзина КП">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            
             <div class="language-toggle">
                 <button class="lang-btn active" data-lang="en">EN</button>
                 <button class="lang-btn" data-lang="ru">RU</button>
@@ -1041,6 +1098,7 @@
             generateBrandSections();
             updateProfitability();
             updateSummary();
+            updateCartBadge();
         }
 
         // Update profitability display
@@ -1164,6 +1222,32 @@
                 'Quote saved successfully!' :
                 'КП успешно сохранено!';
             alert(message);
+        });
+
+        // Search button functionality
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        // Cart button functionality
+        document.getElementById('cartBtn').addEventListener('click', function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const message = currentLang === 'en' ? 
+                'Quote cart functionality will be implemented soon.' :
+                'Функция корзины КП будет реализована в ближайшее время.';
+            alert(message);
+        });
+
+        // Update cart badge based on selected products count
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const productCount = selectedProducts.reduce((sum, product) => sum + (product.quantity || 1), 0);
+            badge.textContent = productCount;
+        }
+
+        // Update cart badge on page load and when products change
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartBadge();
         });
     </script>
 </body>
