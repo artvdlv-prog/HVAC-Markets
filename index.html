@@ -233,48 +233,42 @@
             transform: scale(1.1);
         }
 
-        /* Language Toggle */
-        .language-toggle {
-            display: flex;
-            gap: 0;
+        /* Navigation Dropdowns */
+        .nav-dropdown {
+            position: relative;
         }
 
-        .lang-btn {
-            background: transparent;
+        .nav-select {
+            background: var(--primary-white);
             border: 2px solid var(--light-gray);
             color: var(--deep-graphite);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 2rem 0.5rem 1rem;
             font-family: inherit;
-            font-weight: 600;
             font-size: 0.8rem;
-            letter-spacing: 0.05em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            border-radius: 6px;
             text-transform: uppercase;
+            min-width: 80px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1em;
         }
 
-        .lang-btn:hover {
+        .nav-select:hover {
             border-color: var(--signature-blue);
             color: var(--signature-blue);
         }
 
-        .lang-btn.active {
-            background: var(--signature-blue);
+        .nav-select:focus {
+            outline: none;
             border-color: var(--signature-blue);
-            color: var(--primary-white);
-        }
-
-        .lang-btn:first-child {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-radius: 4px 0 0 4px;
-        }
-
-        .lang-btn:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-left: none;
-            border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         /* Mobile Menu Toggle */
@@ -396,8 +390,8 @@
         }
 
         .equipment-type-item {
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -407,6 +401,7 @@
             background: transparent;
             border: none;
             margin-bottom: 0.5rem;
+            border-radius: 6px;
         }
 
         .equipment-type-item:hover {
@@ -415,16 +410,22 @@
 
         /* Equipment Icon Colors - Light Outline Style */
         .equipment-icon {
-            font-size: 1rem;
+            width: 24px;
+            height: 24px;
             transition: all 0.3s ease;
-            line-height: 1;
-            color: #d0d0d0;
-            font-weight: 300;
+            fill: #d0d0d0;
+            stroke: #d0d0d0;
+        }
+
+        .equipment-icon svg {
+            width: 100%;
+            height: 100%;
         }
 
         .equipment-type-item:hover .equipment-icon {
             transform: scale(1.1);
-            color: #a0a0a0;
+            fill: #a0a0a0;
+            stroke: #a0a0a0;
         }
 
         /* Air Conditioning Equipment - Blue Colors on Active */
@@ -432,7 +433,8 @@
         .equipment-type-item[data-subcategory="multi-split"].active .equipment-icon,
         .equipment-type-item[data-subcategory="vrf"].active .equipment-icon,
         .equipment-type-item[data-subcategory="accessories"].active .equipment-icon {
-            color: var(--signature-blue);
+            fill: var(--signature-blue);
+            stroke: var(--signature-blue);
             transform: scale(1.1);
         }
 
@@ -443,7 +445,8 @@
         .equipment-type-item[data-subcategory="heat-recovery"].active .equipment-icon,
         .equipment-type-item[data-subcategory="air-handling"].active .equipment-icon,
         .equipment-type-item[data-subcategory="fans"].active .equipment-icon {
-            color: #0d47a1;
+            fill: #0d47a1;
+            stroke: #0d47a1;
             transform: scale(1.1);
         }
 
@@ -454,7 +457,8 @@
         .equipment-type-item[data-subcategory="radiators"].active .equipment-icon,
         .equipment-type-item[data-subcategory="floor-heating"].active .equipment-icon,
         .equipment-type-item[data-subcategory="heat-exchangers"].active .equipment-icon {
-            color: #f44336;
+            fill: #f44336;
+            stroke: #f44336;
             transform: scale(1.1);
         }
 
@@ -622,16 +626,19 @@
         /* Equipment Search Block */
         .equipment-search {
             background: var(--primary-white);
-            border-radius: 12px;
+            border-radius: 0;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 2rem;
+            width: calc(100vw - 80px);
+            margin-left: -80px;
+            margin-right: 0;
         }
 
         .search-header {
             background: var(--signature-blue);
             color: var(--primary-white);
-            padding: 1.5rem 2rem;
+            padding: 0.75rem 2rem;
         }
 
         .header-content {
@@ -841,9 +848,10 @@
                 font-size: 1.1rem;
             }
 
-            .lang-btn {
+            .nav-select {
                 min-height: 40px;
-                padding: 0.5rem 0.75rem;
+                padding: 0.5rem 1.5rem 0.5rem 0.75rem;
+                font-size: 0.8rem;
                 touch-action: manipulation;
             }
 
@@ -871,7 +879,7 @@
 
         @media (max-width: 768px) {
             .search-header {
-                padding: 1rem;
+                padding: 0.5rem 1rem;
             }
 
             .ai-search-box {
@@ -1139,10 +1147,26 @@
         /* Brand Tabs */
         .brand-tabs {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: var(--warm-gray);
             border-bottom: 1px solid var(--light-gray);
             overflow-x: auto;
             padding: 0 1rem;
+        }
+
+        .brand-tabs-left {
+            display: flex;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        .brand-tabs-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 2rem;
+            white-space: nowrap;
         }
 
         .brand-tab {
@@ -1535,6 +1559,60 @@
             transform: translateY(-1px);
         }
 
+        .clear-filters-btn-mini {
+            background: var(--signature-blue);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            min-width: 28px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-filters-btn-mini:hover {
+            background: #2563eb;
+        }
+
+        .results-count-box {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            background: var(--primary-white);
+            font-size: 0.85rem;
+            color: #666;
+            min-width: 80px;
+            text-align: center;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-filters-btn-square {
+            background: var(--signature-blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-filters-btn-square:hover {
+            background: #2563eb;
+        }
+
         /* Responsive Category Row */
         @media (max-width: 768px) {
             .catalog-categories-row {
@@ -1835,8 +1913,9 @@
         }
 
         .results-count {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #666;
+            font-weight: 500;
         }
 
         .sort-select {
@@ -2461,6 +2540,18 @@
 
             .brand-tabs {
                 padding: 0 0.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .brand-tabs-left {
+                order: 1;
+            }
+
+            .brand-tabs-right {
+                order: 2;
+                margin-left: 0;
+                justify-content: center;
             }
 
             .brand-tab {
@@ -2784,6 +2875,11 @@
                 padding-left: 0.5rem;
                 padding-right: 0.5rem;
             }
+
+            .equipment-search {
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+            }
             
             .nav-right {
                 gap: 1rem;
@@ -2898,9 +2994,10 @@
                 touch-action: manipulation;
             }
 
-            .lang-btn {
+            .nav-select {
                 min-height: 36px;
-                padding: 0.4rem 0.8rem;
+                padding: 0.4rem 1.4rem 0.4rem 0.6rem;
+                font-size: 0.75rem;
                 touch-action: manipulation;
             }
 
@@ -2981,7 +3078,7 @@
             <a href="#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
             <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
             <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="account.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
             <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
             <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
@@ -3008,9 +3105,21 @@
                 <span class="cart-badge" id="cartBadge">0</span>
             </button>
             
-            <div class="language-toggle">
-                <button class="lang-btn active" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="ru">RU</button>
+            <!-- Language Selection Dropdown -->
+            <div class="nav-dropdown">
+                <select class="nav-select" id="languageSelect">
+                    <option value="en" selected>EN</option>
+                    <option value="ru">RU</option>
+                </select>
+            </div>
+            
+            <!-- Currency Selection Dropdown -->
+            <div class="nav-dropdown">
+                <select class="nav-select" id="currencySelect">
+                    <option value="usd" selected>USD ($)</option>
+                    <option value="rub">RUB (₽)</option>
+                    <option value="eur">EUR (€)</option>
+                </select>
             </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span class="hamburger-line"></span>
@@ -3027,7 +3136,7 @@
             <a href="#match" class="mobile-menu-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
             <a href="quote.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
             <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="account.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
             <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
             <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
@@ -3049,78 +3158,35 @@
                     <div class="search-header">
                         <div class="header-content">
                             <div class="header-text">
-                                <h2 class="search-title" data-en="Equipment Search & Selection" data-ru="Поиск и подбор оборудования">Equipment Search & Selection</h2>
-                                <p class="search-subtitle" data-en="Intelligent HVAC equipment discovery with AI-powered matching" data-ru="Интеллектуальный поиск HVAC оборудования с ИИ сопоставлением">Intelligent HVAC equipment discovery with AI-powered matching</p>
-                            </div>
-                            <div class="header-ai-search">
-                                <div class="ai-search-box">
-                                    <div class="ai-search-input-wrapper">
-                                        <input type="text" class="ai-search-input" id="aiSearchInput" placeholder="Ask AI to find equipment..." data-en-placeholder="Ask AI to find equipment..." data-ru-placeholder="Спросите ИИ об оборудовании...">
-                                        <button class="ai-search-btn" id="aiSearchBtn">
-                                            <span class="ai-icon">🤖</span>
-                                        </button>
-                                    </div>
-                                </div>
+                                <h2 class="search-title" data-en="Equipment Search & Selection" data-ru="Поиск и подбор оборудования">Поиск и подбор оборудования</h2>
                             </div>
                         </div>
                     </div>
 
 
-                <!-- Brand Tabs -->
+                <!-- Brand Tabs with Client Discount -->
                 <div class="brand-tabs">
-                    <button class="brand-tab active" data-brand="daikin">Daikin</button>
-                    <button class="brand-tab" data-brand="mitsubishi">Mitsubishi</button>
-                    <button class="brand-tab" data-brand="lg">LG</button>
-                    <button class="brand-tab" data-brand="panasonic">Panasonic</button>
-                    <button class="brand-tab" data-brand="toshiba">Toshiba</button>
-                    <button class="brand-tab" data-brand="fujitsu">Fujitsu</button>
-                    <button class="brand-tab" data-brand="carrier">Carrier</button>
-                    <button class="brand-tab" data-brand="york">York</button>
-                    <button class="brand-tab" data-brand="trane">Trane</button>
-                    <button class="brand-tab" data-brand="lennox">Lennox</button>
-                </div>
-
-                <!-- Discount & Currency Settings Panel -->
-                <div class="settings-panel">
-                    <div class="settings-row">
-                        <div class="discount-settings">
-                            <div class="setting-group">
-                                <label class="setting-label" data-en="Dealer Discount (D):" data-ru="Скидка дилера (D):">Dealer Discount (D):</label>
-                                <input type="number" class="discount-input" id="dealerDiscount" placeholder="0" min="0" max="100" step="0.1">
-                                <span class="setting-unit">%</span>
-                            </div>
-                            <div class="setting-group">
-                                <label class="setting-label" data-en="Client Discount (C):" data-ru="Скидка клиента (C):">Client Discount (C):</label>
-                                <input type="number" class="discount-input" id="clientDiscount" placeholder="0" min="0" max="100" step="0.1">
-                                <span class="setting-unit">%</span>
-                            </div>
-                        </div>
-                        
-                        <div class="currency-settings">
-                            <div class="setting-group">
-                                <label class="setting-label" data-en="Currency:" data-ru="Валюта:">Currency:</label>
-                                <select class="currency-select" id="currencySelect">
-                                    <option value="usd" selected>USD ($)</option>
-                                    <option value="rub" data-en="RUB (₽)" data-ru="RUB (₽)">RUB (₽)</option>
-                                    <option value="eur" data-en="EUR (€)" data-ru="EUR (€)">EUR (€)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="exchange-rates">
-                                <div class="rate-group">
-                                    <label class="rate-label">USD/RUB:</label>
-                                    <input type="number" class="rate-input" id="usdRubRate" value="75.50" step="0.01">
-                                    <button class="rate-update-btn" onclick="fetchExchangeRate('usd', 'rub')" title="Update rate">🔄</button>
-                                </div>
-                                <div class="rate-group">
-                                    <label class="rate-label">USD/EUR:</label>
-                                    <input type="number" class="rate-input" id="usdEurRate" value="0.85" step="0.001">
-                                    <button class="rate-update-btn" onclick="fetchExchangeRate('usd', 'eur')" title="Update rate">🔄</button>
-                                </div>
-                            </div>
+                    <div class="brand-tabs-left">
+                        <button class="brand-tab active" data-brand="daikin">Daikin</button>
+                        <button class="brand-tab" data-brand="mitsubishi">Mitsubishi</button>
+                        <button class="brand-tab" data-brand="lg">LG</button>
+                        <button class="brand-tab" data-brand="panasonic">Panasonic</button>
+                        <button class="brand-tab" data-brand="toshiba">Toshiba</button>
+                        <button class="brand-tab" data-brand="fujitsu">Fujitsu</button>
+                        <button class="brand-tab" data-brand="carrier">Carrier</button>
+                        <button class="brand-tab" data-brand="york">York</button>
+                        <button class="brand-tab" data-brand="trane">Trane</button>
+                        <button class="brand-tab" data-brand="lennox">Lennox</button>
+                    </div>
+                    <div class="brand-tabs-right">
+                        <div class="setting-group">
+                            <label class="setting-label" data-en="Client Discount:" data-ru="Скидка клиента:">Client Discount:</label>
+                            <input type="number" class="discount-input" id="clientDiscount" placeholder="0" min="0" max="100" step="0.1">
+                            <span class="setting-unit">%</span>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Horizontal Filters -->
                 <div class="horizontal-filters">
@@ -3157,16 +3223,6 @@
                             </div>
                         </div>
 
-                        <!-- Heat Pump Filter -->
-                        <div class="horizontal-filter">
-                            <label class="filter-label" data-en="Heat Pump" data-ru="Тепловой насос">Heat Pump</label>
-                            <select class="filter-select" id="heatPumpFilter">
-                                <option value="" data-en="All" data-ru="Все">All</option>
-                                <option value="yes" data-en="Yes" data-ru="Да">Yes</option>
-                                <option value="no" data-en="No" data-ru="Нет">No</option>
-                            </select>
-                        </div>
-
                         <!-- Wi-Fi Management Filter -->
                         <div class="horizontal-filter">
                             <label class="filter-label" data-en="Wi-Fi" data-ru="Wi-Fi">Wi-Fi</label>
@@ -3188,9 +3244,25 @@
                             </select>
                         </div>
 
+                        <!-- Results Count -->
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Found" data-ru="Найдено">Found</label>
+                            <div class="results-count-box" data-en="247 products" data-ru="247 товаров">247 products</div>
+                        </div>
+
+                        <!-- Sort Selection -->
+                        <div class="horizontal-filter">
+                            <label class="filter-label" data-en="Sort" data-ru="Сорт.">Sort</label>
+                            <select class="filter-select sort-select">
+                                <option data-en="Price" data-ru="Цена">Price</option>
+                                <option data-en="Rating" data-ru="Рейтинг">Rating</option>
+                                <option data-en="Capacity" data-ru="Мощность">Capacity</option>
+                            </select>
+                        </div>
+
                         <!-- Clear Filters Button -->
                         <div class="horizontal-filter">
-                            <button class="clear-filters-btn-compact" onclick="clearAllFilters()" data-en="Clear" data-ru="Очистить">Clear</button>
+                            <button class="clear-filters-btn-square" onclick="clearAllFilters()" title="Clear filters">✕</button>
                         </div>
                     </div>
                 </div>
@@ -3201,77 +3273,215 @@
                     <div class="equipment-sidebar">
                         <!-- Air Conditioning Equipment -->
                         <div class="equipment-type-item active" data-subcategory="split-systems">
-                            <div class="equipment-icon">◯</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="8" width="8" height="6" rx="1"/>
+                                    <rect x="14" y="8" width="8" height="6" rx="1"/>
+                                    <path d="m10 11 4 0"/>
+                                    <path d="M6 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+                                    <path d="M6 14v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Split Systems" data-ru="Сплит-системы">Split Systems</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="multi-split">
-                            <div class="equipment-icon">◉</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="6" width="6" height="4" rx="1"/>
+                                    <rect x="2" y="14" width="6" height="4" rx="1"/>
+                                    <rect x="16" y="10" width="6" height="4" rx="1"/>
+                                    <path d="m8 8 8 4"/>
+                                    <path d="m8 16 8-4"/>
+                                    <circle cx="13" cy="12" r="1" fill="currentColor"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Multi-Split" data-ru="Мульти-сплит">Multi-Split</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="vrf">
-                            <div class="equipment-icon">⬢</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="9" y="2" width="6" height="4" rx="1"/>
+                                    <rect x="2" y="9" width="4" height="6" rx="1"/>
+                                    <rect x="18" y="9" width="4" height="6" rx="1"/>
+                                    <rect x="9" y="18" width="6" height="4" rx="1"/>
+                                    <path d="m9 6 0 3"/>
+                                    <path d="m15 6 0 3"/>
+                                    <path d="m6 9 3 0"/>
+                                    <path d="m6 15 3 0"/>
+                                    <path d="m15 9 3 0"/>
+                                    <path d="m15 15 3 0"/>
+                                    <path d="m9 15 0 3"/>
+                                    <path d="m15 15 0 3"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="VRF Systems" data-ru="VRF системы">VRF Systems</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="accessories">
-                            <div class="equipment-icon">⚙</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="m12 1 0 6"/>
+                                    <path d="m12 17 0 6"/>
+                                    <path d="m1 12 6 0"/>
+                                    <path d="m17 12 6 0"/>
+                                    <path d="m4.22 4.22 4.24 4.24"/>
+                                    <path d="m15.54 15.54 4.24 4.24"/>
+                                    <path d="m4.22 19.78 4.24-4.24"/>
+                                    <path d="m15.54 8.46 4.24-4.24"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="AC Accessories" data-ru="Аксессуары">AC Accessories</div>
                         </div>
                         
                         <!-- Ventilation Equipment -->
                         <div class="equipment-type-item" data-subcategory="supply-ventilation">
-                            <div class="equipment-icon">→</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="8" width="8" height="8" rx="1"/>
+                                    <path d="m11 12 6 0"/>
+                                    <path d="m14 9 3 3-3 3"/>
+                                    <path d="M6 11v2"/>
+                                    <path d="M8 11v2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Supply Ventilation" data-ru="Приточная вентиляция">Supply Ventilation</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="exhaust-ventilation">
-                            <div class="equipment-icon">←</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="13" y="8" width="8" height="8" rx="1"/>
+                                    <path d="m7 12 6 0"/>
+                                    <path d="m10 9-3 3 3 3"/>
+                                    <path d="M16 11v2"/>
+                                    <path d="M18 11v2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Exhaust Ventilation" data-ru="Вытяжная вентиляция">Exhaust Ventilation</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="heat-recovery">
-                            <div class="equipment-icon">↻</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                                    <path d="M7 10h4l2 4h4"/>
+                                    <path d="M17 14h-4l-2-4H7"/>
+                                    <path d="m1 10 2 0"/>
+                                    <path d="m1 14 2 0"/>
+                                    <path d="m21 10 2 0"/>
+                                    <path d="m21 14 2 0"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Heat Recovery" data-ru="Рекуперация">Heat Recovery</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="air-handling">
-                            <div class="equipment-icon">□</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                                    <rect x="6" y="9" width="3" height="6" rx="0.5"/>
+                                    <rect x="11" y="9" width="3" height="6" rx="0.5"/>
+                                    <rect x="16" y="9" width="3" height="6" rx="0.5"/>
+                                    <path d="M2 12h2"/>
+                                    <path d="M20 12h2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Air Handling Units" data-ru="Приточные установки">Air Handling Units</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="fans">
-                            <div class="equipment-icon">○</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M12 2v4"/>
+                                    <path d="M12 18v4"/>
+                                    <path d="M2 12h4"/>
+                                    <path d="M18 12h4"/>
+                                    <path d="m6.34 6.34 2.83 2.83"/>
+                                    <path d="m14.83 14.83 2.83 2.83"/>
+                                    <path d="m6.34 17.66 2.83-2.83"/>
+                                    <path d="m14.83 9.17 2.83-2.83"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Fans" data-ru="Вентиляторы">Fans</div>
                         </div>
                         
                         <!-- Heating Equipment -->
                         <div class="equipment-type-item" data-subcategory="heat-pumps">
-                            <div class="equipment-icon">◐</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="4" y="6" width="16" height="12" rx="2"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M8 9h8"/>
+                                    <path d="M8 15h8"/>
+                                    <path d="M12 2v2"/>
+                                    <path d="M12 20v2"/>
+                                    <path d="M2 12h2"/>
+                                    <path d="M20 12h2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Heat Pumps" data-ru="Тепловые насосы">Heat Pumps</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="boilers">
-                            <div class="equipment-icon">◯</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="6" y="4" width="12" height="16" rx="2"/>
+                                    <circle cx="12" cy="10" r="2"/>
+                                    <path d="M9 16h6"/>
+                                    <path d="M10 16v2"/>
+                                    <path d="M14 16v2"/>
+                                    <path d="M12 2v2"/>
+                                    <path d="M12 20v2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Boilers" data-ru="Котлы">Boilers</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="radiators">
-                            <div class="equipment-icon">▢</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="4" y="8" width="2" height="8"/>
+                                    <rect x="7" y="8" width="2" height="8"/>
+                                    <rect x="10" y="8" width="2" height="8"/>
+                                    <rect x="13" y="8" width="2" height="8"/>
+                                    <rect x="16" y="8" width="2" height="8"/>
+                                    <path d="M2 10h20"/>
+                                    <path d="M2 14h20"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Radiators" data-ru="Радиаторы">Radiators</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="floor-heating">
-                            <div class="equipment-icon">⬜</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="18" width="20" height="3" rx="1"/>
+                                    <path d="M4 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
+                                    <path d="M12 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
+                                    <path d="M6 8v6"/>
+                                    <path d="M10 5v9"/>
+                                    <path d="M14 8v6"/>
+                                    <path d="M18 5v9"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Floor Heating" data-ru="Теплый пол">Floor Heating</div>
                         </div>
                         <div class="equipment-type-item" data-subcategory="heat-exchangers">
-                            <div class="equipment-icon">◇</div>
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="8" width="18" height="8" rx="1"/>
+                                    <path d="M7 12h10"/>
+                                    <path d="M9 10v4"/>
+                                    <path d="M12 10v4"/>
+                                    <path d="M15 10v4"/>
+                                    <path d="M3 10h-2"/>
+                                    <path d="M3 14h-2"/>
+                                    <path d="M21 10h2"/>
+                                    <path d="M21 14h2"/>
+                                </svg>
+                            </div>
                             <div class="equipment-tooltip" data-en="Heat Exchangers" data-ru="Теплообменники">Heat Exchangers</div>
                         </div>
                     </div>
 
                     <!-- Results Area -->
                 <div class="results-area">
-                        <div class="results-header">
-                            <div class="results-count" data-en="Found 247 products" data-ru="Найдено 247 товаров">Found 247 products</div>
-                            <select class="sort-select">
-                                <option data-en="Sort by price" data-ru="Сортировать по цене">Sort by price</option>
-                                <option data-en="Sort by rating" data-ru="По рейтингу">Sort by rating</option>
-                                <option data-en="Sort by capacity" data-ru="По мощности">Sort by capacity</option>
-                            </select>
-                        </div>
 
                         <!-- List Header -->
                         <div class="list-header">
@@ -3954,8 +4164,7 @@
             initNavMenu();
             initEquipmentSidebar();
             
-            // Initialize product list
-            filterProducts();
+            // Products will be initialized by generateSampleProducts()
             
             // Handle hash navigation on page load
             handleHashNavigation();
@@ -4244,42 +4453,22 @@
         // Settings Panel Functions
         function initSettingsPanel() {
             const currencySelect = document.getElementById('currencySelect');
-            const dealerDiscountInput = document.getElementById('dealerDiscount');
             const clientDiscountInput = document.getElementById('clientDiscount');
-            const usdRubRateInput = document.getElementById('usdRubRate');
-            const usdEurRateInput = document.getElementById('usdEurRate');
 
             // Currency change handler
-            currencySelect.addEventListener('change', function() {
-                currentCurrency = this.value;
-                exchangeRates.rub = parseFloat(usdRubRateInput.value) || 75.50;
-                exchangeRates.eur = parseFloat(usdEurRateInput.value) || 0.85;
-                filterProducts(); // Refresh product display
-            });
+            if (currencySelect) {
+                currencySelect.addEventListener('change', function() {
+                    currentCurrency = this.value;
+                    filterProducts(); // Refresh product display
+                });
+            }
 
-            // Discount change handlers
-            dealerDiscountInput.addEventListener('input', function() {
-                filterProducts(); // Refresh product display
-            });
-
-            clientDiscountInput.addEventListener('input', function() {
-                filterProducts(); // Refresh product display
-            });
-
-            // Exchange rate change handlers
-            usdRubRateInput.addEventListener('input', function() {
-                exchangeRates.rub = parseFloat(this.value) || 75.50;
-                if (currentCurrency === 'rub') {
-                    filterProducts(); // Refresh if currently showing RUB
-                }
-            });
-
-            usdEurRateInput.addEventListener('input', function() {
-                exchangeRates.eur = parseFloat(this.value) || 0.85;
-                if (currentCurrency === 'eur') {
-                    filterProducts(); // Refresh if currently showing EUR
-                }
-            });
+            // Client discount change handler
+            if (clientDiscountInput) {
+                clientDiscountInput.addEventListener('input', function() {
+                    filterProducts(); // Refresh product display
+                });
+            }
         }
 
         // Currency conversion function
@@ -4309,10 +4498,10 @@
 
         // Apply discounts to price
         function applyDiscounts(price, isClientPrice = false) {
-            const dealerDiscount = parseFloat(document.getElementById('dealerDiscount').value) || 0;
-            const clientDiscount = parseFloat(document.getElementById('clientDiscount').value) || 0;
+            const clientDiscountInput = document.getElementById('clientDiscount');
+            const clientDiscount = clientDiscountInput ? parseFloat(clientDiscountInput.value) || 0 : 0;
             
-            let discountedPrice = price * (1 - dealerDiscount / 100);
+            let discountedPrice = price;
             
             if (isClientPrice) {
                 discountedPrice = discountedPrice * (1 - clientDiscount / 100);
@@ -4348,67 +4537,11 @@
         }
 
         // Sample product data
-        const sampleProducts = [
-            {
-                id: 1,
-                title: "Daikin FTXM35R Split System",
-                specs: "12,000 BTU/h, A+++ Energy Class, Inverter",
-                brand: "daikin",
-                capacity: 12000,
-                energyClass: "a+++",
-                features: ["inverter", "wifi", "heating"],
-                type: "split",
-                retailPrice: 1299,
-                purchasePrice: 899,
-                salePrice: 1199,
-                stock: 5
-            },
-            {
-                id: 2,
-                title: "Mitsubishi MSZ-LN25VG Multi Split",
-                specs: "9,000 BTU/h, A++ Energy Class, Wi-Fi Ready",
-                brand: "mitsubishi",
-                capacity: 9000,
-                energyClass: "a++",
-                features: ["wifi", "quiet"],
-                type: "multi",
-                retailPrice: 1599,
-                purchasePrice: 1199,
-                salePrice: 1459,
-                stock: 2
-            },
-            {
-                id: 3,
-                title: "LG P12EN Dual Inverter",
-                specs: "12,000 BTU/h, A+++ Energy Class, Quiet Operation",
-                brand: "lg",
-                capacity: 12000,
-                energyClass: "a+++",
-                features: ["inverter", "quiet", "heating"],
-                type: "split",
-                retailPrice: 1199,
-                purchasePrice: 799,
-                salePrice: 1099,
-                stock: 4
-            },
-            {
-                id: 4,
-                title: "Panasonic CZ-TACG1 VRF System",
-                specs: "24,000 BTU/h, A+ Energy Class, Multi Zone",
-                brand: "panasonic",
-                capacity: 24000,
-                energyClass: "a+",
-                features: ["wifi"],
-                type: "vrf",
-                retailPrice: 2899,
-                purchasePrice: 2199,
-                salePrice: 2649,
-                stock: 6
-            }
-        ];
+        const sampleProducts = [];
 
         let selectedProducts = [];
         let currentBrand = 'daikin';
+        let currentSubcategory = 'split-systems'; // Default to split systems
         let currentCurrency = 'usd';
         let exchangeRates = {
             usd: 1,
@@ -4463,12 +4596,18 @@
         }
 
         function filterProducts() {
+            console.log(`Total products available: ${sampleProducts.length}`);
+            console.log(`Current brand: ${currentBrand}, subcategory: ${currentSubcategory}`);
+            
             const checkedFilters = Array.from(document.querySelectorAll('.filter-checkbox.checked'))
                 .map(cb => cb.getAttribute('data-filter'));
             
             let filteredProducts = sampleProducts.filter(product => {
                 // Filter by brand
                 if (product.brand !== currentBrand) return false;
+                
+                // Filter by equipment subcategory
+                if (product.subcategory !== currentSubcategory) return false;
                 
                 // Filter by checked options
                 if (checkedFilters.length > 0) {
@@ -4484,42 +4623,109 @@
                 return true;
             });
 
+            console.log(`Filtered products: ${filteredProducts.length}`);
             renderProducts(filteredProducts);
             updateResultsCount(filteredProducts.length);
         }
 
         function generateSampleProducts() {
-            // Generate more sample products for each brand
+            console.log('Starting product generation...');
             const brands = ['daikin', 'mitsubishi', 'lg', 'panasonic', 'toshiba', 'fujitsu', 'carrier', 'york', 'trane', 'lennox'];
-            const additionalProducts = [];
+            
+            // Equipment categories with their subcategories
+            const equipmentCategories = {
+                'split-systems': { name: 'Split System', capacities: [9000, 12000, 18000, 24000], basePrice: 800 },
+                'multi-split': { name: 'Multi Split', capacities: [18000, 24000, 36000, 48000], basePrice: 1200 },
+                'vrf': { name: 'VRF System', capacities: [24000, 36000, 48000, 60000], basePrice: 2500 },
+                'accessories': { name: 'AC Accessory', capacities: [0], basePrice: 50 },
+                'supply-ventilation': { name: 'Supply Ventilation', capacities: [500, 1000, 1500, 2000], basePrice: 600 },
+                'exhaust-ventilation': { name: 'Exhaust Ventilation', capacities: [500, 1000, 1500, 2000], basePrice: 400 },
+                'heat-recovery': { name: 'Heat Recovery', capacities: [800, 1200, 1600, 2400], basePrice: 1000 },
+                'air-handling': { name: 'AHU', capacities: [2000, 3000, 4000, 5000], basePrice: 1800 },
+                'fans': { name: 'Fan', capacities: [200, 400, 600, 800], basePrice: 200 },
+                'heat-pumps': { name: 'Heat Pump', capacities: [12000, 18000, 24000, 36000], basePrice: 2000 },
+                'boilers': { name: 'Boiler', capacities: [24000, 36000, 48000, 60000], basePrice: 1500 },
+                'radiators': { name: 'Radiator', capacities: [1000, 1500, 2000, 3000], basePrice: 150 },
+                'floor-heating': { name: 'Floor Heating', capacities: [100, 150, 200, 300], basePrice: 80 },
+                'heat-exchangers': { name: 'Heat Exchanger', capacities: [10000, 15000, 20000, 30000], basePrice: 800 }
+            };
 
-            brands.forEach((brand, brandIndex) => {
-                for (let i = 0; i < 3; i++) {
-                    additionalProducts.push({
-                        id: sampleProducts.length + additionalProducts.length + 1,
-                        title: `${brand.charAt(0).toUpperCase() + brand.slice(1)} Model ${i + 1}`,
-                        specs: `${9000 + i * 3000} BTU/h, A++ Energy Class, Premium Features`,
-                        brand: brand,
-                        capacity: 9000 + i * 3000,
-                        energyClass: "a++",
-                        features: ["inverter", "wifi"],
-                        type: "split",
-                        retailPrice: 1000 + brandIndex * 100 + i * 200,
-                        purchasePrice: 700 + brandIndex * 70 + i * 140,
-                        salePrice: 900 + brandIndex * 90 + i * 180,
-                        stock: Math.floor(Math.random() * 6) + 1
-                    });
-                }
+            let productId = 1;
+
+            // Generate products for each brand and category
+            brands.forEach(brand => {
+                Object.entries(equipmentCategories).forEach(([subcategory, config]) => {
+                    // Generate 3-5 products per subcategory per brand
+                    const productCount = Math.floor(Math.random() * 3) + 3; // 3-5 products
+                    
+                    for (let i = 0; i < productCount; i++) {
+                        const capacity = config.capacities[Math.floor(Math.random() * config.capacities.length)];
+                        const energyClass = ['a+++', 'a++', 'a+', 'a', 'b'][Math.floor(Math.random() * 5)];
+                        const features = [];
+                        
+                        // Add random features based on category
+                        if (['split-systems', 'multi-split', 'vrf'].includes(subcategory)) {
+                            if (Math.random() > 0.4) features.push('inverter');
+                            if (Math.random() > 0.6) features.push('wifi');
+                            if (Math.random() > 0.3) features.push('heating');
+                            if (Math.random() > 0.7) features.push('quiet');
+                        } else if (subcategory.includes('ventilation') || subcategory === 'fans') {
+                            if (Math.random() > 0.5) features.push('variable-speed');
+                            if (Math.random() > 0.7) features.push('wifi');
+                            if (Math.random() > 0.6) features.push('quiet');
+                        } else if (['heat-pumps', 'boilers'].includes(subcategory)) {
+                            if (Math.random() > 0.4) features.push('modulating');
+                            if (Math.random() > 0.6) features.push('wifi');
+                            if (Math.random() > 0.5) features.push('heating');
+                        }
+
+                        const basePrice = config.basePrice + Math.random() * config.basePrice * 0.8;
+                        const model = `${String.fromCharCode(65 + Math.floor(Math.random() * 26))}${Math.floor(Math.random() * 9000) + 1000}${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`;
+                        
+                        let specs = '';
+                        if (capacity > 0) {
+                            if (subcategory.includes('ventilation') || subcategory === 'fans' || subcategory === 'air-handling') {
+                                specs = `${capacity.toLocaleString()} m³/h, ${energyClass.toUpperCase()} Energy Class`;
+                            } else if (subcategory === 'floor-heating') {
+                                specs = `${capacity} W/m², ${energyClass.toUpperCase()} Energy Class`;
+                            } else {
+                                specs = `${capacity.toLocaleString()} BTU/h, ${energyClass.toUpperCase()} Energy Class`;
+                            }
+                        } else {
+                            specs = `${energyClass.toUpperCase()} Energy Class, Professional Grade`;
+                        }
+
+                        sampleProducts.push({
+                            id: productId++,
+                            title: `${brand.charAt(0).toUpperCase() + brand.slice(1)} ${model} ${config.name}`,
+                            specs: specs,
+                            brand: brand,
+                            subcategory: subcategory,
+                            capacity: capacity,
+                            energyClass: energyClass,
+                            features: features,
+                            type: subcategory,
+                            retailPrice: Math.round(basePrice * 1.4),
+                            purchasePrice: Math.round(basePrice),
+                            salePrice: Math.round(basePrice * 1.25),
+                            stock: Math.floor(Math.random() * 15) + 1
+                        });
+                    }
+                });
             });
 
-            sampleProducts.push(...additionalProducts);
+            console.log(`Generated ${sampleProducts.length} products across ${brands.length} brands and ${Object.keys(equipmentCategories).length} equipment categories`);
             filterProducts();
         }
 
         function renderProducts(products) {
             const grid = document.getElementById('productsGrid');
-            if (!grid) return;
-
+            if (!grid) {
+                console.error('Products grid not found!');
+                return;
+            }
+            
+            console.log(`Rendering ${products.length} products for brand: ${currentBrand}, subcategory: ${currentSubcategory}`);
             const currentLang = localStorage.getItem('preferredLanguage') || 'en';
 
             grid.innerHTML = products.map(product => {
@@ -4723,12 +4929,12 @@
         }
 
         function updateResultsCount(count) {
-            const countElement = document.querySelector('.results-count');
+            const countElement = document.querySelector('.results-count-box');
             if (countElement) {
                 const currentLang = localStorage.getItem('preferredLanguage') || 'en';
                 countElement.textContent = currentLang === 'en' ? 
-                    `Found ${count} products` : 
-                    `Найдено ${count} товаров`;
+                    `${count} products` : 
+                    `${count} товаров`;
             }
         }
 
@@ -4846,22 +5052,21 @@
 
         // Language switching functionality
         function initLanguageToggle() {
-            const langButtons = document.querySelectorAll('.lang-btn');
+            const languageSelect = document.getElementById('languageSelect');
             const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
             const inputElement = document.getElementById('messageInput');
             
             let currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            languageSelect.value = currentLang;
             switchLanguage(currentLang);
             
-            langButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const newLang = this.getAttribute('data-lang');
-                    if (newLang !== currentLang) {
-                        switchLanguage(newLang);
-                        currentLang = newLang;
-                        localStorage.setItem('preferredLanguage', newLang);
-                    }
-                });
+            languageSelect.addEventListener('change', function() {
+                const newLang = this.value;
+                if (newLang !== currentLang) {
+                    switchLanguage(newLang);
+                    currentLang = newLang;
+                    localStorage.setItem('preferredLanguage', newLang);
+                }
             });
             
             function switchLanguage(lang) {
@@ -4889,12 +5094,8 @@
                     }
                 }
                 
-                langButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.getAttribute('data-lang') === lang) {
-                        btn.classList.add('active');
-                    }
-                });
+                // Update language select dropdown
+                languageSelect.value = lang;
                 
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
             }
@@ -5381,6 +5582,9 @@
                     
                     // Add active class to clicked item
                     this.classList.add('active');
+                    
+                    // Update current subcategory
+                    currentSubcategory = subcategory;
                     
                     // Update filters based on equipment type
                     updateFiltersForEquipmentType(subcategory);

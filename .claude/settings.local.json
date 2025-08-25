@@ -16,7 +16,8 @@
       "Bash(explorer:*)",
       "Bash(git restore:*)",
       "WebFetch(domain:www.hvac.market)",
-      "Bash(start:*)"
+      "Bash(start:*)",
+      "WebFetch(domain:www.aereco.com)"
     ],
     "deny": [],
     "ask": []
