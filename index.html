@@ -2243,9 +2243,9 @@
             color: #757575;
         }
 
-        /* Specific button states - Monochrome Active States */
+        /* Specific button states - Pastel Transparent Active States */
         .btn-select.selected .action-icon {
-            color: #4caf50;
+            color: #2d5a2d;
             transform: scale(1.1);
         }
 
@@ -2445,6 +2445,7 @@
             align-items: center;
             gap: 2rem;
             flex: 1;
+            position: relative;
         }
 
         .selected-count {
@@ -2458,6 +2459,36 @@
             font-size: 1.2rem;
             font-weight: 700;
             color: var(--signature-blue);
+        }
+        
+        /* Reset Selection Button */
+        .btn-reset-selection {
+            background: rgba(244, 67, 54, 0.4);
+            color: #d32f2f;
+            border: 1px solid rgba(244, 67, 54, 0.6);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn-reset-selection:hover {
+            background: rgba(244, 67, 54, 0.6);
+            border-color: rgba(244, 67, 54, 0.8);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+        }
+        
+        .reset-icon {
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1;
         }
 
         .btn-quote {
@@ -3186,69 +3217,197 @@
             transform: translateY(0);
         }
 
-        /* Brand Tabs */
-        .brand-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-            padding-bottom: 0.5rem;
+
+        /* Product selection styling from demo - updated for product-card */
+        .product-card.selected {
+            background: linear-gradient(135deg, rgba(20, 100, 244, 0.08), rgba(20, 100, 244, 0.12)) !important;
+            border: 2px solid var(--signature-blue) !important;
+            box-shadow: 0 4px 15px rgba(20, 100, 244, 0.25) !important;
+            transform: translateY(-2px) !important;
+            z-index: 3;
+            position: relative;
         }
 
-        .brand-tab {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
+        
+        /* Pastel Transparent Checkmark Styling - 60% Transparency */
+        .product-card.selected .action-btn.btn-select.selected {
+            background: rgba(144, 238, 144, 0.6) !important;
+            color: #2d5a2d !important;
+            font-weight: 900 !important;
+            font-size: 1.1rem !important;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(144, 238, 144, 0.4);
+            border-color: rgba(144, 238, 144, 0.8) !important;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Enhanced action button styling */
+        .action-btn.btn-select {
             background: transparent;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 0.95rem;
+            border: 2px solid rgba(221, 221, 221, 0.6);
             color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-weight: 400;
+            transition: all 0.3s ease;
         }
-
-        .brand-tab:hover {
-            background: rgba(20, 100, 244, 0.05);
-            color: var(--signature-blue);
-            border-color: rgba(20, 100, 244, 0.2);
+        
+        .action-btn.btn-select.selected {
+            background: rgba(144, 238, 144, 0.6) !important;
+            border-color: rgba(144, 238, 144, 0.8) !important;
+            color: #2d5a2d !important;
+            font-weight: 900 !important;
+            font-size: 1.2rem !important;
+            transform: scale(1.15) !important;
+            box-shadow: 0 3px 10px rgba(144, 238, 144, 0.5) !important;
+            backdrop-filter: blur(5px);
         }
-
-        .brand-tab.active {
-            background: rgba(20, 100, 244, 0.1);
-            color: var(--signature-blue);
-            border-color: var(--signature-blue);
-            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.2);
-        }
-
-        .brand-logo {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
+        
+        .action-btn.btn-select.selected .action-icon {
+            font-weight: 900 !important;
+            text-shadow: 0 1px 2px rgba(45, 90, 45, 0.3);
         }
 
         /* Analog product highlighting */
-        .analog-product {
+        .product-card.analog-product {
             background: rgba(20, 100, 244, 0.08) !important;
             border-left: 4px solid var(--signature-blue) !important;
             position: relative;
         }
+        
+        /* Compatibility percentage display under checkmarks */
+        .compatibility-percentage {
+            position: absolute;
+            top: 34px;
+            right: 0px;
+            background: rgba(144, 238, 144, 0.6);
+            color: #2d5a2d;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 1px 4px;
+            border-radius: 8px;
+            z-index: 5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            text-align: center;
+            min-width: 24px;
+            width: 32px;
+            backdrop-filter: blur(5px);
+        }
 
-        .analog-product:hover {
+        .product-card.analog-product:hover {
             background: rgba(20, 100, 244, 0.12) !important;
         }
 
-        .analog-product::before {
+        .product-card.analog-product::before {
             content: '🎯';
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
             font-size: 1rem;
             z-index: 5;
+        }
+        
+        /* Make product cards clickable */
+        .product-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Enhanced analog highlighting */
+        .product-card.analog-product {
+            background: linear-gradient(135deg, rgba(20, 100, 244, 0.08), rgba(20, 100, 244, 0.12)) !important;
+            border-left: 4px solid var(--signature-blue) !important;
+            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.2) !important;
+        }
+
+        /* Selection counter styling - hidden */
+        .selection-counter {
+            display: none !important;
+        }
+        
+        /* Analog separator styling */
+        .analog-separator {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        /* Success green color variable */
+        :root {
+            --success-green: #4CAF50;
+        }
+        
+        /* Override product card border for selected state */
+        .product-card {
+            border: 1px solid #ddd;
+        }
+        
+        /* Selected Panel Buttons - Matte Pastel Translucent Styling */
+        .selected-actions {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+        
+        .selected-panel button {
+            background: rgba(255, 255, 255, 0.4);
+            color: var(--deep-graphite);
+            border: 1px solid rgba(26, 26, 26, 0.15);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 100px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .selected-panel button:hover {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(26, 26, 26, 0.25);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Selected Panel Button Styling - Matte Pastel 60% Transparent */
+        .btn-quote {
+            background: rgba(144, 238, 144, 0.4) !important;
+            color: #2d5a2d !important;
+            border-color: rgba(144, 238, 144, 0.6) !important;
+        }
+        
+        .btn-quote:hover {
+            background: rgba(144, 238, 144, 0.6) !important;
+            border-color: rgba(144, 238, 144, 0.8) !important;
+        }
+        
+        .btn-request {
+            background: rgba(173, 216, 230, 0.4) !important;
+            color: #2c4a5a !important;
+            border-color: rgba(173, 216, 230, 0.6) !important;
+        }
+        
+        .btn-request:hover {
+            background: rgba(173, 216, 230, 0.6) !important;
+            border-color: rgba(173, 216, 230, 0.8) !important;
+        }
+        
+        .btn-catalog {
+            background: rgba(255, 218, 185, 0.4) !important;
+            color: #5a4a2c !important;
+            border-color: rgba(255, 218, 185, 0.6) !important;
+        }
+        
+        .btn-catalog:hover {
+            background: rgba(255, 218, 185, 0.6) !important;
+            border-color: rgba(255, 218, 185, 0.8) !important;
         }
 
         .match-score-display {
@@ -3419,13 +3578,6 @@
                     </div>
                 </div>
 
-
-                <!-- Brand Tabs -->
-                <div class="brand-tabs-section" style="margin: 1rem 2rem 0 2rem;">
-                    <div class="brand-tabs" id="brandTabs">
-                        <!-- Brand tabs will be loaded dynamically -->
-                    </div>
-                </div>
 
                 <!-- Horizontal Filters -->
                 <div class="horizontal-filters">
@@ -4382,11 +4534,16 @@
         <div class="selected-info">
             <span class="selected-count" id="selectedCount" data-en="0 items selected" data-ru="0 товаров выбрано">0 items selected</span>
             <span class="selected-total" id="selectedTotal">$0</span>
+            <button class="btn-reset-selection" id="resetSelectionBtn" onclick="resetAllSelections()" title="Сбросить выбор" data-en="Reset" data-ru="Сбросить">
+                <span class="reset-icon">✕</span>
+            </button>
         </div>
-        <button class="btn-quote" onclick="generateQuote()" data-en="Generate Quote" data-ru="Создать КП">Generate Quote</button>
-        <button class="btn-request" onclick="generateRequest()" data-en="Request" data-ru="Запрос">Request</button>
-        <button class="btn-catalog" onclick="openCatalog()" data-en="Catalog" data-ru="Каталог">Catalog</button>
-        </div> <!-- End Main Content Area -->
+        <div class="selected-actions">
+            <button class="btn-quote" onclick="generateQuote()" data-en="Generate Quote" data-ru="Создать КП">Generate Quote</button>
+            <button class="btn-request" onclick="generateRequest()" data-en="Request" data-ru="Запрос">Request</button>
+            <button class="btn-catalog" onclick="openCatalog()" data-en="Catalog" data-ru="Каталог">Catalog</button>
+        </div>
+    </div> <!-- End Main Content Area -->
     </div>
 
     <script>
@@ -4818,8 +4975,12 @@
                     // Add active class to clicked tab
                     this.classList.add('active');
                     
-                    currentBrand = this.getAttribute('data-brand');
-                    filterProducts();
+                    const newBrand = this.getAttribute('data-brand');
+                    if (newBrand !== currentBrand) {
+                        currentBrand = newBrand;
+                        // Generate new products for the selected brand
+                        generateSampleProducts();
+                    }
                 });
 
                 // Add hover effect to highlight settings panel
@@ -4854,47 +5015,176 @@
         }
 
         function filterProducts() {
-            console.log('Showing all products');
-            renderProducts(sampleProducts);
-            updateResultsCount(sampleProducts.length);
+            console.log('Filtering products for brand:', currentBrand);
+            // Generate products for current brand if sampleProducts is empty or for different brand
+            if (sampleProducts.length === 0 || !sampleProducts[0].brand || sampleProducts[0].brand !== currentBrand) {
+                generateSampleProducts();
+            } else {
+                renderProducts(sampleProducts);
+                updateResultsCount(sampleProducts.length);
+            }
         }
 
 
+        // Comprehensive product database for all brands - make it global
+        window.allBrandProducts = {
+            daikin: [
+                { model: 'FTXS25K', title: 'Daikin FTXS25K Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 850, capacity: 9000, type: 'split' },
+                { model: 'FTXS35K', title: 'Daikin FTXS35K Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 950, capacity: 12000, type: 'split' },
+                { model: 'FTXS50K', title: 'Daikin FTXS50K Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1150, capacity: 18000, type: 'split' },
+                { model: 'FCAG71A', title: 'Daikin FCAG71A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1650, capacity: 24000, type: 'cassette' },
+                { model: 'FDXS35F', title: 'Daikin FDXS35F Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1100, capacity: 12000, type: 'floor' }
+            ],
+            mitsubishi: [
+                { model: 'MSZ-AP25VG', title: 'Mitsubishi MSZ-AP25VG Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 900, capacity: 9000, type: 'split' },
+                { model: 'MSZ-AP35VG', title: 'Mitsubishi MSZ-AP35VG Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1000, capacity: 12000, type: 'split' },
+                { model: 'MSZ-EF50VE', title: 'Mitsubishi MSZ-EF50VE Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1200, capacity: 18000, type: 'split' },
+                { model: 'PLA-M71EA', title: 'Mitsubishi PLA-M71EA Ceiling System', specs: '24,000 BTU/h, A+ Energy Class', price: 1700, capacity: 24000, type: 'ceiling' },
+                { model: 'MLZ-KP25VF', title: 'Mitsubishi MLZ-KP25VF Floor System', specs: '9,000 BTU/h, A++ Energy Class', price: 950, capacity: 9000, type: 'floor' }
+            ],
+            lg: [
+                { model: 'S09EQ', title: 'LG S09EQ Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 750, capacity: 9000, type: 'split' },
+                { model: 'S12EQ', title: 'LG S12EQ Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 850, capacity: 12000, type: 'split' },
+                { model: 'S18EQ', title: 'LG S18EQ Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1050, capacity: 18000, type: 'split' },
+                { model: 'CT24F', title: 'LG CT24F Cassette System', specs: '24,000 BTU/h, A++ Energy Class', price: 1550, capacity: 24000, type: 'cassette' },
+                { model: 'UV42F', title: 'LG UV42F Floor System', specs: '12,000 BTU/h, A+ Energy Class', price: 980, capacity: 12000, type: 'floor' }
+            ],
+            panasonic: [
+                { model: 'CS-Z25TKEW', title: 'Panasonic CS-Z25TKEW Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 950, capacity: 9000, type: 'split' },
+                { model: 'CS-Z35TKEW', title: 'Panasonic CS-Z35TKEW Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1050, capacity: 12000, type: 'split' },
+                { model: 'CS-Z50TKEW', title: 'Panasonic CS-Z50TKEW Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1250, capacity: 18000, type: 'split' },
+                { model: 'S-71PU2E5A', title: 'Panasonic S-71PU2E5A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1750, capacity: 24000, type: 'cassette' },
+                { model: 'S-35PF2E5A', title: 'Panasonic S-35PF2E5A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1150, capacity: 12000, type: 'floor' }
+            ],
+            toshiba: [
+                { model: 'RAS-25PKVSG', title: 'Toshiba RAS-25PKVSG Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 820, capacity: 9000, type: 'split' },
+                { model: 'RAS-35PKVSG', title: 'Toshiba RAS-35PKVSG Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 920, capacity: 12000, type: 'split' },
+                { model: 'RAS-50PKVSG', title: 'Toshiba RAS-50PKVSG Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1120, capacity: 18000, type: 'split' },
+                { model: 'RAV-SM804CTP', title: 'Toshiba RAV-SM804CTP Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1620, capacity: 24000, type: 'cassette' },
+                { model: 'RAV-SM364FTP', title: 'Toshiba RAV-SM364FTP Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1050, capacity: 12000, type: 'floor' }
+            ],
+            fujitsu: [
+                { model: 'ASYG09KMCC', title: 'Fujitsu ASYG09KMCC Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 880, capacity: 9000, type: 'split' },
+                { model: 'ASYG12KMCC', title: 'Fujitsu ASYG12KMCC Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 980, capacity: 12000, type: 'split' },
+                { model: 'ASYG18KMCC', title: 'Fujitsu ASYG18KMCC Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1180, capacity: 18000, type: 'split' },
+                { model: 'AUYG24LVLA', title: 'Fujitsu AUYG24LVLA Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1680, capacity: 24000, type: 'cassette' },
+                { model: 'AGYG12LVCB', title: 'Fujitsu AGYG12LVCB Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1080, capacity: 12000, type: 'floor' }
+            ],
+            carrier: [
+                { model: '42QHC009DS', title: 'Carrier 42QHC009DS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 780, capacity: 9000, type: 'split' },
+                { model: '42QHC012DS', title: 'Carrier 42QHC012DS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 880, capacity: 12000, type: 'split' },
+                { model: '42QHC018DS', title: 'Carrier 42QHC018DS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1080, capacity: 18000, type: 'split' },
+                { model: '42GW024DS', title: 'Carrier 42GW024DS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1580, capacity: 24000, type: 'cassette' },
+                { model: '42GW012DS', title: 'Carrier 42GW012DS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 980, capacity: 12000, type: 'floor' }
+            ],
+            york: [
+                { model: 'YHFC09FS', title: 'York YHFC09FS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 760, capacity: 9000, type: 'split' },
+                { model: 'YHFC12FS', title: 'York YHFC12FS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 860, capacity: 12000, type: 'split' },
+                { model: 'YHFC18FS', title: 'York YHFC18FS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1060, capacity: 18000, type: 'split' },
+                { model: 'YCAC024FS', title: 'York YCAC024FS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1560, capacity: 24000, type: 'cassette' },
+                { model: 'YFAC012FS', title: 'York YFAC012FS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 960, capacity: 12000, type: 'floor' }
+            ],
+            trane: [
+                { model: '4TXK3009A', title: 'Trane 4TXK3009A Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 800, capacity: 9000, type: 'split' },
+                { model: '4TXK3012A', title: 'Trane 4TXK3012A Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 900, capacity: 12000, type: 'split' },
+                { model: '4TXK3018A', title: 'Trane 4TXK3018A Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1100, capacity: 18000, type: 'split' },
+                { model: '4TCC4024A', title: 'Trane 4TCC4024A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1600, capacity: 24000, type: 'cassette' },
+                { model: '4TFC4012A', title: 'Trane 4TFC4012A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1000, capacity: 12000, type: 'floor' }
+            ],
+            lennox: [
+                { model: 'MLA009S4M', title: 'Lennox MLA009S4M Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 790, capacity: 9000, type: 'split' },
+                { model: 'MLA012S4M', title: 'Lennox MLA012S4M Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 890, capacity: 12000, type: 'split' },
+                { model: 'MLA018S4M', title: 'Lennox MLA018S4M Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1090, capacity: 18000, type: 'split' },
+                { model: 'MCA024S4M', title: 'Lennox MCA024S4M Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1590, capacity: 24000, type: 'cassette' },
+                { model: 'MFA012S4M', title: 'Lennox MFA012S4M Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 990, capacity: 12000, type: 'floor' }
+            ]
+        };
+        
+        // Selection view toggle function
+        function toggleSelectionView() {
+            console.log('Selection view toggle clicked');
+            
+            if (window.brandSearch && window.brandSearch.selectedProducts.length > 0) {
+                const brandSearch = window.brandSearch;
+                const selectedProducts = brandSearch.selectedProducts;
+                const selectedCount = selectedProducts.length;
+                const currentBrand = brandSearch.currentBrand;
+                const currentBrandName = brandSearch.equipmentStructure.brands[currentBrand]?.name || currentBrand;
+                
+                let message = `Выбрано товаров: ${selectedCount}\n`;
+                message += `Текущий бренд: ${currentBrandName}\n\n`;
+                
+                // Check if we're showing analogs or original products
+                const isShowingAnalogs = selectedProducts.length > 0 && selectedProducts[0].originalBrand !== currentBrand;
+                
+                if (isShowingAnalogs) {
+                    // Show analog products with their prices
+                    const matches = brandSearch.findMultipleCrossMatches(selectedProducts);
+                    const currentBrandMatches = matches[currentBrand] || [];
+                    
+                    message += `Найденные аналоги (${currentBrandName}):\n`;
+                    currentBrandMatches.forEach((product, index) => {
+                        const price = brandSearch.formatPrice(product.price || 0);
+                        const score = product.score ? ` (${Math.round(product.score)}% совпадение)` : '';
+                        message += `${index + 1}. ${product.title || product.model} - ${price}${score}\n`;
+                    });
+                    
+                    const totalPrice = currentBrandMatches.reduce((sum, p) => sum + (p.price || 0), 0);
+                    message += `\nОбщая стоимость аналогов: ${brandSearch.formatPrice(totalPrice)}`;
+                } else {
+                    // Show original selected products
+                    message += `Изначально выбранные товары:\n`;
+                    selectedProducts.forEach((product, index) => {
+                        const price = brandSearch.formatPrice(product.price || 0);
+                        const brandName = brandSearch.equipmentStructure.brands[product.originalBrand]?.name || product.originalBrand;
+                        message += `${index + 1}. ${product.title || product.model} (${brandName}) - ${price}\n`;
+                    });
+                    
+                    const totalPrice = selectedProducts.reduce((sum, p) => sum + (p.price || 0), 0);
+                    message += `\nОбщая стоимость: ${brandSearch.formatPrice(totalPrice)}`;
+                }
+                
+                alert(message);
+            } else {
+                alert('Ничего не выбрано. Кликните по товарам для выбора.');
+            }
+        }
+        
         function generateSampleProducts() {
-            console.log('=== GENERATING SAMPLE PRODUCTS ===');
+            console.log('=== GENERATING SAMPLE PRODUCTS FOR BRAND:', currentBrand, '===');
             
             // Очищаем массив
             sampleProducts.splice(0, sampleProducts.length);
             
-            // Простые тестовые продукты
-            const products = [
-                { title: 'Daikin FTXS25K Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 850 },
-                { title: 'Daikin FTXS35K Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 950 },
-                { title: 'Daikin FTXS50K Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1150 },
-                { title: 'Mitsubishi MSZ-AP25VG Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 900 },
-                { title: 'Mitsubishi MSZ-AP35VG Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1000 },
-                { title: 'LG S09EQ Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 750 },
-                { title: 'LG S12EQ Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 850 },
-                { title: 'Panasonic CS-Z25TKEW Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 950 }
-            ];
+            // Получаем продукты для текущего бренда
+            const brandProducts = window.allBrandProducts[currentBrand] || [];
             
-            console.log('Adding products to array...');
-            products.forEach((product, index) => {
+            console.log('Adding products to array for brand:', currentBrand);
+            brandProducts.forEach((product, index) => {
                 sampleProducts.push({
                     id: index + 1,
                     title: product.title,
+                    model: product.model,
                     specs: product.specs,
                     price: product.price,
+                    capacity: product.capacity,
+                    type: product.type,
+                    brand: currentBrand,
                     stock: Math.floor(Math.random() * 20) + 5
                 });
             });
             
-            console.log(`Generated ${sampleProducts.length} products`);
-            console.log('First product:', sampleProducts[0]);
+            console.log(`Generated ${sampleProducts.length} products for ${currentBrand}`);
+            console.log('Products:', sampleProducts);
             
             // Напрямую вызываем renderProducts
             setTimeout(() => {
                 renderProducts(sampleProducts);
+                
+                // Уведомляем систему перекрестного поиска о новых продуктах
+                if (window.brandSearch) {
+                    window.brandSearch.injectProductCardStyling();
+                }
             }, 100);
         }
 
@@ -5217,6 +5507,50 @@
             
             // Navigate to catalog page
             window.location.href = 'catalog.html';
+        }
+
+        // Reset all selected products
+        function resetAllSelections() {
+            console.log('Resetting all selections...');
+            
+            // Clear selected products array
+            selectedProducts = [];
+            
+            // Clear all product card selections
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.classList.remove('selected', 'analog-product');
+                card.removeAttribute('data-selection-order');
+                
+                // Clear checkmark highlighting
+                const selectButton = card.querySelector('.btn-select');
+                if (selectButton) {
+                    selectButton.classList.remove('selected');
+                }
+                
+                // Remove compatibility displays
+                const compatibilityDisplay = card.querySelector('.compatibility-percentage');
+                if (compatibilityDisplay) {
+                    compatibilityDisplay.remove();
+                }
+            });
+            
+            // Reset brand search selections if available
+            if (window.brandSearch) {
+                window.brandSearch.selectedProducts = [];
+                window.brandSearch.updateSelectionCounter();
+                window.brandSearch.updateTotalPrice();
+            }
+            
+            // Hide selection panel
+            const selectedPanel = document.getElementById('selectedPanel');
+            if (selectedPanel) {
+                selectedPanel.classList.remove('active');
+            }
+            
+            // Update UI
+            updateSelectionPanel();
+            
+            console.log('All selections cleared');
         }
 
         // Language switching functionality
