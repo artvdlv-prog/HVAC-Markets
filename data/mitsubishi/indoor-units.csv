@@ -1,0 +1,16 @@
+id,model,series,power,cooling_capacity,heating_capacity,airflow,noise_level,type,inverter,price_rub,availability,description,image
+MIT_IU_001,MSZ-LN25VGW,Diamond,2.5,2.5,3.2,450,21,wall,true,47000,in_stock,"Настенный внутренний блок Mitsubishi Diamond 2.5 кВт",mitsubishi-msz-ln25vgw.jpg
+MIT_IU_002,MSZ-LN35VGW,Diamond,3.5,3.5,4.2,570,23,wall,true,54000,in_stock,"Настенный внутренний блок Mitsubishi Diamond 3.5 кВт",mitsubishi-msz-ln35vgw.jpg
+MIT_IU_003,MSZ-LN50VGW,Diamond,5.0,5.0,5.8,720,25,wall,true,70000,in_stock,"Настенный внутренний блок Mitsubishi Diamond 5.0 кВт",mitsubishi-msz-ln50vgw.jpg
+MIT_IU_004,MSZ-LN71VGW,Diamond,7.1,7.1,8.0,920,27,wall,true,87000,in_stock,"Настенный внутренний блок Mitsubishi Diamond 7.1 кВт",mitsubishi-msz-ln71vgw.jpg
+MIT_IU_005,MSZ-EF25VEW,Zubadan,2.5,2.5,3.2,400,19,wall,true,82000,in_stock,"Настенный внутренний блок Mitsubishi Zubadan 2.5 кВт для холодного климата",mitsubishi-msz-ef25vew.jpg
+MIT_IU_006,MSZ-EF35VEW,Zubadan,3.5,3.5,4.2,520,21,wall,true,93000,in_stock,"Настенный внутренний блок Mitsubishi Zubadan 3.5 кВт для холодного климата",mitsubishi-msz-ef35vew.jpg
+MIT_IU_007,MSZ-EF50VEW,Zubadan,5.0,5.0,5.8,640,23,wall,true,108000,in_stock,"Настенный внутренний блок Mitsubishi Zubadan 5.0 кВт для холодного климата",mitsubishi-msz-ef50vew.jpg
+MIT_IU_008,PLZ-M25EA,City Multi,2.5,2.8,3.6,480,26,cassette,false,89000,in_stock,"Кассетный внутренний блок Mitsubishi City Multi 2.5 кВт",mitsubishi-plz-m25ea.jpg
+MIT_IU_009,PLZ-M35EA,City Multi,3.5,4.0,4.5,620,28,cassette,false,102000,in_stock,"Кассетный внутренний блок Mitsubishi City Multi 3.5 кВт",mitsubishi-plz-m35ea.jpg
+MIT_IU_010,PLZ-M50EA,City Multi,5.0,5.6,6.3,820,30,cassette,false,128000,in_stock,"Кассетный внутренний блок Mitsubishi City Multi 5.0 кВт",mitsubishi-plz-m50ea.jpg
+MIT_IU_011,SEZ-M25DA,City Multi,2.5,2.8,3.6,510,24,duct,false,97000,in_stock,"Канальный внутренний блок Mitsubishi City Multi 2.5 кВт",mitsubishi-sez-m25da.jpg
+MIT_IU_012,SEZ-M35DA,City Multi,3.5,4.0,4.5,670,26,duct,false,112000,in_stock,"Канальный внутренний блок Mitsubishi City Multi 3.5 кВт",mitsubishi-sez-m35da.jpg
+MIT_IU_013,MFZ-KT25VG,City Multi,2.5,2.8,3.6,420,22,floor,false,91000,in_stock,"Напольный внутренний блок Mitsubishi City Multi 2.5 кВт",mitsubishi-mfz-kt25vg.jpg
+MIT_IU_014,MFZ-KT35VG,City Multi,3.5,4.0,4.5,550,24,floor,false,105000,in_stock,"Напольный внутренний блок Mitsubishi City Multi 3.5 кВт",mitsubishi-mfz-kt35vg.jpg
+MIT_IU_015,MSZ-AP25VGK,Deluxe,2.5,2.5,3.2,340,21,wall,true,128000,in_stock,"Настенный внутренний блок Mitsubishi Deluxe 2.5 кВт премиум класса",mitsubishi-msz-ap25vgk.jpg

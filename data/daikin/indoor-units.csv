@@ -1,0 +1,16 @@
+id,model,series,power,cooling_capacity,heating_capacity,airflow,noise_level,type,inverter,price_rub,availability,description,image
+DAI_IU_001,FTXS25K,Sensira,2.5,2.5,3.2,480,19,wall,true,45000,in_stock,"Настенный внутренний блок Daikin Sensira 2.5 кВт",daikin-ftxs25k.jpg
+DAI_IU_002,FTXS35K,Sensira,3.5,3.5,4.2,600,21,wall,true,52000,in_stock,"Настенный внутренний блок Daikin Sensira 3.5 кВт",daikin-ftxs35k.jpg
+DAI_IU_003,FTXS50K,Sensira,5.0,5.0,5.8,750,23,wall,true,68000,in_stock,"Настенный внутренний блок Daikin Sensira 5.0 кВт",daikin-ftxs50k.jpg
+DAI_IU_004,FTXS71K,Sensira,7.1,7.1,8.0,950,25,wall,true,85000,in_stock,"Настенный внутренний блок Daikin Sensira 7.1 кВт",daikin-ftxs71k.jpg
+DAI_IU_005,FTXA25AW,Stylish,2.5,2.5,3.2,420,19,wall,true,78000,in_stock,"Настенный внутренний блок Daikin Stylish 2.5 кВт",daikin-ftxa25aw.jpg
+DAI_IU_006,FTXA35AW,Stylish,3.5,3.5,4.2,540,21,wall,true,89000,in_stock,"Настенный внутренний блок Daikin Stylish 3.5 кВт",daikin-ftxa35aw.jpg
+DAI_IU_007,FTXA50AW,Stylish,5.0,5.0,5.8,660,23,wall,true,105000,in_stock,"Настенный внутренний блок Daikin Stylish 5.0 кВт",daikin-ftxa50aw.jpg
+DAI_IU_008,FCQ25C,Sky Air,2.5,2.8,3.6,500,28,cassette,false,85000,in_stock,"Кассетный внутренний блок Daikin Sky Air 2.5 кВт",daikin-fcq25c.jpg
+DAI_IU_009,FCQ35C,Sky Air,3.5,4.0,4.5,650,30,cassette,false,98000,in_stock,"Кассетный внутренний блок Daikin Sky Air 3.5 кВт",daikin-fcq35c.jpg
+DAI_IU_010,FCQ50C,Sky Air,5.0,5.6,6.3,850,32,cassette,false,125000,in_stock,"Кассетный внутренний блок Daikin Sky Air 5.0 кВт",daikin-fcq50c.jpg
+DAI_IU_011,FBQ25D,VRV,2.5,2.8,3.6,520,26,duct,false,95000,in_stock,"Канальный внутренний блок Daikin VRV 2.5 кВт",daikin-fbq25d.jpg
+DAI_IU_012,FBQ35D,VRV,3.5,4.0,4.5,680,28,duct,false,110000,in_stock,"Канальный внутренний блок Daikin VRV 3.5 кВт",daikin-fbq35d.jpg
+DAI_IU_013,FVXS25F,VRV,2.5,2.8,3.6,450,24,floor,false,88000,in_stock,"Напольный внутренний блок Daikin VRV 2.5 кВт",daikin-fvxs25f.jpg
+DAI_IU_014,FVXS35F,VRV,3.5,4.0,4.5,580,26,floor,false,102000,in_stock,"Напольный внутренний блок Daikin VRV 3.5 кВт",daikin-fvxs35f.jpg
+DAI_IU_015,FTXZ25N,Ururu Sarara,2.5,2.5,3.2,360,19,wall,true,125000,in_stock,"Настенный внутренний блок Daikin Ururu Sarara 2.5 кВт с увлажнением",daikin-ftxz25n.jpg

@@ -1,0 +1,364 @@
+{
+  "brands": {
+    "daikin": {
+      "name": "Daikin",
+      "logo": "assets/brands/daikin-logo.svg",
+      "color": "#003DA5",
+      "categories": {
+        "indoor_units": {
+          "name": "Внутренние блоки",
+          "name_en": "Indoor Units",
+          "csv_file": "data/daikin/indoor-units.csv",
+          "filters": [
+            {
+              "name": "power",
+              "type": "range",
+              "unit": "кВт",
+              "min": 1.5,
+              "max": 15.0,
+              "step": 0.1,
+              "key_param": true
+            },
+            {
+              "name": "cooling_capacity",
+              "type": "range", 
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 18.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "heating_capacity",
+              "type": "range",
+              "unit": "кВт", 
+              "min": 2.0,
+              "max": 20.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "airflow",
+              "type": "range",
+              "unit": "м³/ч",
+              "min": 300,
+              "max": 2000,
+              "step": 50,
+              "key_param": true,
+              "match_tolerance": 100
+            },
+            {
+              "name": "noise_level",
+              "type": "range",
+              "unit": "дБ(А)",
+              "min": 19,
+              "max": 45,
+              "step": 1,
+              "key_param": false
+            },
+            {
+              "name": "type",
+              "type": "select",
+              "options": ["wall", "ceiling", "floor", "cassette", "duct"],
+              "labels": {
+                "wall": "Настенный",
+                "ceiling": "Потолочный", 
+                "floor": "Напольный",
+                "cassette": "Кассетный",
+                "duct": "Канальный"
+              },
+              "key_param": true
+            },
+            {
+              "name": "inverter",
+              "type": "boolean",
+              "label": "Инвертор",
+              "key_param": false
+            }
+          ]
+        },
+        "outdoor_units": {
+          "name": "Наружные блоки", 
+          "name_en": "Outdoor Units",
+          "csv_file": "data/daikin/outdoor-units.csv",
+          "filters": [
+            {
+              "name": "power",
+              "type": "range",
+              "unit": "кВт",
+              "min": 1.5,
+              "max": 15.0,
+              "step": 0.1,
+              "key_param": true
+            },
+            {
+              "name": "cooling_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 18.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "heating_capacity", 
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 20.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "refrigerant",
+              "type": "select",
+              "options": ["R410A", "R32", "R454B"],
+              "key_param": true
+            },
+            {
+              "name": "compressor_type",
+              "type": "select", 
+              "options": ["scroll", "rotary", "twin_rotary"],
+              "labels": {
+                "scroll": "Спиральный",
+                "rotary": "Ротационный",
+                "twin_rotary": "Двухроторный"
+              },
+              "key_param": false
+            }
+          ]
+        }
+      }
+    },
+    "mitsubishi": {
+      "name": "Mitsubishi Electric",
+      "logo": "assets/brands/mitsubishi-logo.svg", 
+      "color": "#E60012",
+      "categories": {
+        "indoor_units": {
+          "name": "Внутренние блоки",
+          "name_en": "Indoor Units", 
+          "csv_file": "data/mitsubishi/indoor-units.csv",
+          "filters": [
+            {
+              "name": "power",
+              "type": "range",
+              "unit": "кВт",
+              "min": 1.5,
+              "max": 15.0,
+              "step": 0.1,
+              "key_param": true
+            },
+            {
+              "name": "cooling_capacity",
+              "type": "range",
+              "unit": "кВт", 
+              "min": 2.0,
+              "max": 18.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "heating_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 20.0, 
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "airflow",
+              "type": "range",
+              "unit": "м³/ч",
+              "min": 280,
+              "max": 1950,
+              "step": 50,
+              "key_param": true,
+              "match_tolerance": 100
+            },
+            {
+              "name": "noise_level",
+              "type": "range", 
+              "unit": "дБ(А)",
+              "min": 21,
+              "max": 42,
+              "step": 1,
+              "key_param": false
+            },
+            {
+              "name": "type",
+              "type": "select",
+              "options": ["wall", "ceiling", "floor", "cassette", "duct"],
+              "labels": {
+                "wall": "Настенный",
+                "ceiling": "Потолочный",
+                "floor": "Напольный", 
+                "cassette": "Кассетный",
+                "duct": "Канальный"
+              },
+              "key_param": true
+            },
+            {
+              "name": "inverter",
+              "type": "boolean",
+              "label": "Инвертор",
+              "key_param": false
+            }
+          ]
+        },
+        "outdoor_units": {
+          "name": "Наружные блоки",
+          "name_en": "Outdoor Units",
+          "csv_file": "data/mitsubishi/outdoor-units.csv", 
+          "filters": [
+            {
+              "name": "power",
+              "type": "range",
+              "unit": "кВт",
+              "min": 1.5,
+              "max": 15.0,
+              "step": 0.1,
+              "key_param": true
+            },
+            {
+              "name": "cooling_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 18.0,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "heating_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.0,
+              "max": 20.0,
+              "step": 0.1, 
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "refrigerant",
+              "type": "select",
+              "options": ["R410A", "R32"],
+              "key_param": true
+            },
+            {
+              "name": "compressor_type",
+              "type": "select",
+              "options": ["scroll", "rotary", "twin_rotary"],
+              "labels": {
+                "scroll": "Спиральный",
+                "rotary": "Ротационный", 
+                "twin_rotary": "Двухроторный"
+              },
+              "key_param": false
+            }
+          ]
+        }
+      }
+    },
+    "lg": {
+      "name": "LG",
+      "logo": "assets/brands/lg-logo.svg",
+      "color": "#A50034", 
+      "categories": {
+        "indoor_units": {
+          "name": "Внутренние блоки",
+          "name_en": "Indoor Units",
+          "csv_file": "data/lg/indoor-units.csv",
+          "filters": [
+            {
+              "name": "power",
+              "type": "range",
+              "unit": "кВт",
+              "min": 1.8,
+              "max": 14.0,
+              "step": 0.1, 
+              "key_param": true
+            },
+            {
+              "name": "cooling_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.1,
+              "max": 16.5,
+              "step": 0.1,
+              "key_param": true,
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "heating_capacity",
+              "type": "range",
+              "unit": "кВт",
+              "min": 2.2,
+              "max": 18.5,
+              "step": 0.1,
+              "key_param": true, 
+              "match_tolerance": 0.2
+            },
+            {
+              "name": "airflow",
+              "type": "range",
+              "unit": "м³/ч",
+              "min": 350,
+              "max": 1850,
+              "step": 50,
+              "key_param": true,
+              "match_tolerance": 100
+            },
+            {
+              "name": "noise_level",
+              "type": "range",
+              "unit": "дБ(А)",
+              "min": 22,
+              "max": 44,
+              "step": 1, 
+              "key_param": false
+            },
+            {
+              "name": "type",
+              "type": "select",
+              "options": ["wall", "ceiling", "floor", "cassette", "duct"],
+              "labels": {
+                "wall": "Настенный",
+                "ceiling": "Потолочный",
+                "floor": "Напольный",
+                "cassette": "Кассетный",
+                "duct": "Канальный"
+              },
+              "key_param": true
+            },
+            {
+              "name": "inverter", 
+              "type": "boolean",
+              "label": "Инвертор",
+              "key_param": false
+            }
+          ]
+        }
+      }
+    }
+  },
+  "cross_matching": {
+    "enabled": true,
+    "tolerance_multiplier": 1.1,
+    "priority_params": ["cooling_capacity", "heating_capacity", "power", "type"],
+    "scoring": {
+      "exact_match": 100,
+      "within_tolerance": 80,
+      "type_match": 50,
+      "brand_preference": 10
+    }
+  }
+}

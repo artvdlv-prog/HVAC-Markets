@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Брендовый поиск оборудования HVAC</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1A1A1A;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1464F4;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 5px solid #1464F4;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .example-section {
+            margin-bottom: 3rem;
+        }
+
+        .example-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .scenario {
+            background: #f0f8ff;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid #1464F4;
+        }
+
+        .scenario-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            background: #1464F4;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-description {
+            font-size: 1rem;
+            color: #1A1A1A;
+        }
+
+        .brands-demo {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .brand-demo {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .brand-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .brand-demo.daikin {
+            background: linear-gradient(135deg, #003DA5, #0056d6);
+            color: white;
+        }
+
+        .brand-demo.mitsubishi {
+            background: linear-gradient(135deg, #E60012, #ff1a2b);
+            color: white;
+        }
+
+        .brand-demo.lg {
+            background: linear-gradient(135deg, #A50034, #c7004b);
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .match-arrow {
+            font-size: 2rem;
+            color: #1464F4;
+            margin: 0 1rem;
+        }
+
+        .tech-specs {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .spec-value {
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #856404;
+            font-weight: 600;
+        }
+
+        .btn-demo {
+            display: inline-block;
+            background: #1464F4;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 1rem auto;
+        }
+
+        .btn-demo:hover {
+            background: #0f52c7;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 100, 244, 0.3);
+        }
+
+        .demo-footer {
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Брендовый каталог HVAC оборудования</h1>
+            <p class="subtitle">Инновационная система поиска с перекрестным подбором по техническим параметрам</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-title">🏷️ Брендовые вкладки</div>
+                <div class="feature-description">
+                    Каждый бренд (Daikin, Mitsubishi, LG и др.) имеет свою вкладку с индивидуальным дизайном и логотипом. 
+                    Переход между брендами сохраняется в URL для удобной навигации.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">📊 Структурированные данные</div>
+                <div class="feature-description">
+                    Каждый бренд имеет свои CSV файлы с ценами и техническими параметрами. 
+                    Структура данных унифицирована для корректного перекрестного сравнения.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">🔄 Перекрестный подбор</div>
+                <div class="feature-description">
+                    При выборе оборудования одного бренда, система автоматически находит аналоги в других брендах 
+                    по техническим параметрам с учетом допустимых погрешностей.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">⚙️ Умные фильтры</div>
+                <div class="feature-description">
+                    Фильтры адаптируются под выбранный бренд и категорию оборудования. 
+                    Ключевые параметры учитываются при перекрестном поиске с приоритетом.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">💰 Сравнение цен</div>
+                <div class="feature-description">
+                    Быстрое сравнение цен на аналогичное оборудование разных брендов. 
+                    Система показывает процент совпадения по техническим параметрам.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-title">🔗 URL интеграция</div>
+                <div class="feature-description">
+                    Все параметры поиска (бренд, категория, фильтры) отражаются в URL. 
+                    Можно делиться ссылками на конкретные подборки оборудования.
+                </div>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="example-title">Пример работы системы</h2>
+            
+            <div class="scenario">
+                <div class="scenario-step">
+                    <div class="step-number">1</div>
+                    <div class="step-description">
+                        Пользователь выбирает <span class="highlight">внутренний блок Daikin FTXS35K мощностью 3.5 кВт</span>
+                    </div>
+                </div>
+
+                <div class="tech-specs">
+                    <strong>Технические характеристики выбранного блока:</strong>
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">Мощность:</span>
+                            <span class="spec-value">3.5 кВт</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Охлаждение:</span>
+                            <span class="spec-value">3.5 кВт</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Обогрев:</span>
+                            <span class="spec-value">4.2 кВт</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Расход воздуха:</span>
+                            <span class="spec-value">600 м³/ч</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Тип:</span>
+                            <span class="spec-value">Настенный</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Цена:</span>
+                            <span class="spec-value">52,000 ₽</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-step">
+                    <div class="step-number">2</div>
+                    <div class="step-description">
+                        Система автоматически находит <span class="highlight">аналогичные модели</span> в других брендах
+                    </div>
+                </div>
+
+                <div class="brands-demo">
+                    <div class="brand-demo mitsubishi">
+                        <div class="brand-name">Mitsubishi</div>
+                        <div>MSZ-LN35VGW</div>
+                        <div>3.5 кВт | 570 м³/ч</div>
+                        <div>54,000 ₽</div>
+                        <div><strong>Совпадение: 95%</strong></div>
+                    </div>
+
+                    <div class="match-arrow">⟷</div>
+
+                    <div class="brand-demo lg">
+                        <div class="brand-name">LG</div>
+                        <div>S12ET</div>
+                        <div>3.5 кВт | 580 м³/ч</div>
+                        <div>48,000 ₽</div>
+                        <div><strong>Совпадение: 88%</strong></div>
+                    </div>
+                </div>
+
+                <div class="scenario-step">
+                    <div class="step-number">3</div>
+                    <div class="step-description">
+                        Пользователь может <span class="highlight">переключиться на любой бренд</span> одним кликом и сравнить предложения
+                    </div>
+                </div>
+
+                <div class="scenario-step">
+                    <div class="step-number">4</div>
+                    <div class="step-description">
+                        URL автоматически обновляется: <span class="highlight">catalog.html?brand=mitsubishi&category=indoor_units</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-footer">
+            <a href="catalog-demo.html" class="btn-demo">Перейти к демо каталогу</a>
+            <p style="margin-top: 1rem; color: #666;">
+                Каталог поддерживает полнофункциональный поиск с фильтрацией, сравнением и перекрестным подбором
+            </p>
+        </div>
+    </div>
+</body>
+</html>

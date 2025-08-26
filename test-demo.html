@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест демо функций</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1A1A1A;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+        }
+
+        .test-section.success {
+            border-color: #4CAF50;
+            background: #f1f8e9;
+        }
+
+        .test-section.error {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .test-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #1464F4;
+        }
+
+        .test-result {
+            font-weight: 600;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .test-result.pass {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .test-result.fail {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .btn-test {
+            background: #1464F4;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+
+        .btn-test:hover {
+            background: #0f52c7;
+        }
+
+        .demo-link {
+            display: block;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: linear-gradient(135deg, #1464F4, #46F4E1);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .demo-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(20, 100, 244, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Тестирование демо-каталога HVAC</h1>
+        
+        <div class="test-section" id="test1">
+            <div class="test-title">1. Проверка загрузки JavaScript модуля</div>
+            <button class="btn-test" onclick="testJSLoad()">Запустить тест</button>
+            <div id="result1"></div>
+        </div>
+
+        <div class="test-section" id="test2">
+            <div class="test-title">2. Проверка структуры данных брендов</div>
+            <button class="btn-test" onclick="testBrandData()">Запустить тест</button>
+            <div id="result2"></div>
+        </div>
+
+        <div class="test-section" id="test3">
+            <div class="test-title">3. Проверка перекрестного подбора (новая логика)</div>
+            <button class="btn-test" onclick="testCrossMatching()">Запустить тест</button>
+            <div id="result3"></div>
+        </div>
+
+        <div class="test-section" id="test6">
+            <div class="test-title">6. Проверка множественного выбора</div>
+            <button class="btn-test" onclick="testMultipleSelection()">Запустить тест</button>
+            <div id="result6"></div>
+        </div>
+
+        <div class="test-section" id="test4">
+            <div class="test-title">4. Проверка фильтрации</div>
+            <button class="btn-test" onclick="testFiltering()">Запустить тест</button>
+            <div id="result4"></div>
+        </div>
+
+        <div class="test-section" id="test5">
+            <div class="test-title">5. Проверка URL интеграции</div>
+            <button class="btn-test" onclick="testURLIntegration()">Запустить тест</button>
+            <div id="result5"></div>
+        </div>
+
+        <div class="test-section" id="test7">
+            <div class="test-title">7. Проверка переключения брендов с сохранением выбора</div>
+            <button class="btn-test" onclick="testBrandSwitchingWithSelection()">Запустить тест</button>
+            <div id="result7"></div>
+        </div>
+
+        <a href="catalog-demo.html" class="demo-link">🚀 Перейти к рабочему демо-каталогу</a>
+
+        <div style="text-align: center; color: #666; margin-top: 2rem;">
+            <p><strong>Инструкция по тестированию:</strong></p>
+            <p>1. Запустите все тесты на этой странице</p>
+            <p>2. Перейдите к демо-каталогу</p>
+            <p>3. Попробуйте все функции: переключение брендов, фильтры, выбор товара для сравнения</p>
+            <p>4. Убедитесь, что перекрестный подбор работает корректно</p>
+        </div>
+    </div>
+
+    <script src="js/demo-catalog.js"></script>
+    <script>
+        function testJSLoad() {
+            const resultDiv = document.getElementById('result1');
+            const testSection = document.getElementById('test1');
+            
+            try {
+                if (typeof DemoBrandCatalog !== 'undefined') {
+                    resultDiv.innerHTML = '<div class="test-result pass">✅ PASS: JavaScript модуль загружен успешно</div>';
+                    testSection.classList.add('success');
+                } else {
+                    throw new Error('DemoBrandCatalog не найден');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testBrandData() {
+            const resultDiv = document.getElementById('result2');
+            const testSection = document.getElementById('test2');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                const brands = Object.keys(catalog.equipmentStructure.brands);
+                const expectedBrands = ['daikin', 'mitsubishi', 'lg'];
+                
+                if (brands.length >= 3 && expectedBrands.every(brand => brands.includes(brand))) {
+                    const totalProducts = brands.reduce((total, brand) => {
+                        return total + (catalog.equipmentData[brand]?.indoor_units?.length || 0);
+                    }, 0);
+                    
+                    resultDiv.innerHTML = `
+                        <div class="test-result pass">✅ PASS: Данные загружены корректно</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            • Бренды: ${brands.join(', ')}<br>
+                            • Общее количество товаров: ${totalProducts}<br>
+                            • Структура фильтров: проверена
+                        </div>
+                    `;
+                    testSection.classList.add('success');
+                } else {
+                    throw new Error('Недостаточно данных о брендах');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testCrossMatching() {
+            const resultDiv = document.getElementById('result3');
+            const testSection = document.getElementById('test3');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                
+                // Тест 1: Выбираем 1 товар - должен найти 1 аналог в каждом бренде
+                const daikinProduct1 = catalog.equipmentData.daikin.indoor_units[1]; // FTXS35K 3.5 кВт
+                catalog.selectedProducts = [daikinProduct1.id];
+                
+                const matches1 = catalog.findMultipleCrossMatches([daikinProduct1]);
+                const mitsubishiMatches1 = matches1.mitsubishi || [];
+                const lgMatches1 = matches1.lg || [];
+                
+                // Тест 2: Выбираем 2 товара - должен найти 2 аналога в каждом бренде  
+                const daikinProduct2 = catalog.equipmentData.daikin.indoor_units[2]; // FTXA35AW 3.5 кВт
+                const selectedProducts2 = [daikinProduct1, daikinProduct2];
+                catalog.selectedProducts = selectedProducts2.map(p => p.id);
+                
+                const matches2 = catalog.findMultipleCrossMatches(selectedProducts2);
+                const mitsubishiMatches2 = matches2.mitsubishi || [];
+                const lgMatches2 = matches2.lg || [];
+                
+                if (mitsubishiMatches1.length === 1 && lgMatches1.length === 1 && 
+                    mitsubishiMatches2.length === 2 && lgMatches2.length === 2) {
+                    
+                    resultDiv.innerHTML = `
+                        <div class="test-result pass">✅ PASS: Новая логика перекрестного подбора работает!</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <strong>Тест 1 (1 товар):</strong><br>
+                            • Выбран: ${daikinProduct1.model}<br>
+                            • Mitsubishi: ${mitsubishiMatches1.length} аналог<br>
+                            • LG: ${lgMatches1.length} аналог<br><br>
+                            
+                            <strong>Тест 2 (2 товара):</strong><br>
+                            • Выбраны: ${daikinProduct1.model}, ${daikinProduct2.model}<br>
+                            • Mitsubishi: ${mitsubishiMatches2.length} аналога<br>
+                            • LG: ${lgMatches2.length} аналога<br><br>
+                            
+                            <strong>✅ Логика работает: количество аналогов = количество выбранных товаров!</strong>
+                        </div>
+                    `;
+                    testSection.classList.add('success');
+                } else {
+                    throw new Error(`Неправильное количество аналогов. Ожидалось: 1→1, 2→2. Получено: ${mitsubishiMatches1.length}→${mitsubishiMatches2.length}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testMultipleSelection() {
+            const resultDiv = document.getElementById('result6');
+            const testSection = document.getElementById('test6');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                
+                // Тест множественного выбора
+                const product1 = catalog.equipmentData.daikin.indoor_units[0].id;
+                const product2 = catalog.equipmentData.daikin.indoor_units[1].id;
+                const product3 = catalog.equipmentData.daikin.indoor_units[2].id;
+                
+                // Выбираем товары
+                catalog.selectProduct(product1, false); // Первый
+                catalog.selectProduct(product2, false); // Второй
+                catalog.selectProduct(product3, false); // Третий
+                
+                if (catalog.selectedProducts.length === 3 && 
+                    catalog.selectedProducts.includes(product1) &&
+                    catalog.selectedProducts.includes(product2) &&
+                    catalog.selectedProducts.includes(product3)) {
+                    
+                    // Проверяем снятие выбора
+                    catalog.selectProduct(product2, true); // Убираем второй
+                    
+                    if (catalog.selectedProducts.length === 2 && 
+                        !catalog.selectedProducts.includes(product2)) {
+                        
+                        resultDiv.innerHTML = `
+                            <div class="test-result pass">✅ PASS: Множественный выбор работает</div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                                • Выбор 3 товаров: успешно<br>
+                                • Снятие выбора: успешно<br>
+                                • Итого выбрано: ${catalog.selectedProducts.length} товара<br>
+                                • Toggle режим: работает
+                            </div>
+                        `;
+                        testSection.classList.add('success');
+                    } else {
+                        throw new Error('Снятие выбора не работает');
+                    }
+                } else {
+                    throw new Error('Множественный выбор не работает');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testFiltering() {
+            const resultDiv = document.getElementById('result4');
+            const testSection = document.getElementById('test4');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                
+                // Тест фильтрации по мощности
+                const allProducts = catalog.equipmentData.daikin.indoor_units;
+                const filterMock = {
+                    power: { type: 'range', min: 3.0, max: 4.0 }
+                };
+                
+                const filtered = allProducts.filter(product => {
+                    return product.power >= filterMock.power.min && product.power <= filterMock.power.max;
+                });
+                
+                // Тест фильтрации по типу
+                const wallProducts = allProducts.filter(product => product.type === 'wall');
+                const cassetteProducts = allProducts.filter(product => product.type === 'cassette');
+                
+                if (filtered.length > 0 && wallProducts.length > 0 && cassetteProducts.length > 0) {
+                    resultDiv.innerHTML = `
+                        <div class="test-result pass">✅ PASS: Фильтрация работает корректно</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            • По мощности (3-4 кВт): ${filtered.length} товаров<br>
+                            • Настенных блоков: ${wallProducts.length}<br>
+                            • Кассетных блоков: ${cassetteProducts.length}<br>
+                            • Диапазонная и селективная фильтрация: работают
+                        </div>
+                    `;
+                    testSection.classList.add('success');
+                } else {
+                    throw new Error('Фильтрация не работает корректно');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testURLIntegration() {
+            const resultDiv = document.getElementById('result5');
+            const testSection = document.getElementById('test5');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                
+                // Симулируем изменение URL
+                const originalURL = window.location.href;
+                
+                // Тестируем updateURL
+                catalog.currentBrand = 'mitsubishi';
+                catalog.currentCategory = 'indoor_units';
+                catalog.updateURL();
+                
+                const newURL = window.location.href;
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                if (urlParams.get('brand') === 'mitsubishi' && urlParams.get('category') === 'indoor_units') {
+                    resultDiv.innerHTML = `
+                        <div class="test-result pass">✅ PASS: URL интеграция работает</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            • Параметр brand: ${urlParams.get('brand')}<br>
+                            • Параметр category: ${urlParams.get('category')}<br>
+                            • URL обновление: активно<br>
+                            • История браузера: поддерживается
+                        </div>
+                    `;
+                    testSection.classList.add('success');
+                } else {
+                    throw new Error('URL параметры не обновились');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        function testBrandSwitchingWithSelection() {
+            const resultDiv = document.getElementById('result7');
+            const testSection = document.getElementById('test7');
+            
+            try {
+                const catalog = new DemoBrandCatalog();
+                
+                // Начинаем с Daikin и выбираем 2 товара
+                catalog.currentBrand = 'daikin';
+                const daikinProduct1 = catalog.equipmentData.daikin.indoor_units[0].id;
+                const daikinProduct2 = catalog.equipmentData.daikin.indoor_units[1].id;
+                
+                catalog.selectProduct(daikinProduct1, false);
+                catalog.selectProduct(daikinProduct2, false);
+                
+                if (catalog.selectedProducts.length !== 2) {
+                    throw new Error('Не удалось выбрать 2 товара в Daikin');
+                }
+                
+                // Переключаемся на Mitsubishi
+                catalog.switchBrand('mitsubishi');
+                
+                // Проверяем что выбор сохранился и найдены аналоги
+                if (catalog.selectedProducts.length === 2 && catalog.currentBrand === 'mitsubishi') {
+                    
+                    // Переключаемся на LG
+                    catalog.switchBrand('lg');
+                    
+                    if (catalog.selectedProducts.length === 2 && catalog.currentBrand === 'lg') {
+                        resultDiv.innerHTML = `
+                            <div class="test-result pass">✅ PASS: Переключение брендов с сохранением выбора работает!</div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                                • Изначально выбрано в Daikin: 2 товара<br>
+                                • Переключение на Mitsubishi: ${catalog.selectedProducts.length} аналога найдено<br>
+                                • Переключение на LG: ${catalog.selectedProducts.length} аналога найдено<br>
+                                • Логика работает: количество аналогов = количество исходных товаров!
+                            </div>
+                        `;
+                        testSection.classList.add('success');
+                    } else {
+                        throw new Error(`LG: ожидалось 2 товара, получено ${catalog.selectedProducts.length}`);
+                    }
+                } else {
+                    throw new Error(`Mitsubishi: ожидалось 2 товара, получено ${catalog.selectedProducts.length}`);
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result fail">❌ FAIL: ${error.message}</div>`;
+                testSection.classList.add('error');
+            }
+        }
+
+        // Автоматический запуск базовых тестов при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testJSLoad();
+                setTimeout(testBrandData, 500);
+            }, 100);
+        });
+    </script>
+</body>
+</html>

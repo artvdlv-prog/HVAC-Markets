@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIR Dealer - Каталог оборудования по брендам</title>
+    <title>HVAC Markets - Демо каталог брендового поиска</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -103,6 +103,23 @@
             gap: 1.5rem;
         }
 
+        .demo-badge {
+            background: linear-gradient(135deg, var(--signature-blue), var(--turquoise));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .nav-icon, .profile-icon {
             display: flex;
             align-items: center;
@@ -172,10 +189,28 @@
             color: var(--primary-white);
         }
 
+        /* Header banner */
+        .demo-header {
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--signature-blue), var(--turquoise));
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .demo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
         /* Main Container */
         .catalog-container {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
+            min-height: calc(100vh - 140px);
             padding: 3rem 0;
             background: var(--primary-white);
         }
@@ -370,6 +405,48 @@
             flex: 1;
         }
 
+        /* Instructions Panel */
+        .instructions-panel {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 0 2rem 2rem 2rem;
+        }
+
+        .instructions-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #856404;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .instruction-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .instruction-number {
+            font-weight: 800;
+            color: #856404;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .instruction-text {
+            color: #495057;
+            line-height: 1.6;
+        }
+
         /* Catalog Content */
         .catalog-content {
             max-width: 1400px;
@@ -377,123 +454,275 @@
             padding: 0 2rem;
         }
 
-        /* Products Grid */
+        /* List Header */
+        .list-header {
+            display: flex;
+            align-items: center;
+            background: var(--search-header-gray);
+            border: 1px solid var(--light-gray);
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--deep-graphite);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0;
+        }
+
+        .header-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-cell:first-child {
+            width: 80px;
+            justify-content: center;
+        }
+
+        .header-cell:nth-child(2) {
+            flex: 2;
+            padding-left: 1rem;
+        }
+
+        .header-cell:nth-child(3) {
+            flex: 0.8;
+            justify-content: center;
+        }
+
+        .header-cell:nth-child(4) {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .header-cell:nth-child(5) {
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .header-cell:last-child {
+            flex: 0.6;
+            justify-content: center;
+        }
+
+        /* Products List */
         .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .product-card {
             background: var(--primary-white);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--light-gray);
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
             cursor: pointer;
         }
 
+        .product-card:last-child {
+            border-bottom: 1px solid var(--light-gray);
+        }
+
         .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(20, 100, 244, 0.02);
+            border-color: var(--signature-blue);
+            z-index: 2;
         }
 
         .product-card.selected {
-            border: 3px solid var(--signature-blue);
-            box-shadow: 0 8px 30px rgba(20, 100, 244, 0.2);
+            background: rgba(20, 100, 244, 0.05);
+            border-color: var(--signature-blue);
+            z-index: 3;
+            position: relative;
         }
 
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .product-brand {
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .product-series {
-            font-size: 0.8rem;
-            color: #666;
-            text-transform: uppercase;
+        .product-card.selected::after {
+            content: '✓ Выбран (#' attr(data-selection-order) ')';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 10;
         }
 
         .product-image {
-            width: 100%;
-            height: 200px;
+            width: 80px;
+            height: 60px;
             background: var(--warm-gray);
-            border-radius: 8px;
-            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            color: #999;
+            margin-right: 1rem;
+            flex-shrink: 0;
         }
 
-        .product-image img {
+        .product-info {
+            display: flex;
+            align-items: center;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
-        .product-model {
-            font-size: 1.2rem;
-            font-weight: 700;
+        .product-details {
+            flex: 2;
+            padding-left: 1rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 1rem;
             color: var(--deep-graphite);
-            margin-bottom: 0.5rem;
-        }
-
-        .product-description {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 0.25rem;
         }
 
         .product-specs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
             font-size: 0.85rem;
-        }
-
-        .spec-label {
-            font-weight: 600;
             color: #666;
         }
 
-        .spec-value {
+        .product-capacity {
+            flex: 0.8;
+            text-align: center;
+        }
+
+        .capacity-value {
             font-weight: 700;
+            font-size: 1.1rem;
             color: var(--deep-graphite);
         }
 
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .capacity-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
         }
 
-        .product-price {
-            font-size: 1.2rem;
-            font-weight: 800;
+        .product-availability {
+            flex: 1;
+            text-align: center;
+        }
+
+        .product-match-score {
+            flex: 1;
+            text-align: center;
+        }
+
+        .availability-scale {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .availability-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .availability-dot.active {
+            background: var(--success-green);
+        }
+
+        .availability-text {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .product-pricing {
+            flex: 1;
+            text-align: right;
+        }
+
+        .price-dealer {
+            font-weight: 700;
+            font-size: 1.1rem;
             color: var(--signature-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .price-retail {
+            font-size: 0.8rem;
+            color: #666;
+            text-decoration: line-through;
         }
 
         .product-actions {
+            flex: 0.6;
             display: flex;
+            justify-content: center;
             gap: 0.5rem;
+        }
+
+        .btn-icon {
+            background: none;
+            border: 1px solid var(--light-gray);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-icon:hover {
+            background: var(--signature-blue);
+            color: white;
+            border-color: var(--signature-blue);
+        }
+
+        .btn-sm {
+            padding: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        /* Cross-brand products styling */
+        .cross-brand-product {
+            opacity: 0.95;
+            position: relative;
+        }
+
+        .cross-brand-product:hover {
+            background: rgba(20, 100, 244, 0.03);
+            opacity: 1;
+        }
+
+        .cross-brand-products-list .product-card:last-child {
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        /* Analog product highlighting */
+        .analog-product {
+            background: rgba(20, 100, 244, 0.08) !important;
+            border-left: 4px solid var(--signature-blue) !important;
+            position: relative;
+        }
+
+        .analog-product:hover {
+            background: rgba(20, 100, 244, 0.12) !important;
+        }
+
+        .analog-product::before {
+            content: '🎯';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1rem;
+            z-index: 5;
+        }
+
+        .match-score-display {
+            text-align: center;
         }
 
         .btn-compare, .btn-add-to-cart {
@@ -533,7 +762,8 @@
 
         /* Cross-brand Matches */
         .cross-matches {
-            background: var(--warm-gray);
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border: 2px solid var(--signature-blue);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -598,6 +828,10 @@
             font-size: 0.8rem;
             font-weight: 600;
             color: var(--signature-blue);
+            background: rgba(20, 100, 244, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
         }
 
         .no-products {
@@ -649,12 +883,12 @@
                 min-width: 250px;
             }
 
-            .filters-panel {
+            .filters-panel, .instructions-panel {
                 margin: 0 1rem 2rem 1rem;
                 padding: 1.5rem;
             }
 
-            .filters-grid {
+            .filters-grid, .instructions-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -679,7 +913,7 @@
         /* Notifications */
         .notification {
             position: fixed;
-            top: 20px;
+            top: 100px;
             right: 20px;
             background: var(--success-green);
             color: white;
@@ -696,6 +930,126 @@
             opacity: 1;
             transform: translateX(0);
         }
+
+        /* Filter toggle button in main content */
+        .filter-toggle-main {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn-toggle-filters {
+            background: var(--signature-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-toggle-filters:hover {
+            background: var(--deep-graphite);
+            transform: translateY(-2px);
+        }
+
+        /* Selection Counter */
+        .selection-counter {
+            background: linear-gradient(135deg, var(--success-green), #66bb6a);
+            color: white;
+            text-align: center;
+            padding: 1rem 2rem;
+            margin: 0 2rem 2rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .selection-counter.show {
+            display: block;
+        }
+
+        /* Enhanced Cross Match Styles */
+        .cross-match-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cross-match-number {
+            background: var(--signature-blue);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .cross-match-origin {
+            font-size: 0.75rem;
+            color: #999;
+            font-style: italic;
+            margin-top: 0.25rem;
+        }
+
+        /* Enhanced Product Card Selection */
+        .product-card.selected::after {
+            content: '✓ Выбран (#' attr(data-selection-order) ')';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .product-card {
+            position: relative;
+        }
+
+        /* Multiple selection hint */
+        .selection-hint {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 0 2rem 2rem 2rem;
+            text-align: center;
+            color: #856404;
+        }
+
+        .selection-hint-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .selection-hint-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -704,25 +1058,11 @@
         <a href="index.html" class="nav-logo">HVAC MARKETS</a>
         <div class="nav-menu">
             <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">ПОИСК</a>
-            <a href="catalog.html" class="nav-item active" data-en="ANALYSIS" data-ru="АНАЛИЗ">АНАЛИЗ</a>
-            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">ПРОДАЖИ</a>
-            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">ПРОЕКТ</a>
-            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">СЕРВИС</a>
-            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">ПРОГНОЗ</a>
-            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">МОНТАЖ</a>
+            <a href="catalog-demo.html" class="nav-item active" data-en="DEMO CATALOG" data-ru="ДЕМО КАТАЛОГ">ДЕМО КАТАЛОГ</a>
+            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖИ">ПРОДАЖИ</a>
         </div>
         <div class="nav-right">
-            <button class="nav-icon" id="searchBtn" title="AI Search / ИИ Поиск">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </button>
-            
-            <a href="account.html" class="profile-icon" title="Personal Account / Личный кабинет">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-            </a>
+            <div class="demo-badge">DEMO VERSION</div>
             
             <button class="nav-icon" id="cartBtn" title="Quote Cart / Корзина КП">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -738,8 +1078,37 @@
         </div>
     </nav>
 
+    <!-- Demo Header -->
+    <div class="demo-header">
+        <h1>🚀 Демо: Брендовый поиск HVAC оборудования</h1>
+        <p>Интерактивная демонстрация системы поиска с перекрестным подбором по техническим параметрам</p>
+    </div>
+
     <!-- Catalog Container -->
     <div class="catalog-container">
+        <!-- Instructions Panel -->
+        <div class="instructions-panel">
+            <h2 class="instructions-title">📋 Как пользоваться демо-каталогом</h2>
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-number">1. Выберите бренд</div>
+                    <div class="instruction-text">Переключайтесь между брендами (Daikin, Mitsubishi, LG) для просмотра их ассортимента</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">2. Выберите товары</div>
+                    <div class="instruction-text"><strong>Новинка!</strong> Кликайте по товарам для множественного выбора. Повторный клик снимает выбор</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">3. Переключение на аналоги</div>
+                    <div class="instruction-text"><strong>Главная фишка!</strong> При переходе на другой бренд показываются только найденные аналоги в списочном формате</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">4. Точное соответствие 1:1, 2:2, 3:3</div>
+                    <div class="instruction-text">Выбрали 2 товара → при переходе на другой бренд видите ровно 2 аналога с процентами совпадения</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Brand Tabs -->
         <div class="brand-tabs" id="brandTabs">
             <!-- Brand tabs will be loaded dynamically -->
@@ -750,11 +1119,30 @@
             <!-- Category tabs will be loaded dynamically -->
         </div>
 
+        <!-- Selection Hint -->
+        <div class="selection-hint">
+            <div class="selection-hint-title">💡 Как работает перекрестный подбор</div>
+            <div class="selection-hint-text">
+                Кликайте по товарам для выбора. Выберете 1 товар — увидите 1 лучший аналог в других брендах. 
+                Выберете 2 товара — увидите 2 лучших аналога. Попробуйте!
+            </div>
+        </div>
+
+        <!-- Selection Counter -->
+        <div class="selection-counter" id="selectionCounter">
+            <!-- Counter will be updated by JS -->
+        </div>
+
+        <!-- Filter Toggle Button -->
+        <div class="filter-toggle-main">
+            <button class="btn-toggle-filters" onclick="toggleFilters()">🔍 Показать/Скрыть Фильтры</button>
+        </div>
+
         <!-- Filters Panel -->
         <div class="filters-panel" id="filtersPanel">
             <div class="filters-header">
                 <h3 class="filters-title" data-en="Filters" data-ru="Фильтры">Фильтры</h3>
-                <button class="filters-toggle" onclick="toggleFilters()" data-en="Show/Hide" data-ru="Показать/Скрыть">Показать</button>
+                <button class="filters-toggle" onclick="toggleFilters()" data-en="Hide" data-ru="Скрыть">Скрыть</button>
             </div>
             <div class="filters-grid" id="filtersContainer">
                 <!-- Filters will be loaded dynamically -->
@@ -763,9 +1151,24 @@
 
         <!-- Catalog Content -->
         <div class="catalog-content">
+            <!-- List Header -->
+            <div class="list-header">
+                <div class="header-cell"></div>
+                <div class="header-cell">Товар</div>
+                <div class="header-cell">Мощность</div>
+                <div class="header-cell">Наличие</div>
+                <div class="header-cell">Цены</div>
+                <div class="header-cell">Действия</div>
+            </div>
+            
             <!-- Products Grid -->
             <div class="products-grid" id="productsGrid">
                 <!-- Products will be loaded here -->
+            </div>
+            
+            <!-- Cross-brand Products Section -->
+            <div id="crossBrandProducts" style="display: none;">
+                <!-- Cross-brand product lists will be displayed here -->
             </div>
 
             <!-- Cross-brand Matches -->
@@ -775,13 +1178,13 @@
 
             <!-- Back Button -->
             <div class="back-section">
-                <a href="index.html" class="btn-back" data-en="Back to Search" data-ru="Назад к поиску">Назад к поиску</a>
+                <a href="demo-brand-search.html" class="btn-back" data-en="Back to Demo Description" data-ru="Назад к описанию демо">Назад к описанию демо</a>
             </div>
         </div>
     </div>
 
-    <!-- Include Brand Catalog JavaScript -->
-    <script src="js/brand-catalog.js"></script>
+    <!-- Include Demo Catalog JavaScript -->
+    <script src="js/demo-catalog.js"></script>
     
     <script>
         // Additional catalog functionality
@@ -794,9 +1197,11 @@
             const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
             const isActive = filtersPanel.classList.contains('active');
             
-            toggleBtn.textContent = currentLang === 'en' 
-                ? (isActive ? 'Hide' : 'Show')
-                : (isActive ? 'Скрыть' : 'Показать');
+            if (toggleBtn) {
+                toggleBtn.textContent = currentLang === 'en' 
+                    ? (isActive ? 'Hide' : 'Show')
+                    : (isActive ? 'Скрыть' : 'Показать');
+            }
         }
 
         // Language toggle functionality

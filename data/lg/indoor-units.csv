@@ -1,0 +1,16 @@
+id,model,series,power,cooling_capacity,heating_capacity,airflow,noise_level,type,inverter,price_rub,availability,description,image
+LG_IU_001,S09ET,Standard Plus,2.6,2.6,3.0,450,22,wall,true,42000,in_stock,"Настенный внутренний блок LG Standard Plus 2.6 кВт",lg-s09et.jpg
+LG_IU_002,S12ET,Standard Plus,3.5,3.5,4.0,580,24,wall,true,48000,in_stock,"Настенный внутренний блок LG Standard Plus 3.5 кВт",lg-s12et.jpg
+LG_IU_003,S18ET,Standard Plus,5.3,5.3,6.0,750,26,wall,true,65000,in_stock,"Настенный внутренний блок LG Standard Plus 5.3 кВт",lg-s18et.jpg
+LG_IU_004,S24ET,Standard Plus,7.0,7.0,8.0,920,28,wall,true,78000,in_stock,"Настенный внутренний блок LG Standard Plus 7.0 кВт",lg-s24et.jpg
+LG_IU_005,A09FR,Artcool Gallery,2.6,2.6,3.0,380,22,wall,true,85000,in_stock,"Настенный внутренний блок LG Artcool Gallery 2.6 кВт",lg-a09fr.jpg
+LG_IU_006,A12FR,Artcool Gallery,3.5,3.5,4.0,480,24,wall,true,95000,in_stock,"Настенный внутренний блок LG Artcool Gallery 3.5 кВт",lg-a12fr.jpg
+LG_IU_007,A18FR,Artcool Gallery,5.3,5.3,6.0,620,26,wall,true,115000,in_stock,"Настенный внутренний блок LG Artcool Gallery 5.3 кВт",lg-a18fr.jpg
+LG_IU_008,CT09F,Cassette,2.6,2.9,3.4,470,28,cassette,false,82000,in_stock,"Кассетный внутренний блок LG 2.6 кВт",lg-ct09f.jpg
+LG_IU_009,CT12F,Cassette,3.5,4.1,4.8,610,30,cassette,false,95000,in_stock,"Кассетный внутренний блок LG 3.5 кВт",lg-ct12f.jpg
+LG_IU_010,CT18F,Cassette,5.3,6.0,7.0,850,32,cassette,false,118000,in_stock,"Кассетный внутренний блок LG 5.3 кВт",lg-ct18f.jpg
+LG_IU_011,UD09WN,Duct,2.6,2.9,3.4,490,26,duct,false,88000,in_stock,"Канальный внутренний блок LG 2.6 кВт",lg-ud09wn.jpg
+LG_IU_012,UD12WN,Duct,3.5,4.1,4.8,640,28,duct,false,102000,in_stock,"Канальный внутренний блок LG 3.5 кВт",lg-ud12wn.jpg
+LG_IU_013,UV09WN,Floor Console,2.6,2.9,3.4,410,24,floor,false,85000,in_stock,"Напольно-потолочный внутренний блок LG 2.6 кВт",lg-uv09wn.jpg
+LG_IU_014,UV12WN,Floor Console,3.5,4.1,4.8,540,26,floor,false,98000,in_stock,"Напольно-потолочный внутренний блок LG 3.5 кВт",lg-uv12wn.jpg
+LG_IU_015,P09EN,Prestige,2.6,2.6,3.0,360,22,wall,true,125000,in_stock,"Настенный внутренний блок LG Prestige 2.6 кВт премиум класса",lg-p09en.jpg
