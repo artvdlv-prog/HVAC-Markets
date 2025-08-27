@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC MARKETS - Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo-presentation {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.1rem;
+        }
+
+        .hvac-large {
+            display: flex;
+            gap: 0.2rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+
+        .hvac-letter-large {
+            font-size: 8rem;
+            font-weight: 900;
+            color: #1A1A1A;
+            letter-spacing: -0.02em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 0.5rem;
+            border-radius: 12px;
+            position: relative;
+            user-select: none;
+        }
+
+        .markets-large {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #1A1A1A;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+        }
+
+        .markets-large.heating-active {
+            background: rgba(255, 107, 53, 0.2);
+            color: #FF6B35;
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .markets-large.ventilation-active {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .markets-large.airconditioning-active {
+            background: rgba(20, 100, 244, 0.2);
+            color: #1464F4;
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(20, 100, 244, 0.3);
+        }
+
+        .markets-large:hover {
+            background: rgba(26, 26, 26, 0.1);
+            color: #1A1A1A;
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Heating platform styles */
+        .hvac-letter-large[data-platform="heating"]:hover {
+            background: rgba(255, 107, 53, 0.2);
+            color: #FF6B35;
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Ventilation platform styles */
+        .hvac-letter-large[data-platform="ventilation"]:hover {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Air Conditioning platform styles */
+        .ac-group {
+            display: flex;
+            gap: 0.2rem;
+            cursor: pointer;
+            border-radius: 12px;
+            padding: 0.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .ac-group:hover {
+            background: rgba(20, 100, 244, 0.2);
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(20, 100, 244, 0.3);
+        }
+
+        .ac-group:hover .hvac-letter-large {
+            color: #1464F4;
+        }
+
+        .ac-group .hvac-letter-large {
+            padding: 0;
+            transition: color 0.4s ease;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #666;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .platform-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .platform-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .platform-item {
+            color: #888;
+        }
+
+        .platform-item:hover {
+            color: #1A1A1A;
+            background: rgba(26, 26, 26, 0.05);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .hvac-letter-large {
+                font-size: 4rem;
+            }
+            
+            .markets-large {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                padding: 0 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hvac-letter-large {
+                font-size: 3rem;
+            }
+            
+            .markets-large {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="logo-presentation">
+            <div class="hvac-large">
+                <span class="hvac-letter-large" data-platform="heating">H</span>
+                <span class="hvac-letter-large" data-platform="ventilation">V</span>
+                <div class="ac-group" data-platform="airconditioning">
+                    <span class="hvac-letter-large">A</span>
+                    <span class="hvac-letter-large">C</span>
+                </div>
+            </div>
+            <div class="markets-large">MARKETS</div>
+            <div class="subtitle">
+                Комплексная платформа для отопления, вентиляции и кондиционирования<br>
+                Наведите на буквы для перехода к специализированным разделам
+            </div>
+        </div>
+        <div class="platform-hint">
+            <div class="platform-item heating" data-platform="heating">H - Отопление</div>
+            <div class="platform-item ventilation" data-platform="ventilation">V - Вентиляция</div>
+            <div class="platform-item airconditioning" data-platform="airconditioning">AC - Кондиционирование</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const letters = document.querySelectorAll('.hvac-letter-large[data-platform]');
+            const acGroup = document.querySelector('.ac-group');
+            const marketsText = document.querySelector('.markets-large');
+            const platformItems = document.querySelectorAll('.platform-item');
+            
+            letters.forEach(letter => {
+                letter.addEventListener('mouseenter', function() {
+                    const platform = this.getAttribute('data-platform');
+                    marketsText.className = 'markets-large ' + platform + '-active';
+                });
+                
+                letter.addEventListener('mouseleave', function() {
+                    marketsText.className = 'markets-large';
+                });
+                
+                letter.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    
+                    if (platform === 'heating') {
+                        window.open('heating.html', '_blank');
+                    } else if (platform === 'ventilation') {
+                        window.open('ventilation.html', '_blank');
+                    }
+                });
+            });
+
+            if (acGroup) {
+                acGroup.addEventListener('mouseenter', function() {
+                    marketsText.className = 'markets-large airconditioning-active';
+                });
+                
+                acGroup.addEventListener('mouseleave', function() {
+                    marketsText.className = 'markets-large';
+                });
+                
+                acGroup.addEventListener('click', function() {
+                    window.open('air-conditioning.html', '_blank');
+                });
+            }
+
+            if (marketsText) {
+                marketsText.addEventListener('click', function() {
+                    window.open('index.html', '_blank');
+                });
+            }
+
+            platformItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    
+                    if (platform === 'heating') {
+                        window.open('heating.html', '_blank');
+                    } else if (platform === 'ventilation') {
+                        window.open('ventilation.html', '_blank');
+                    } else if (platform === 'airconditioning') {
+                        window.open('air-conditioning.html', '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
