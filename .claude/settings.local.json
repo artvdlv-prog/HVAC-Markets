@@ -20,7 +20,8 @@
       "WebFetch(domain:www.aereco.com)",
       "Bash(findstr:*)",
       "Bash(copy catalog.html catalog-backup.html)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []
