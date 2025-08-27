@@ -705,11 +705,7 @@
             });
             
             cartBtn.addEventListener('click', function() {
-                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-                const message = currentLang === 'en' ? 
-                    'Quote Cart would open here' :
-                    'Здесь откроется корзина КП';
-                alert(message);
+                window.open('cart.html', '_blank');
             });
 
             // Update cart badge from localStorage

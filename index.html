@@ -3880,8 +3880,6 @@
                 </select>
             </div>
             
-            <!-- Test Cart Button (temporary) -->
-            <button class="nav-icon" onclick="testCart()" title="Test Cart">🧪</button>
             
             <button class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span class="hamburger-line"></span>
@@ -4910,8 +4908,8 @@
             </button>
         </div>
         <div class="selected-actions">
-            <button type="button" class="btn-quote" id="quoteButton" data-en="Create Quote" data-ru="Создать КП">Создать КП</button>
-            <button class="btn-request" onclick="generateRequest()" data-en="Request" data-ru="Запрос">Request</button>
+            <button type="button" class="btn-quote" id="quoteButton" data-en="+ Add to KP" data-ru="+ Добавить в КП">+ Добавить в КП</button>
+            <button class="btn-request" onclick="generateRequest()" data-en="Request" data-ru="Запрос">Запрос</button>
             <button class="btn-catalog" onclick="openCatalog()" data-en="Catalog" data-ru="Каталог">Catalog</button>
         </div>
     </div> <!-- End Main Content Area -->
@@ -5558,9 +5556,9 @@
                     message += `\nОбщая стоимость: ${brandSearch.formatPrice(totalPrice)}`;
                 }
                 
-                alert(message);
+                console.log('Selection summary:', message);
             } else {
-                alert('Ничего не выбрано. Кликните по товарам для выбора.');
+                console.log('Nothing selected. Click on products to select them.');
             }
         }
         
@@ -5893,7 +5891,7 @@
                 }
                 
                 if (productsForQuote.length === 0) {
-                    alert('Нет товаров для добавления в корзину');
+                    console.log('No products to add to cart');
                     return;
                 }
                 
@@ -5928,21 +5926,14 @@
                 // Save to localStorage
                 localStorage.setItem('globalQuoteData', JSON.stringify(globalQuoteData));
                 
+                console.log('Products saved to globalQuoteData:');
+                console.log('Current globalQuoteData:', globalQuoteData);
+                console.log('Brand keys:', Object.keys(globalQuoteData));
+                
                 // Update cart badge with animation
                 updateCartBadge(true);
                 
-                // Show confirmation
-                const brandName = brandSearch.equipmentStructure.brands[currentBrand]?.name || currentBrand;
-                const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                    return sum + brandProducts.length;
-                }, 0);
-                const totalBrands = Object.keys(globalQuoteData).length;
-                
-                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
-                const message = currentLang === 'en' ? 
-                    `${brandName} products added to cart!\nTotal products: ${totalProducts}\nTotal brands: ${totalBrands}\n\nClick cart icon (🛒) in menu to view full quote.` :
-                    `Товары ${brandName} добавлены в корзину!\nВсего товаров: ${totalProducts}\nВсего брендов: ${totalBrands}\n\nНажмите значок корзины (🛒) в меню для просмотра полного КП.`;
-                alert(message);
+                // Just update counter without popup
                 
                 console.log('Products successfully added to cart, NO REDIRECT PERFORMED');
                 
@@ -5974,21 +5965,10 @@
                 // Update cart badge with animation
                 updateCartBadge(true);
                 
-                // Show confirmation
-                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
-                const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                    return sum + brandProducts.length;
-                }, 0);
-                const totalBrands = Object.keys(globalQuoteData).length;
-                const message = currentLang === 'en' ? 
-                    `Products added to cart!\nTotal products: ${totalProducts}\nTotal brands: ${totalBrands}\n\nClick cart icon (🛒) in menu to view full quote.` :
-                    `Товары добавлены в корзину!\nВсего товаров: ${totalProducts}\nВсего брендов: ${totalBrands}\n\nНажмите значок корзины (🛒) в меню для просмотра полного КП.`;
-                alert(message);
-                
                 console.log('Fallback products successfully added to cart, NO REDIRECT PERFORMED');
                 
             } else {
-                alert('Сначала выберите товары');
+                console.log('No products selected for cart');
             }
         }
 
@@ -6027,7 +6007,7 @@
                 }
                 
                 if (productsForQuote.length === 0) {
-                    alert('Нет товаров для добавления в КП');
+                    console.log('No products to add to quote');
                     return;
                 }
                 
@@ -6044,19 +6024,6 @@
                 
                 // Update cart badge with animation
                 updateCartBadge(true);
-                
-                // Show confirmation
-                const brandName = brandSearch.equipmentStructure.brands[currentBrand]?.name || currentBrand;
-                const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                    return sum + brandProducts.length;
-                }, 0);
-                const totalBrands = Object.keys(globalQuoteData).length;
-                
-                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
-                const message = currentLang === 'en' ? 
-                    `${brandName} products added to quote!\nTotal products: ${totalProducts}\nTotal brands: ${totalBrands}\n\nClick cart icon (🛒) in menu to view full quote.` :
-                    `Товары ${brandName} добавлены в КП!\nВсего товаров: ${totalProducts}\nВсего брендов: ${totalBrands}\n\nНажмите значок корзины (🛒) в меню для просмотра полного КП.`;
-                alert(message);
                 
             } else if (selectedProducts.length > 0) {
                 // Fallback for regular selection - add to global quote data
@@ -6080,19 +6047,8 @@
                 
                 // Update cart badge with animation
                 updateCartBadge(true);
-                
-                // Show confirmation
-                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
-                const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                    return sum + brandProducts.length;
-                }, 0);
-                const totalBrands = Object.keys(globalQuoteData).length;
-                const message = currentLang === 'en' ? 
-                    `Products added to quote!\nTotal products: ${totalProducts}\nTotal brands: ${totalBrands}\n\nClick cart icon (🛒) in menu to view full quote.` :
-                    `Товары добавлены в КП!\nВсего товаров: ${totalProducts}\nВсего брендов: ${totalBrands}\n\nНажмите значок корзины (🛒) в меню для просмотра полного КП.`;
-                alert(message);
             } else {
-                alert('Сначала выберите товары');
+                console.log('No products selected for quote');
             }
         }
         
@@ -6145,18 +6101,254 @@
 
         // Generate request - add to cart without redirect
         function generateRequest() {
-            // Use the new addToCart function - no redirect
-            addToCart();
+            // Add to requests instead of KP
+            addToRequests();
         }
 
-        // Open catalog for technical specifications
-        function openCatalog() {
-            if (selectedProducts.length > 0) {
-                localStorage.setItem('catalogProducts', JSON.stringify(selectedProducts));
+        // Add selected products to requests (without prices)
+        function addToRequests(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
             }
             
-            // Navigate to catalog page
-            window.location.href = 'catalog.html';
+            console.log('Adding products to requests - for supplier inquiries');
+            
+            // Check if we have brand search data
+            if (window.brandSearch && window.brandSearch.selectedProducts.length > 0) {
+                const brandSearch = window.brandSearch;
+                const selectedProducts = brandSearch.selectedProducts;
+                const currentBrand = brandSearch.currentBrand;
+                
+                console.log('Adding products to requests for brand:', currentBrand);
+                console.log('Selected products:', selectedProducts);
+                
+                // Get products for current brand (analogs or originals)
+                let productsForRequest;
+                if (selectedProducts.length > 0 && selectedProducts[0].originalBrand !== currentBrand) {
+                    // We're viewing analogs, get the analog products
+                    const matches = brandSearch.findMultipleCrossMatches(selectedProducts);
+                    const currentBrandMatches = matches[currentBrand] || [];
+                    productsForRequest = currentBrandMatches.map(product => ({
+                        ...product,
+                        brand: currentBrand,
+                        quantity: 1,
+                        isAnalog: true,
+                        originalSelections: selectedProducts,
+                        // Remove price info for requests
+                        price: undefined,
+                        price_rub: undefined
+                    }));
+                } else {
+                    // We're viewing original selections
+                    productsForRequest = selectedProducts.filter(p => p.originalBrand === currentBrand).map(product => ({
+                        ...product,
+                        brand: currentBrand,
+                        quantity: 1,
+                        // Remove price info for requests
+                        price: undefined,
+                        price_rub: undefined
+                    }));
+                }
+                
+                if (productsForRequest.length === 0) {
+                    console.log('No products to add to requests');
+                    return;
+                }
+                
+                // Get existing request products
+                let requestProducts = JSON.parse(localStorage.getItem('requestProducts') || '[]');
+                
+                // Add new products to requests
+                productsForRequest.forEach(product => {
+                    // Check if product already exists to avoid duplicates
+                    const existingProduct = requestProducts.find(p => 
+                        (p.model === product.model || p.title === product.title) && 
+                        p.brand === product.brand &&
+                        p.capacity === product.capacity
+                    );
+                    
+                    if (!existingProduct) {
+                        requestProducts.push({
+                            ...product,
+                            id: `request_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            model: product.model || product.title,
+                            type: product.type || 'HVAC Equipment',
+                            specs: product.specs || `${product.cooling_capacity || product.capacity || 'N/A'} kW`,
+                            addedDate: new Date().toISOString()
+                        });
+                    }
+                });
+                
+                // Save to localStorage
+                localStorage.setItem('requestProducts', JSON.stringify(requestProducts));
+                
+                console.log('Products saved to requestProducts:', requestProducts);
+                
+                // Update cart badge
+                updateCartBadge(true);
+                
+                console.log('Products successfully added to requests, NO REDIRECT PERFORMED');
+                
+            } else if (selectedProducts.length > 0) {
+                console.log('Using fallback selectedProducts for requests');
+                
+                // Fallback for regular selected products
+                let requestProducts = JSON.parse(localStorage.getItem('requestProducts') || '[]');
+                
+                selectedProducts.forEach(product => {
+                    const existingProduct = requestProducts.find(p => 
+                        (p.model === product.model || p.title === product.title) && 
+                        p.brand === product.brand
+                    );
+                    
+                    if (!existingProduct) {
+                        requestProducts.push({
+                            ...product,
+                            id: `request_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            model: product.model || product.title,
+                            type: product.type || 'HVAC Equipment',
+                            specs: product.specs || `${product.capacity || 'N/A'} BTU/h`,
+                            // Remove price info for requests
+                            price: undefined,
+                            price_rub: undefined,
+                            addedDate: new Date().toISOString()
+                        });
+                    }
+                });
+                
+                localStorage.setItem('requestProducts', JSON.stringify(requestProducts));
+                updateCartBadge(true);
+                
+                console.log('Products added to requests from selectedProducts');
+            } else {
+                console.log('No products selected for requests');
+            }
+        }
+
+        // Add to catalog for technical specifications
+        function openCatalog() {
+            addToCatalog();
+        }
+
+        // Add selected products to catalog (for technical comparison)
+        function addToCatalog(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            console.log('Adding products to catalog - for technical specifications');
+            
+            // Check if we have brand search data
+            if (window.brandSearch && window.brandSearch.selectedProducts.length > 0) {
+                const brandSearch = window.brandSearch;
+                const selectedProducts = brandSearch.selectedProducts;
+                const currentBrand = brandSearch.currentBrand;
+                
+                console.log('Adding products to catalog for brand:', currentBrand);
+                console.log('Selected products:', selectedProducts);
+                
+                // Get products for current brand (analogs or originals)
+                let productsForCatalog;
+                if (selectedProducts.length > 0 && selectedProducts[0].originalBrand !== currentBrand) {
+                    // We're viewing analogs, get the analog products
+                    const matches = brandSearch.findMultipleCrossMatches(selectedProducts);
+                    const currentBrandMatches = matches[currentBrand] || [];
+                    productsForCatalog = currentBrandMatches.map(product => ({
+                        ...product,
+                        brand: currentBrand,
+                        quantity: 1,
+                        isAnalog: true,
+                        originalSelections: selectedProducts
+                    }));
+                } else {
+                    // We're viewing original selections
+                    productsForCatalog = selectedProducts.filter(p => p.originalBrand === currentBrand).map(product => ({
+                        ...product,
+                        brand: currentBrand,
+                        quantity: 1
+                    }));
+                }
+                
+                if (productsForCatalog.length === 0) {
+                    console.log('No products to add to catalog');
+                    return;
+                }
+                
+                // Get existing catalog products
+                let catalogProducts = JSON.parse(localStorage.getItem('catalogProducts') || '[]');
+                
+                // Add new products to catalog
+                productsForCatalog.forEach(product => {
+                    // Check if product already exists to avoid duplicates
+                    const existingProduct = catalogProducts.find(p => 
+                        (p.model === product.model || p.title === product.title) && 
+                        p.brand === product.brand &&
+                        p.capacity === product.capacity
+                    );
+                    
+                    if (!existingProduct) {
+                        catalogProducts.push({
+                            ...product,
+                            id: `catalog_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            model: product.model || product.title,
+                            type: product.type || 'HVAC Equipment',
+                            specs: product.specs || `${product.cooling_capacity || product.capacity || 'N/A'} kW`,
+                            addedDate: new Date().toISOString(),
+                            // Keep all technical specifications for comparison
+                            cooling_capacity: product.cooling_capacity,
+                            heating_capacity: product.heating_capacity,
+                            power: product.power,
+                            airflow: product.airflow,
+                            energy_class: product.energy_class,
+                            price: product.price,
+                            price_rub: product.price_rub
+                        });
+                    }
+                });
+                
+                // Save to localStorage
+                localStorage.setItem('catalogProducts', JSON.stringify(catalogProducts));
+                
+                console.log('Products saved to catalogProducts:', catalogProducts);
+                
+                // Update cart badge
+                updateCartBadge(true);
+                
+                console.log('Products successfully added to catalog');
+                
+            } else if (selectedProducts.length > 0) {
+                console.log('Using fallback selectedProducts for catalog');
+                
+                // Fallback for regular selected products
+                let catalogProducts = JSON.parse(localStorage.getItem('catalogProducts') || '[]');
+                
+                selectedProducts.forEach(product => {
+                    const existingProduct = catalogProducts.find(p => 
+                        (p.model === product.model || p.title === product.title) && 
+                        p.brand === product.brand
+                    );
+                    
+                    if (!existingProduct) {
+                        catalogProducts.push({
+                            ...product,
+                            id: `catalog_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            model: product.model || product.title,
+                            type: product.type || 'HVAC Equipment',
+                            specs: product.specs || `${product.capacity || 'N/A'} BTU/h`,
+                            addedDate: new Date().toISOString()
+                        });
+                    }
+                });
+                
+                localStorage.setItem('catalogProducts', JSON.stringify(catalogProducts));
+                updateCartBadge(true);
+                
+                console.log('Products added to catalog from selectedProducts');
+            } else {
+                console.log('No products selected for catalog');
+            }
         }
 
         // Reset all selected products
@@ -7022,22 +7214,7 @@
             // Cart functionality - open cart modal
             if (cartBtn) {
                 cartBtn.addEventListener('click', function() {
-                    const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                        return sum + (brandProducts ? brandProducts.length : 0);
-                    }, 0);
-                    
-                    console.log('Cart button clicked. Total products:', totalProducts);
-                    console.log('Current cart data:', globalQuoteData);
-                    
-                    if (totalProducts > 0) {
-                        openCart();
-                    } else {
-                        const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
-                        const message = currentLang === 'en' ? 
-                            'Cart is empty. Add products from different brands first.\n\nClick the test button (🧪) to add sample products.' :
-                            'Корзина пуста. Сначала добавьте товары из разных брендов.\n\nНажмите кнопку теста (🧪) для добавления примеров товаров.';
-                        alert(message);
-                    }
+                    window.open('cart.html', '_blank');
                 });
             }
             
@@ -7053,13 +7230,6 @@
             }
         }
         
-        function updateCartBadge(count) {
-            const badge = document.getElementById('cartBadge');
-            if (badge) {
-                badge.textContent = count;
-                badge.style.display = count > 0 ? 'flex' : 'none';
-            }
-        }
 
         // Module navigation functionality
         function initModuleNavigation() {

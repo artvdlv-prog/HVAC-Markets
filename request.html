@@ -872,11 +872,7 @@
 
         // Cart button functionality
         document.getElementById('cartBtn').addEventListener('click', function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const message = currentLang === 'en' ? 
-                'Quote cart functionality will be implemented soon.' :
-                'Функция корзины КП будет реализована в ближайшее время.';
-            alert(message);
+            window.open('cart.html', '_blank');
         });
 
         // Update cart badge based on request products count
