@@ -82,22 +82,35 @@
             cursor: default;
         }
 
+        .logo-main {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
         .hvac-letters {
             display: flex;
-            gap: 0.1rem;
+            gap: 0;
             align-items: center;
+            margin-right: 0;
         }
 
         .hvac-letter {
             font-size: 1.5rem;
             font-weight: 900;
             color: var(--deep-graphite);
-            letter-spacing: 0.05em;
+            letter-spacing: -0.1em;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 0.2rem 0.4rem;
+            padding: 0.2rem 0;
             border-radius: 4px;
             position: relative;
+            margin: 0;
+            margin-right: -0.05rem;
+        }
+
+        .hvac-letter:last-child {
+            margin-right: 0;
         }
 
         .markets-text {
@@ -105,7 +118,6 @@
             font-weight: 900;
             color: var(--deep-graphite);
             letter-spacing: 0.1em;
-            margin-left: 0.5rem;
         }
 
         .platform-subtitle {
@@ -114,7 +126,6 @@
             font-style: italic;
             color: var(--signature-blue);
             margin-top: -0.2rem;
-            margin-left: 0.5rem;
             opacity: 0.8;
             transition: color 0.3s ease;
         }
@@ -3937,12 +3948,14 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-logo">
-            <div class="hvac-letters">
-                <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
-                <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
-                <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+            <div class="logo-main">
+                <div class="hvac-letters">
+                    <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
+                    <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
+                    <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+                </div>
+                <span class="markets-text">MARKETS</span>
             </div>
-            <span class="markets-text">MARKETS</span>
             <div class="platform-subtitle" id="platformSubtitle">Air Conditioning</div>
         </div>
         <div class="nav-menu">
@@ -5101,17 +5114,28 @@
 
         // Platform System Initialization
         function initPlatformSystem() {
+            console.log('Initializing platform system...');
+            
             // Load saved platform or default to air conditioning
             const savedPlatform = localStorage.getItem('currentPlatform') || 'airconditioning';
-            switchToPlatform(savedPlatform);
+            console.log('Loading saved platform:', savedPlatform);
             
             // Add click events to HVAC letters
-            document.querySelectorAll('.hvac-letter').forEach(letter => {
-                letter.addEventListener('click', function() {
+            const letters = document.querySelectorAll('.hvac-letter');
+            console.log('Found HVAC letters:', letters.length);
+            
+            letters.forEach(letter => {
+                console.log('Adding click event to letter:', letter.textContent, 'platform:', letter.getAttribute('data-platform'));
+                letter.addEventListener('click', function(e) {
+                    e.preventDefault();
                     const platform = this.getAttribute('data-platform');
+                    console.log('Letter clicked:', this.textContent, 'switching to platform:', platform);
                     switchToPlatform(platform);
                 });
             });
+            
+            // Switch to saved platform
+            switchToPlatform(savedPlatform);
         }
 
         // Switch to specific platform
@@ -5163,24 +5187,33 @@
 
         // Update equipment sidebar based on platform
         function updateEquipmentSidebar(platform) {
+            console.log('Updating equipment sidebar for platform:', platform);
             const sidebar = document.querySelector('.equipment-sidebar');
-            if (!sidebar) return;
+            if (!sidebar) {
+                console.log('Equipment sidebar not found');
+                return;
+            }
             
             const data = platformData[platform];
+            console.log('Platform data:', data);
             
             // Hide all equipment items first
             const allItems = sidebar.querySelectorAll('.equipment-type-item');
-            allItems.forEach(item => item.style.display = 'none');
+            console.log('Found equipment items:', allItems.length);
+            allItems.forEach(item => {
+                item.style.display = 'none';
+                console.log('Hidden item:', item.getAttribute('data-subcategory'));
+            });
             
             // Show only relevant equipment for the platform
             if (platform === 'heating') {
-                // Show heating equipment
-                showEquipmentItems(['boilers', 'radiators', 'thermostats', 'heat-pumps']);
+                console.log('Showing heating equipment');
+                showEquipmentItems(['heat-pumps', 'boilers', 'radiators', 'floor-heating']);
             } else if (platform === 'ventilation') {
-                // Show ventilation equipment
-                showEquipmentItems(['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'ventilation-accessories']);
+                console.log('Showing ventilation equipment');
+                showEquipmentItems(['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'fans']);
             } else if (platform === 'airconditioning') {
-                // Show air conditioning equipment (all by default)
+                console.log('Showing air conditioning equipment');
                 showEquipmentItems(['split-systems', 'multi-split', 'vrf', 'accessories']);
             }
             
@@ -5189,13 +5222,18 @@
         
         // Show specific equipment items
         function showEquipmentItems(categories) {
+            console.log('Showing equipment items:', categories);
             const sidebar = document.querySelector('.equipment-sidebar');
             if (!sidebar) return;
             
             categories.forEach(category => {
                 const item = sidebar.querySelector(`[data-subcategory="${category}"]`);
+                console.log(`Looking for item with data-subcategory="${category}":`, item ? 'found' : 'not found');
                 if (item) {
                     item.style.display = 'flex';
+                    console.log('Showed item:', category);
+                } else {
+                    console.log('Item not found:', category);
                 }
             });
         }
