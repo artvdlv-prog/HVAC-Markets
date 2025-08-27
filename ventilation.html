@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HVAC Markets - Air Conditioning Platform</title>
+    <title>HVAC Markets - Ventilation Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -3940,7 +3940,7 @@
         }
     </style>
 </head>
-<body class="platform-airconditioning" data-current-platform="airconditioning">
+<body class="platform-ventilation" data-current-platform="ventilation">
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-logo">
@@ -3952,7 +3952,7 @@
                 </div>
                 <span class="markets-text">MARKETS</span>
             </div>
-            <div class="platform-subtitle" id="platformSubtitle">Air Conditioning</div>
+            <div class="platform-subtitle" id="platformSubtitle">Ventilation</div>
         </div>
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
@@ -5081,7 +5081,7 @@
 
     <script>
         // Platform System Variables
-        let currentPlatform = 'airconditioning';
+        let currentPlatform = 'ventilation';
         let globalQuoteData = {}; // This will be platform-specific
         
         const platformData = {
@@ -5113,7 +5113,7 @@
             console.log('Initializing platform system...');
             
             // Load saved platform or default to air conditioning
-            const savedPlatform = localStorage.getItem('currentPlatform') || 'airconditioning';
+            const savedPlatform = 'ventilation';
             console.log('Loading saved platform:', savedPlatform);
             
             // Add click events to HVAC letters
