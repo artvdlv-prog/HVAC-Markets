@@ -40,6 +40,14 @@
             --warning-yellow: #FF9800;
             --error-red: #F44336;
             --search-header-gray: #EEEEEE;
+            
+            /* Platform theme colors */
+            --heating-color: #FF6B35;
+            --heating-light: rgba(255, 107, 53, 0.15);
+            --ventilation-color: #4CAF50;
+            --ventilation-light: rgba(76, 175, 80, 0.15);
+            --airconditioning-color: #1464F4;
+            --airconditioning-light: rgba(20, 100, 244, 0.15);
         }
 
         /* Typography */
@@ -68,15 +76,106 @@
         }
 
         .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: default;
+        }
+
+        .hvac-letters {
+            display: flex;
+            gap: 0.1rem;
+            align-items: center;
+        }
+
+        .hvac-letter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .markets-text {
             font-size: 1.5rem;
             font-weight: 900;
             color: var(--deep-graphite);
             letter-spacing: 0.1em;
-            text-decoration: none;
+            margin-left: 0.5rem;
+        }
+
+        .platform-subtitle {
+            font-size: 0.7rem;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--signature-blue);
+            margin-top: -0.2rem;
+            margin-left: 0.5rem;
+            opacity: 0.8;
             transition: color 0.3s ease;
         }
 
-        .nav-logo:hover {
+        /* Heating platform styles */
+        .hvac-letter[data-platform="heating"]:hover,
+        .hvac-letter[data-platform="heating"].active,
+        .platform-heating .hvac-letter[data-platform="heating"] {
+            background: rgba(255, 107, 53, 0.15);
+            color: #FF6B35;
+        }
+
+        .platform-heating .platform-subtitle {
+            color: #FF6B35;
+        }
+
+        .platform-heating .nav-item:hover {
+            color: #FF6B35;
+        }
+
+        .platform-heating .nav-item.active {
+            color: #FF6B35;
+        }
+
+        /* Ventilation platform styles */
+        .hvac-letter[data-platform="ventilation"]:hover,
+        .hvac-letter[data-platform="ventilation"].active,
+        .platform-ventilation .hvac-letter[data-platform="ventilation"] {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        .platform-ventilation .platform-subtitle {
+            color: #4CAF50;
+        }
+
+        .platform-ventilation .nav-item:hover {
+            color: #4CAF50;
+        }
+
+        .platform-ventilation .nav-item.active {
+            color: #4CAF50;
+        }
+
+        /* Air Conditioning platform styles (default) */
+        .hvac-letter[data-platform="airconditioning"]:hover,
+        .hvac-letter[data-platform="airconditioning"].active,
+        .platform-airconditioning .hvac-letter[data-platform="airconditioning"] {
+            background: rgba(20, 100, 244, 0.15);
+            color: var(--signature-blue);
+        }
+
+        .platform-airconditioning .platform-subtitle {
+            color: var(--signature-blue);
+        }
+
+        .platform-airconditioning .nav-item:hover {
+            color: var(--signature-blue);
+        }
+
+        .platform-airconditioning .nav-item.active {
             color: var(--signature-blue);
         }
 
@@ -874,6 +973,13 @@
             padding: 2rem;
             min-height: 80vh;
             width: 100%;
+        }
+
+        /* Fix for anchor links under fixed navigation */
+        #scout, #match {
+            scroll-margin-top: 80px;
+            padding-top: 80px;
+            margin-top: -80px;
         }
 
         .module-content.active {
@@ -3827,10 +3933,18 @@
         }
     </style>
 </head>
-<body>
+<body class="platform-airconditioning" data-current-platform="airconditioning">
     <!-- Navigation -->
     <nav class="nav">
-        <a href="index.html" class="nav-logo">HVAC MARKETS</a>
+        <div class="nav-logo">
+            <div class="hvac-letters">
+                <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
+                <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
+                <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+            </div>
+            <span class="markets-text">MARKETS</span>
+            <div class="platform-subtitle" id="platformSubtitle">Air Conditioning</div>
+        </div>
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
@@ -4957,10 +5071,148 @@
     </div>
 
     <script>
+        // Platform System Variables
+        let currentPlatform = 'airconditioning';
+        let globalQuoteData = {}; // This will be platform-specific
+        
+        const platformData = {
+            heating: {
+                name: 'Heating',
+                color: '#FF6B35',
+                subtitle: 'Heating',
+                brands: ['viessmann', 'bosch', 'vaillant', 'buderus', 'wolf'],
+                categories: ['boilers', 'radiators', 'thermostats', 'pipework']
+            },
+            ventilation: {
+                name: 'Ventilation', 
+                color: '#4CAF50',
+                subtitle: 'Ventilation',
+                brands: ['systemair', 'swegon', 'komfovent', 'salda', 'vents'],
+                categories: ['fans', 'ducts', 'filters', 'heat_recovery', 'controllers']
+            },
+            airconditioning: {
+                name: 'Air Conditioning',
+                color: '#1464F4', 
+                subtitle: 'Air Conditioning',
+                brands: ['daikin', 'mitsubishi', 'panasonic', 'toshiba', 'fujitsu', 'lg', 'samsung'],
+                categories: ['split_systems', 'multi_split', 'vrv_vrf', 'cassette', 'ducted', 'portable']
+            }
+        };
+
+        // Platform System Initialization
+        function initPlatformSystem() {
+            // Load saved platform or default to air conditioning
+            const savedPlatform = localStorage.getItem('currentPlatform') || 'airconditioning';
+            switchToPlatform(savedPlatform);
+            
+            // Add click events to HVAC letters
+            document.querySelectorAll('.hvac-letter').forEach(letter => {
+                letter.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    switchToPlatform(platform);
+                });
+            });
+        }
+
+        // Switch to specific platform
+        function switchToPlatform(platform) {
+            console.log('Switching to platform:', platform);
+            
+            // Save current platform's cart data before switching
+            if (currentPlatform && Object.keys(globalQuoteData).length > 0) {
+                localStorage.setItem(`globalQuoteData_${currentPlatform}`, JSON.stringify(globalQuoteData));
+            }
+            
+            // Update current platform
+            currentPlatform = platform;
+            localStorage.setItem('currentPlatform', platform);
+            
+            // Load cart data for new platform
+            globalQuoteData = JSON.parse(localStorage.getItem(`globalQuoteData_${platform}`) || '{}');
+            
+            // Update body class
+            document.body.className = `platform-${platform}`;
+            document.body.setAttribute('data-current-platform', platform);
+            
+            // Update platform subtitle
+            const subtitle = document.getElementById('platformSubtitle');
+            if (subtitle) {
+                subtitle.textContent = platformData[platform].subtitle;
+            }
+            
+            // Update HVAC letters active state
+            document.querySelectorAll('.hvac-letter').forEach(letter => {
+                if (letter.getAttribute('data-platform') === platform) {
+                    letter.classList.add('active');
+                } else {
+                    letter.classList.remove('active');
+                }
+            });
+            
+            // Update equipment sidebar for current platform
+            updateEquipmentSidebar(platform);
+            
+            // Update search filters for current platform
+            updateSearchFilters(platform);
+            
+            // Update cart badge for new platform
+            updateCartBadge();
+            
+            console.log('Platform switched to:', platform);
+        }
+
+        // Update equipment sidebar based on platform
+        function updateEquipmentSidebar(platform) {
+            const sidebar = document.querySelector('.equipment-sidebar');
+            if (!sidebar) return;
+            
+            const data = platformData[platform];
+            
+            // Hide all equipment items first
+            const allItems = sidebar.querySelectorAll('.equipment-type-item');
+            allItems.forEach(item => item.style.display = 'none');
+            
+            // Show only relevant equipment for the platform
+            if (platform === 'heating') {
+                // Show heating equipment
+                showEquipmentItems(['boilers', 'radiators', 'thermostats', 'heat-pumps']);
+            } else if (platform === 'ventilation') {
+                // Show ventilation equipment
+                showEquipmentItems(['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'ventilation-accessories']);
+            } else if (platform === 'airconditioning') {
+                // Show air conditioning equipment (all by default)
+                showEquipmentItems(['split-systems', 'multi-split', 'vrf', 'accessories']);
+            }
+            
+            console.log('Updated sidebar for platform:', platform);
+        }
+        
+        // Show specific equipment items
+        function showEquipmentItems(categories) {
+            const sidebar = document.querySelector('.equipment-sidebar');
+            if (!sidebar) return;
+            
+            categories.forEach(category => {
+                const item = sidebar.querySelector(`[data-subcategory="${category}"]`);
+                if (item) {
+                    item.style.display = 'flex';
+                }
+            });
+        }
+
+        // Update search filters based on platform
+        function updateSearchFilters(platform) {
+            const data = platformData[platform];
+            // This will filter brands and categories based on platform
+            console.log('Updating filters for platform:', platform, 'with brands:', data.brands);
+        }
+
         // Dashboard JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, starting initialization...');
             try {
+                initPlatformSystem();
+                console.log('✓ initPlatformSystem completed');
                 initChatbot();
                 console.log('✓ initChatbot completed');
                 initAnimations();
