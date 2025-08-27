@@ -90,7 +90,7 @@
 
         .hvac-letters {
             display: flex;
-            gap: 0;
+            gap: 0.05rem;
             align-items: center;
             margin-right: 0;
         }
@@ -99,18 +99,22 @@
             font-size: 1.5rem;
             font-weight: 900;
             color: var(--deep-graphite);
-            letter-spacing: -0.1em;
+            letter-spacing: 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 0.2rem 0;
+            padding: 0.2rem 0.1rem;
             border-radius: 4px;
             position: relative;
             margin: 0;
-            margin-right: -0.05rem;
+            z-index: 10;
+            pointer-events: auto;
         }
 
-        .hvac-letter:last-child {
-            margin-right: 0;
+        .markets-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .markets-text {
@@ -128,6 +132,7 @@
             margin-top: -0.2rem;
             opacity: 0.8;
             transition: color 0.3s ease;
+            align-self: flex-start;
         }
 
         /* Heating platform styles */
@@ -3954,9 +3959,11 @@
                     <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
                     <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
                 </div>
-                <span class="markets-text">MARKETS</span>
+                <div class="markets-container">
+                    <span class="markets-text">MARKETS</span>
+                    <div class="platform-subtitle" id="platformSubtitle">Air Conditioning</div>
+                </div>
             </div>
-            <div class="platform-subtitle" id="platformSubtitle">Air Conditioning</div>
         </div>
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
@@ -5128,9 +5135,19 @@
                 console.log('Adding click event to letter:', letter.textContent, 'platform:', letter.getAttribute('data-platform'));
                 letter.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     const platform = this.getAttribute('data-platform');
+                    console.log('========== LETTER CLICKED ==========');
                     console.log('Letter clicked:', this.textContent, 'switching to platform:', platform);
+                    console.log('Current platform before switch:', currentPlatform);
                     switchToPlatform(platform);
+                    console.log('Current platform after switch:', currentPlatform);
+                    console.log('====================================');
+                });
+                
+                // Also add hover effect for debugging
+                letter.addEventListener('mouseenter', function() {
+                    console.log('Hovering over letter:', this.textContent);
                 });
             });
             
@@ -5206,15 +5223,42 @@
             });
             
             // Show only relevant equipment for the platform
+            let defaultCategory = null;
             if (platform === 'heating') {
                 console.log('Showing heating equipment');
                 showEquipmentItems(['heat-pumps', 'boilers', 'radiators', 'floor-heating']);
+                defaultCategory = 'heat-pumps';
             } else if (platform === 'ventilation') {
                 console.log('Showing ventilation equipment');
                 showEquipmentItems(['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'fans']);
+                defaultCategory = 'supply-ventilation';
             } else if (platform === 'airconditioning') {
                 console.log('Showing air conditioning equipment');
                 showEquipmentItems(['split-systems', 'multi-split', 'vrf', 'accessories']);
+                defaultCategory = 'split-systems';
+            }
+            
+            // Set the first visible item as active and generate products
+            if (defaultCategory) {
+                const defaultItem = sidebar.querySelector(`[data-subcategory="${defaultCategory}"]`);
+                if (defaultItem) {
+                    // Remove active from all items
+                    sidebar.querySelectorAll('.equipment-type-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Make default item active
+                    defaultItem.classList.add('active');
+                    
+                    // Update current subcategory
+                    window.currentSubcategory = defaultCategory;
+                    
+                    // Generate products for this category
+                    if (typeof generateSampleProducts === 'function') {
+                        console.log('Generating sample products for category:', defaultCategory);
+                        generateSampleProducts();
+                    }
+                }
             }
             
             console.log('Updated sidebar for platform:', platform);
