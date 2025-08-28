@@ -593,35 +593,39 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            height: 80px;
+            background: rgba(20, 100, 244, 0.08);
+            backdrop-filter: blur(10px);
             display: none;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
-            padding-top: 100px;
-            z-index: 10000;
+            z-index: 10001;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
         }
 
         .search-modal.active {
             display: flex;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .search-modal-content {
-            background: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background: transparent;
+            border-radius: 0;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            overflow: visible;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
         }
 
         .search-modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: none;
         }
 
         .search-modal-title {
@@ -630,18 +634,96 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 1rem;
+            white-space: nowrap;
         }
 
         .search-modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             color: var(--deep-graphite);
+            position: absolute;
+            right: 2rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .search-modal-close:hover {
+            background: rgba(20, 100, 244, 0.15);
         }
 
         .search-modal-body {
-            padding: 1.5rem;
+            padding: 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-modal-body .search-modal-title {
+            display: flex;
+        }
+
+        .ai-search-bar-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--primary-white);
+            border-radius: 25px;
+            padding: 8px 12px;
+            border: 2px solid rgba(20, 100, 244, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.1);
+        }
+
+        .ai-search-bar-input:hover,
+        .ai-search-bar-input:focus-within {
+            border-color: rgba(20, 100, 244, 0.4);
+            box-shadow: 0 4px 12px rgba(20, 100, 244, 0.2);
+        }
+
+        .ai-search-input-bar {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--deep-graphite);
+            font-size: 0.9rem;
+            font-family: inherit;
+            padding: 6px 0;
+        }
+
+        .ai-search-input-bar::placeholder {
+            color: rgba(20, 100, 244, 0.6);
+        }
+
+        .ai-search-send-bar {
+            background: rgba(20, 100, 244, 0.8);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .ai-search-send-bar:hover {
+            background: rgba(20, 100, 244, 1);
+            transform: scale(1.05);
         }
 
         .profile-icon svg {
@@ -781,9 +863,96 @@
             transform: translateX(10px);
         }
 
+        /* Equipment Search Bar */
+        .equipment-search-bar {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(20, 100, 244, 0.08);
+            border-bottom: 1px solid rgba(20, 100, 244, 0.2);
+            z-index: 998;
+            padding: 12px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Show search bar on navigation hover */
+        .nav:hover + .equipment-search-bar,
+        .equipment-search-bar:hover {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .search-bar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--primary-white);
+            border: 2px solid rgba(20, 100, 244, 0.2);
+            border-radius: 25px;
+            padding: 8px 12px;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.1);
+        }
+
+        .search-input-wrapper:hover,
+        .search-input-wrapper:focus-within {
+            border-color: rgba(20, 100, 244, 0.4);
+            box-shadow: 0 4px 12px rgba(20, 100, 244, 0.2);
+        }
+
+        .search-icon {
+            color: rgba(20, 100, 244, 0.8);
+            flex-shrink: 0;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--deep-graphite);
+            font-size: 0.9rem;
+            font-family: inherit;
+            padding: 6px 0;
+        }
+
+        .search-input::placeholder {
+            color: rgba(20, 100, 244, 0.6);
+        }
+
+        .search-button {
+            background: rgba(20, 100, 244, 0.8);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 18px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .search-button:hover {
+            background: rgba(20, 100, 244, 1);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(20, 100, 244, 0.3);
+        }
+
         /* Main Dashboard Layout */
         .dashboard-container {
-            padding-top: 100px;
+            padding-top: 90px;
             min-height: 100vh;
             background: var(--warm-gray);
             display: flex;
@@ -1048,16 +1217,16 @@
             border-radius: 0;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             width: calc(100vw - 80px);
             margin-left: -80px;
             margin-right: 0;
         }
 
         .search-header {
-            background: var(--search-header-gray);
+            background: rgba(20, 100, 244, 0.08);
             color: var(--deep-graphite);
-            padding: 0.75rem 2rem;
+            padding: 0.5rem 2rem;
         }
 
         .header-content {
@@ -1072,7 +1241,7 @@
         }
 
         .search-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
@@ -1298,7 +1467,7 @@
 
         @media (max-width: 768px) {
             .search-header {
-                padding: 0.5rem 1rem;
+                padding: 0.4rem 1rem;
             }
 
             .ai-search-box {
@@ -1572,6 +1741,7 @@
             border-bottom: 1px solid var(--light-gray);
             overflow-x: auto;
             padding: 0 1rem;
+            margin-bottom: 1rem;
         }
 
         .brand-tabs-left {
@@ -1641,6 +1811,7 @@
             background: var(--primary-white);
             border-bottom: 1px solid var(--light-gray);
             padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
         }
 
         .category-dropdown {
@@ -2070,6 +2241,7 @@
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
+            margin-bottom: 1rem;
         }
 
         .settings-panel.brand-hover {
@@ -3430,6 +3602,68 @@
                 display: flex;
             }
 
+            .equipment-search-bar {
+                padding: 8px 0;
+            }
+
+            .search-bar-container {
+                padding: 0 1rem;
+            }
+
+            .search-input-wrapper {
+                padding: 6px 10px;
+            }
+
+            .search-input {
+                font-size: 0.85rem;
+                padding: 4px 0;
+            }
+
+            .search-button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .search-modal-content {
+                padding: 0 1rem;
+            }
+
+            .search-modal-title {
+                font-size: 0.85rem;
+                margin-right: 0.5rem;
+            }
+
+            .search-modal-title svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .ai-search-bar-input {
+                padding: 6px 10px;
+            }
+
+            .ai-search-input-bar {
+                font-size: 0.85rem;
+            }
+
+            .ai-search-send-bar {
+                width: 28px;
+                height: 28px;
+                margin-left: 6px;
+            }
+
+            .ai-search-send-bar svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .search-modal-close {
+                right: 1rem;
+                width: 26px;
+                height: 26px;
+                font-size: 1rem;
+            }
+
             .equipment-sidebar {
                 display: none;
             }
@@ -3960,6 +4194,21 @@
             <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
             <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
             <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+        </div>
+    </div>
+
+    <!-- Equipment Search Bar -->
+    <div class="equipment-search-bar">
+        <div class="search-bar-container">
+            <div class="search-input-wrapper">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" class="search-input" placeholder="Поиск оборудования..." data-en-placeholder="Search equipment..." data-ru-placeholder="Поиск оборудования...">
+                <button class="search-button">
+                    <span data-en="Search" data-ru="Поиск">Поиск</span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -7278,33 +7527,62 @@
             const cartBtn = document.getElementById('cartBtn');
             const searchModal = document.getElementById('searchModal');
             const searchModalClose = document.getElementById('searchModalClose');
+            let searchTimeout;
             
-            // Search button functionality
-            if (searchBtn) {
-                searchBtn.addEventListener('click', function() {
+            // Search button hover functionality
+            if (searchBtn && searchModal) {
+                // Show search bar on hover
+                searchBtn.addEventListener('mouseenter', function() {
+                    clearTimeout(searchTimeout);
                     searchModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
                     
-                    // Focus on search input
+                    // Focus on search input after animation
                     const searchInput = document.getElementById('aiSearchInput');
                     if (searchInput) {
-                        setTimeout(() => searchInput.focus(), 100);
+                        setTimeout(() => searchInput.focus(), 300);
                     }
                 });
+
+                // Keep search bar open when hovering over it
+                searchModal.addEventListener('mouseenter', function() {
+                    clearTimeout(searchTimeout);
+                });
+
+                // Hide search bar when leaving both button and modal
+                searchBtn.addEventListener('mouseleave', function() {
+                    searchTimeout = setTimeout(() => {
+                        if (!searchModal.matches(':hover')) {
+                            closeSearchModal();
+                        }
+                    }, 300);
+                });
+
+                searchModal.addEventListener('mouseleave', function() {
+                    searchTimeout = setTimeout(() => {
+                        closeSearchModal();
+                    }, 300);
+                });
+
+                // Also keep open when typing
+                const searchInput = document.getElementById('aiSearchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('focus', function() {
+                        clearTimeout(searchTimeout);
+                    });
+
+                    searchInput.addEventListener('blur', function() {
+                        if (searchInput.value.trim() === '') {
+                            searchTimeout = setTimeout(() => {
+                                closeSearchModal();
+                            }, 2000);
+                        }
+                    });
+                }
             }
             
-            // Close search modal
+            // Close search modal manually
             if (searchModalClose) {
                 searchModalClose.addEventListener('click', closeSearchModal);
-            }
-            
-            // Close modal when clicking outside
-            if (searchModal) {
-                searchModal.addEventListener('click', function(e) {
-                    if (e.target === searchModal) {
-                        closeSearchModal();
-                    }
-                });
             }
             
             // Cart functionality - open cart modal
@@ -7322,7 +7600,7 @@
             const searchModal = document.getElementById('searchModal');
             if (searchModal) {
                 searchModal.classList.remove('active');
-                document.body.style.overflow = '';
+                // Don't change body overflow since it's just a top bar now
             }
         }
         
@@ -7408,34 +7686,26 @@
         }
     </script>
     
-    <!-- AI Search Modal -->
+    <!-- AI Search Bar -->
     <div class="search-modal" id="searchModal">
         <div class="search-modal-content">
-            <div class="search-modal-header">
+            <div class="search-modal-body">
                 <h3 class="search-modal-title">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
                     </svg>
-                    <span data-en="AI Search" data-ru="ИИ Поиск">AI Search</span>
+                    <span data-en="AI Search" data-ru="ИИ Поиск">ИИ Поиск</span>
                 </h3>
-                <button class="search-modal-close" id="searchModalClose">&times;</button>
-            </div>
-            <div class="search-modal-body">
-                <div class="ai-search-interface">
-                    <div class="ai-chat-container">
-                        <div class="ai-chat-messages" id="modalChatMessages">
-                            <div class="ai-message">
-                                <div class="ai-avatar">🤖</div>
-                                <div class="ai-message-content" data-en="Hello! I can help you find HVAC equipment using natural language. Try asking: 'Find quiet split systems with heating for a 25m² room'" data-ru="Привет! Я помогу найти HVAC оборудование через естественный язык. Попробуйте спросить: 'Найди тихие сплит-системы с обогревом для комнаты 25м²'">Hello! I can help you find HVAC equipment using natural language. Try asking: 'Find quiet split systems with heating for a 25m² room'</div>
-                            </div>
-                        </div>
-                        <div class="ai-chat-input">
-                            <input type="text" class="ai-chat-input-field" id="aiSearchInput" placeholder="Ask me anything about HVAC equipment..." data-en-placeholder="Ask me anything about HVAC equipment..." data-ru-placeholder="Спросите меня о HVAC оборудовании...">
-                            <button class="ai-chat-send-btn" id="aiSearchSendBtn">➤</button>
-                        </div>
-                    </div>
+                <div class="ai-search-bar-input">
+                    <input type="text" class="ai-search-input-bar" id="aiSearchInput" placeholder="Спросите меня о HVAC оборудовании..." data-en-placeholder="Ask me anything about HVAC equipment..." data-ru-placeholder="Спросите меня о HVAC оборудовании...">
+                    <button class="ai-search-send-bar" id="aiSearchSendBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
+            <button class="search-modal-close" id="searchModalClose">&times;</button>
         </div>
     </div>
 
