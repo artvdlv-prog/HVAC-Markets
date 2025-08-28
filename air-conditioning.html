@@ -772,6 +772,50 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--light-gray);
+            color: var(--deep-graphite);
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--signature-blue);
+            color: var(--signature-blue);
+        }
+
+        .lang-btn.active {
+            background: var(--signature-blue);
+            border-color: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .lang-btn:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .lang-btn:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+
         /* Mobile Menu Toggle */
         .mobile-menu-toggle {
             display: none;
@@ -2628,8 +2672,8 @@
         }
 
         .price-retail {
-            color: #999;
-            text-decoration: line-through;
+            color: #333;
+            font-weight: 600;
         }
 
         .price-purchase {
@@ -4129,11 +4173,11 @@
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="air-conditioning/sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="air-conditioning/design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="air-conditioning/service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="air-conditioning/forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="air-conditioning/installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <!-- AI Search Button -->
@@ -4189,11 +4233,11 @@
         <div class="mobile-menu-content">
             <a href="#scout" class="mobile-menu-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="mobile-menu-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="air-conditioning/sales.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="air-conditioning/design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="air-conditioning/service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="air-conditioning/forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="air-conditioning/installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
     </div>
 
@@ -4402,151 +4446,6 @@
                                 </svg>
                             </div>
                             <div class="equipment-tooltip" data-en="AC Accessories" data-ru="Аксессуары">AC Accessories</div>
-                        </div>
-                        
-                        <!-- Ventilation Equipment -->
-                        <div class="equipment-type-item" data-subcategory="supply-ventilation">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="3" y="8" width="8" height="8" rx="1"/>
-                                    <path d="m11 12 6 0"/>
-                                    <path d="m14 9 3 3-3 3"/>
-                                    <path d="M6 11v2"/>
-                                    <path d="M8 11v2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Supply Ventilation" data-ru="Приточная вентиляция">Supply Ventilation</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="exhaust-ventilation">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="13" y="8" width="8" height="8" rx="1"/>
-                                    <path d="m7 12 6 0"/>
-                                    <path d="m10 9-3 3 3 3"/>
-                                    <path d="M16 11v2"/>
-                                    <path d="M18 11v2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Exhaust Ventilation" data-ru="Вытяжная вентиляция">Exhaust Ventilation</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="heat-recovery">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="3" y="6" width="18" height="12" rx="2"/>
-                                    <path d="M7 10h4l2 4h4"/>
-                                    <path d="M17 14h-4l-2-4H7"/>
-                                    <path d="m1 10 2 0"/>
-                                    <path d="m1 14 2 0"/>
-                                    <path d="m21 10 2 0"/>
-                                    <path d="m21 14 2 0"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Heat Recovery" data-ru="Рекуперация">Heat Recovery</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="air-handling">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="2" y="6" width="20" height="12" rx="2"/>
-                                    <rect x="6" y="9" width="3" height="6" rx="0.5"/>
-                                    <rect x="11" y="9" width="3" height="6" rx="0.5"/>
-                                    <rect x="16" y="9" width="3" height="6" rx="0.5"/>
-                                    <path d="M2 12h2"/>
-                                    <path d="M20 12h2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Air Handling Units" data-ru="Приточные установки">Air Handling Units</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="fans">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <circle cx="12" cy="12" r="9"/>
-                                    <circle cx="12" cy="12" r="2"/>
-                                    <path d="M12 2v4"/>
-                                    <path d="M12 18v4"/>
-                                    <path d="M2 12h4"/>
-                                    <path d="M18 12h4"/>
-                                    <path d="m6.34 6.34 2.83 2.83"/>
-                                    <path d="m14.83 14.83 2.83 2.83"/>
-                                    <path d="m6.34 17.66 2.83-2.83"/>
-                                    <path d="m14.83 9.17 2.83-2.83"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Fans" data-ru="Вентиляторы">Fans</div>
-                        </div>
-                        
-                        <!-- Heating Equipment -->
-                        <div class="equipment-type-item" data-subcategory="heat-pumps">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="4" y="6" width="16" height="12" rx="2"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M8 9h8"/>
-                                    <path d="M8 15h8"/>
-                                    <path d="M12 2v2"/>
-                                    <path d="M12 20v2"/>
-                                    <path d="M2 12h2"/>
-                                    <path d="M20 12h2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Heat Pumps" data-ru="Тепловые насосы">Heat Pumps</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="boilers">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="6" y="4" width="12" height="16" rx="2"/>
-                                    <circle cx="12" cy="10" r="2"/>
-                                    <path d="M9 16h6"/>
-                                    <path d="M10 16v2"/>
-                                    <path d="M14 16v2"/>
-                                    <path d="M12 2v2"/>
-                                    <path d="M12 20v2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Boilers" data-ru="Котлы">Boilers</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="radiators">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="4" y="8" width="2" height="8"/>
-                                    <rect x="7" y="8" width="2" height="8"/>
-                                    <rect x="10" y="8" width="2" height="8"/>
-                                    <rect x="13" y="8" width="2" height="8"/>
-                                    <rect x="16" y="8" width="2" height="8"/>
-                                    <path d="M2 10h20"/>
-                                    <path d="M2 14h20"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Radiators" data-ru="Радиаторы">Radiators</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="floor-heating">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="2" y="18" width="20" height="3" rx="1"/>
-                                    <path d="M4 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
-                                    <path d="M12 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
-                                    <path d="M6 8v6"/>
-                                    <path d="M10 5v9"/>
-                                    <path d="M14 8v6"/>
-                                    <path d="M18 5v9"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Floor Heating" data-ru="Теплый пол">Floor Heating</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="heat-exchangers">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="3" y="8" width="18" height="8" rx="1"/>
-                                    <path d="M7 12h10"/>
-                                    <path d="M9 10v4"/>
-                                    <path d="M12 10v4"/>
-                                    <path d="M15 10v4"/>
-                                    <path d="M3 10h-2"/>
-                                    <path d="M3 14h-2"/>
-                                    <path d="M21 10h2"/>
-                                    <path d="M21 14h2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Heat Exchangers" data-ru="Теплообменники">Heat Exchangers</div>
                         </div>
                     </div>
 
@@ -6002,7 +5901,7 @@
                             </div>
                             <div class="price-item">
                                 <span class="price-label">Клиент:</span>
-                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.25, true))}</span>
+                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.4, true))}</span>
                             </div>
                         </div>
                         
@@ -6778,6 +6677,11 @@
             const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
             const inputElement = document.getElementById('messageInput');
             
+            if (!languageSelect) {
+                console.warn('Language select element not found');
+                return;
+            }
+            
             let currentLang = localStorage.getItem('preferredLanguage') || 'en';
             languageSelect.value = currentLang;
             switchLanguage(currentLang);
@@ -6817,9 +6721,13 @@
                 }
                 
                 // Update language select dropdown
-                languageSelect.value = lang;
+                if (languageSelect) {
+                    languageSelect.value = lang;
+                }
                 
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+                
+                console.log('Language switched to:', lang);
             }
         }
 

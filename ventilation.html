@@ -735,6 +735,50 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            gap: 0;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--light-gray);
+            color: var(--deep-graphite);
+            padding: 0.5rem 1rem;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--signature-blue);
+            color: var(--signature-blue);
+        }
+
+        .lang-btn.active {
+            background: var(--signature-blue);
+            border-color: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .lang-btn:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .lang-btn:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+
         /* Mobile Menu Toggle */
         .mobile-menu-toggle {
             display: none;
@@ -2508,8 +2552,8 @@
         }
 
         .price-retail {
-            color: #999;
-            text-decoration: line-through;
+            color: #333;
+            font-weight: 600;
         }
 
         .price-purchase {
@@ -3947,11 +3991,11 @@
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="ventilation/sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="ventilation/design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="ventilation/service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="ventilation/forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="ventilation/installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <!-- AI Search Button -->
@@ -4007,11 +4051,11 @@
         <div class="mobile-menu-content">
             <a href="#scout" class="mobile-menu-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="mobile-menu-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="ventilation/sales.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="ventilation/design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="ventilation/service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="ventilation/forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="ventilation/installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
     </div>
 
@@ -4144,71 +4188,8 @@
                 <div class="products-layout">
                     <!-- Equipment Type Sidebar -->
                     <div class="equipment-sidebar">
-                        <!-- Air Conditioning Equipment -->
-                        <div class="equipment-type-item active" data-subcategory="split-systems">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="2" y="8" width="8" height="6" rx="1"/>
-                                    <rect x="14" y="8" width="8" height="6" rx="1"/>
-                                    <path d="m10 11 4 0"/>
-                                    <path d="M6 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
-                                    <path d="M6 14v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Split Systems" data-ru="Сплит-системы">Split Systems</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="multi-split">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="2" y="6" width="6" height="4" rx="1"/>
-                                    <rect x="2" y="14" width="6" height="4" rx="1"/>
-                                    <rect x="16" y="10" width="6" height="4" rx="1"/>
-                                    <path d="m8 8 8 4"/>
-                                    <path d="m8 16 8-4"/>
-                                    <circle cx="13" cy="12" r="1" fill="currentColor"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Multi-Split" data-ru="Мульти-сплит">Multi-Split</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="vrf">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="9" y="2" width="6" height="4" rx="1"/>
-                                    <rect x="2" y="9" width="4" height="6" rx="1"/>
-                                    <rect x="18" y="9" width="4" height="6" rx="1"/>
-                                    <rect x="9" y="18" width="6" height="4" rx="1"/>
-                                    <path d="m9 6 0 3"/>
-                                    <path d="m15 6 0 3"/>
-                                    <path d="m6 9 3 0"/>
-                                    <path d="m6 15 3 0"/>
-                                    <path d="m15 9 3 0"/>
-                                    <path d="m15 15 3 0"/>
-                                    <path d="m9 15 0 3"/>
-                                    <path d="m15 15 0 3"/>
-                                    <circle cx="12" cy="12" r="2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="VRF Systems" data-ru="VRF системы">VRF Systems</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="accessories">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="m12 1 0 6"/>
-                                    <path d="m12 17 0 6"/>
-                                    <path d="m1 12 6 0"/>
-                                    <path d="m17 12 6 0"/>
-                                    <path d="m4.22 4.22 4.24 4.24"/>
-                                    <path d="m15.54 15.54 4.24 4.24"/>
-                                    <path d="m4.22 19.78 4.24-4.24"/>
-                                    <path d="m15.54 8.46 4.24-4.24"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="AC Accessories" data-ru="Аксессуары">AC Accessories</div>
-                        </div>
-                        
                         <!-- Ventilation Equipment -->
-                        <div class="equipment-type-item" data-subcategory="supply-ventilation">
+                        <div class="equipment-type-item active" data-subcategory="supply-ventilation">
                             <div class="equipment-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <rect x="3" y="8" width="8" height="8" rx="1"/>
@@ -4275,81 +4256,6 @@
                                 </svg>
                             </div>
                             <div class="equipment-tooltip" data-en="Fans" data-ru="Вентиляторы">Fans</div>
-                        </div>
-                        
-                        <!-- Heating Equipment -->
-                        <div class="equipment-type-item" data-subcategory="heat-pumps">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="4" y="6" width="16" height="12" rx="2"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M8 9h8"/>
-                                    <path d="M8 15h8"/>
-                                    <path d="M12 2v2"/>
-                                    <path d="M12 20v2"/>
-                                    <path d="M2 12h2"/>
-                                    <path d="M20 12h2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Heat Pumps" data-ru="Тепловые насосы">Heat Pumps</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="boilers">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="6" y="4" width="12" height="16" rx="2"/>
-                                    <circle cx="12" cy="10" r="2"/>
-                                    <path d="M9 16h6"/>
-                                    <path d="M10 16v2"/>
-                                    <path d="M14 16v2"/>
-                                    <path d="M12 2v2"/>
-                                    <path d="M12 20v2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Boilers" data-ru="Котлы">Boilers</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="radiators">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="4" y="8" width="2" height="8"/>
-                                    <rect x="7" y="8" width="2" height="8"/>
-                                    <rect x="10" y="8" width="2" height="8"/>
-                                    <rect x="13" y="8" width="2" height="8"/>
-                                    <rect x="16" y="8" width="2" height="8"/>
-                                    <path d="M2 10h20"/>
-                                    <path d="M2 14h20"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Radiators" data-ru="Радиаторы">Radiators</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="floor-heating">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="2" y="18" width="20" height="3" rx="1"/>
-                                    <path d="M4 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
-                                    <path d="M12 18c0-1 0-2 1-3s2-1 3-1 2 0 3 1 1 2 1 3"/>
-                                    <path d="M6 8v6"/>
-                                    <path d="M10 5v9"/>
-                                    <path d="M14 8v6"/>
-                                    <path d="M18 5v9"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Floor Heating" data-ru="Теплый пол">Floor Heating</div>
-                        </div>
-                        <div class="equipment-type-item" data-subcategory="heat-exchangers">
-                            <div class="equipment-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="3" y="8" width="18" height="8" rx="1"/>
-                                    <path d="M7 12h10"/>
-                                    <path d="M9 10v4"/>
-                                    <path d="M12 10v4"/>
-                                    <path d="M15 10v4"/>
-                                    <path d="M3 10h-2"/>
-                                    <path d="M3 14h-2"/>
-                                    <path d="M21 10h2"/>
-                                    <path d="M21 14h2"/>
-                                </svg>
-                            </div>
-                            <div class="equipment-tooltip" data-en="Heat Exchangers" data-ru="Теплообменники">Heat Exchangers</div>
                         </div>
                     </div>
 
@@ -5976,7 +5882,7 @@
                             </div>
                             <div class="price-item">
                                 <span class="price-label">Клиент:</span>
-                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.25, true))}</span>
+                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.4, true))}</span>
                             </div>
                         </div>
                         
@@ -6752,6 +6658,11 @@
             const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
             const inputElement = document.getElementById('messageInput');
             
+            if (!languageSelect) {
+                console.warn('Language select element not found');
+                return;
+            }
+            
             let currentLang = localStorage.getItem('preferredLanguage') || 'en';
             languageSelect.value = currentLang;
             switchLanguage(currentLang);
@@ -6791,9 +6702,13 @@
                 }
                 
                 // Update language select dropdown
-                languageSelect.value = lang;
+                if (languageSelect) {
+                    languageSelect.value = lang;
+                }
                 
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+                
+                console.log('Language switched to:', lang);
             }
         }
 
