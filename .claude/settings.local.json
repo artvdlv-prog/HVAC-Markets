@@ -37,7 +37,12 @@
       "Bash(do sed -i \"s|href=\"\"index.html\"\"|href=\"\"../index.html\"\"|g\" $platform/$file)",
       "Bash(do echo \"Обновляю $file\")",
       "Bash(do echo \"=== Обновляю $file ===\")",
-      "Bash(do echo \"=== Проверяю $platform/design.html ===\")"
+      "Bash(do echo \"=== Проверяю $platform/design.html ===\")",
+      "Bash(copy:*)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(grep:*)",
+      "Bash(do echo \"=== heating/$file ===\")",
+      "Bash(do echo \"=== Исправляю $file ===\")"
     ],
     "deny": [],
     "ask": []

@@ -2095,7 +2095,35 @@
             initSearchModal();
             initLanguageToggle();
             initCartButton();
+            initLogoNavigation();
         });
+
+        // Initialize logo navigation
+        function initLogoNavigation() {
+            const letters = document.querySelectorAll('.hvac-letter');
+            letters.forEach(letter => {
+                letter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const platform = this.getAttribute('data-platform');
+                    
+                    // Navigate to the appropriate platform page
+                    switch(platform) {
+                        case 'heating':
+                            window.open('../heating.html', '_blank');
+                            break;
+                        case 'ventilation':
+                            window.open('../ventilation.html', '_blank');
+                            break;
+                        case 'airconditioning':
+                            window.location.href = '../air-conditioning.html';
+                            break;
+                        default:
+                            window.location.href = '../air-conditioning.html';
+                    }
+                });
+            });
+        }
         
         // Initialize cart button click handler
         function initCartButton() {

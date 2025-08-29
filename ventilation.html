@@ -5025,14 +5025,13 @@
                     console.log('========== LETTER CLICKED ==========');
                     console.log('Letter clicked:', this.textContent, 'switching to platform:', platform);
                     
-                    // Navigate to respective platform file
+                    // Navigate to respective platform file - each letter always goes to its platform
                     if (platform === 'heating') {
-                        window.open('heating.html', '_blank');
+                        window.location.href = 'heating.html';
                     } else if (platform === 'ventilation') {
-                        // Stay on current ventilation page, just refresh
-                        window.location.reload();
+                        window.location.href = 'ventilation.html';
                     } else if (platform === 'airconditioning') {
-                        window.open('air-conditioning.html', '_blank');
+                        window.location.href = 'air-conditioning.html';
                     }
                     console.log('====================================');
                 });
@@ -7953,6 +7952,37 @@
             if (e.key === 'Escape') {
                 closeCart();
             }
+        });
+
+        // Emergency navigation initialization - ensure navigation always works
+        window.addEventListener('load', function() {
+            console.log('Window loaded - reinitializing navigation...');
+            setTimeout(function() {
+                const letters = document.querySelectorAll('.hvac-letter');
+                console.log('Emergency init: Found', letters.length, 'HVAC letters');
+                
+                letters.forEach(function(letter) {
+                    // Remove any existing listeners by cloning the element
+                    const newLetter = letter.cloneNode(true);
+                    letter.parentNode.replaceChild(newLetter, letter);
+                    
+                    // Add fresh event listener
+                    newLetter.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const platform = this.getAttribute('data-platform');
+                        console.log('Emergency nav: Letter clicked:', this.textContent, 'platform:', platform);
+                        
+                        if (platform === 'heating') {
+                            window.location.href = 'heating.html';
+                        } else if (platform === 'ventilation') {
+                            window.location.href = 'ventilation.html';
+                        } else if (platform === 'airconditioning') {
+                            window.location.href = 'air-conditioning.html';
+                        }
+                    });
+                });
+            }, 1000);
         });
     </script>
 </body>
