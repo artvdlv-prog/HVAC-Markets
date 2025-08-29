@@ -1699,7 +1699,7 @@
         }
 
         .brand-tab.active {
-            color: var(--signature-blue);
+            color: #4CAF50;
             background: var(--primary-white);
         }
 
@@ -1710,7 +1710,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--signature-blue);
+            background: #4CAF50;
         }
 
         .brand-tab:hover:not(.active) {
@@ -1763,16 +1763,16 @@
         }
 
         .category-btn:hover {
-            border-color: var(--signature-blue);
-            background: rgba(20, 100, 244, 0.05);
-            color: var(--signature-blue);
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.05);
+            color: #4CAF50;
         }
 
         .category-btn.active {
-            background: var(--signature-blue);
+            background: #4CAF50;
             color: var(--primary-white);
-            border-color: var(--signature-blue);
-            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.3);
+            border-color: #4CAF50;
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
         }
 
         .category-btn.active .dropdown-arrow {
@@ -1917,7 +1917,7 @@
         }
 
         .price-input:focus, .area-input:focus, .capacity-input:focus {
-            border-color: var(--signature-blue);
+            border-color: #4CAF50;
             outline: none;
         }
 
@@ -2380,8 +2380,8 @@
         }
 
         .filter-checkbox.checked {
-            background: var(--signature-blue);
-            border-color: var(--signature-blue);
+            background: #4CAF50;
+            border-color: #4CAF50;
         }
 
         .filter-checkbox.checked::after {
@@ -2467,8 +2467,8 @@
         }
 
         .product-card:hover {
-            background: rgba(20, 100, 244, 0.02);
-            border-color: var(--signature-blue);
+            background: rgba(76, 175, 80, 0.02);
+            border-color: #4CAF50;
             z-index: 2;
         }
 
@@ -4084,16 +4084,16 @@
                 <!-- Brand Tabs with Client Discount -->
                 <div class="brand-tabs">
                     <div class="brand-tabs-left">
-                        <button class="brand-tab active" data-brand="daikin">Daikin</button>
-                        <button class="brand-tab" data-brand="mitsubishi">Mitsubishi</button>
-                        <button class="brand-tab" data-brand="lg">LG</button>
-                        <button class="brand-tab" data-brand="panasonic">Panasonic</button>
-                        <button class="brand-tab" data-brand="toshiba">Toshiba</button>
-                        <button class="brand-tab" data-brand="fujitsu">Fujitsu</button>
-                        <button class="brand-tab" data-brand="carrier">Carrier</button>
-                        <button class="brand-tab" data-brand="york">York</button>
-                        <button class="brand-tab" data-brand="trane">Trane</button>
-                        <button class="brand-tab" data-brand="lennox">Lennox</button>
+                        <button class="brand-tab active" data-brand="vertro">Vertro</button>
+                        <button class="brand-tab" data-brand="turkov">Turkov</button>
+                        <button class="brand-tab" data-brand="breezart">Breezart</button>
+                        <button class="brand-tab" data-brand="rowen">Rowen</button>
+                        <button class="brand-tab" data-brand="vents">Vents</button>
+                        <button class="brand-tab" data-brand="blauberg">Blauberg</button>
+                        <button class="brand-tab" data-brand="halton">Halton</button>
+                        <button class="brand-tab" data-brand="ventoxx">Ventoxx</button>
+                        <button class="brand-tab" data-brand="systemair">Systemair</button>
+                        <button class="brand-tab" data-brand="ostberg">Ostberg</button>
                     </div>
                     <div class="brand-tabs-right">
                         <div class="setting-group">
@@ -5027,11 +5027,12 @@
                     
                     // Navigate to respective platform file
                     if (platform === 'heating') {
-                        window.location.href = 'heating.html';
+                        window.open('heating.html', '_blank');
                     } else if (platform === 'ventilation') {
-                        window.location.href = 'ventilation.html';
+                        // Stay on current ventilation page, just refresh
+                        window.location.reload();
                     } else if (platform === 'airconditioning') {
-                        window.location.href = 'air-conditioning.html';
+                        window.open('air-conditioning.html', '_blank');
                     }
                     console.log('====================================');
                 });
@@ -5215,8 +5216,34 @@
             // Force product generation after everything is loaded
             setTimeout(() => {
                 console.log('Force generating products...');
+                console.log('Current brand:', currentBrand);
+                console.log('Available brands:', Object.keys(window.allBrandProducts));
+                
+                // Immediately call renderProducts with sample data as fallback
+                if (!window.allBrandProducts[currentBrand] || window.allBrandProducts[currentBrand].length === 0) {
+                    console.error('No products found for brand:', currentBrand);
+                    console.log('Setting fallback to first available brand');
+                    const availableBrands = Object.keys(window.allBrandProducts);
+                    if (availableBrands.length > 0) {
+                        currentBrand = availableBrands[0];
+                        console.log('Changed currentBrand to:', currentBrand);
+                    }
+                }
+                
                 generateSampleProducts();
-            }, 500);
+                
+                // Double-check that products were generated
+                setTimeout(() => {
+                    if (sampleProducts.length === 0) {
+                        console.error('EMERGENCY: No products generated! Forcing manual generation...');
+                        const emergencyProducts = [
+                            { id: 1, title: 'Test Ventilation Product', model: 'TEST-V1', specs: 'Test specs', price: 500, capacity: 500, type: 'test', brand: currentBrand, stock: 5 }
+                        ];
+                        renderProducts(emergencyProducts);
+                    }
+                }, 100);
+                
+            }, 800);
             
             // Handle hash navigation on page load
             handleHashNavigation();
@@ -5238,14 +5265,61 @@
 
         // Equipment Search System
         function initEquipmentSearch() {
+            console.log('=== INIT EQUIPMENT SEARCH (VENTILATION) ===');
+            console.log('Current brand at start:', currentBrand);
+            console.log('Brand products available:', Object.keys(window.allBrandProducts));
+            
             initScoutTabs();
+            console.log('✓ initScoutTabs completed');
+            
             initBrandTabs();
+            console.log('✓ initBrandTabs completed');
+            
             initFilters();
+            console.log('✓ initFilters completed');
+            
             initProductCards();
+            console.log('✓ initProductCards completed');
+            
             initSettingsPanel();
+            console.log('✓ initSettingsPanel completed');
+            
             initAISearch();
+            console.log('✓ initAISearch completed');
+            
             initAIChat();
-            generateSampleProducts();
+            console.log('✓ initAIChat completed');
+            
+            console.log('About to call generateSampleProducts');
+            
+            // Add a delay to ensure everything is properly loaded
+            setTimeout(() => {
+                console.log('Delayed call to generateSampleProducts (ventilation)');
+                try {
+                    generateSampleProducts();
+                    console.log('✓ generateSampleProducts called successfully');
+                } catch (error) {
+                    console.error('Error calling generateSampleProducts:', error);
+                    
+                    // Emergency fallback - render at least one test product
+                    const emergencyProducts = [{
+                        id: 1,
+                        title: 'Test Ventilation Product',
+                        model: 'TEST-V1',
+                        specs: 'Test ventilation specifications',
+                        price: 150,
+                        capacity: 500,
+                        type: 'test',
+                        brand: currentBrand,
+                        stock: 5
+                    }];
+                    
+                    console.log('Rendering emergency fallback products (ventilation)');
+                    renderProducts(emergencyProducts);
+                }
+            }, 500);
+            
+            console.log('✓ generateSampleProducts scheduled');
         }
 
         // Scout Sub-tabs functionality
@@ -5431,7 +5505,7 @@
             }
 
             // Brand detection
-            const brands = ['daikin', 'mitsubishi', 'lg', 'panasonic', 'toshiba', 'fujitsu', 'carrier', 'york', 'trane', 'lennox'];
+            const brands = ['vertro', 'turkov', 'breezart', 'rowen', 'vents', 'blauberg', 'halton', 'ventoxx', 'systemair', 'ostberg', 'salda', 'soler-palau', 'maico', 'helios', 'aereco'];
             brands.forEach(brand => {
                 if (lowerQuery.includes(brand)) {
                     const brandTab = document.querySelector(`[data-brand="${brand}"]`);
@@ -5592,7 +5666,7 @@
         let sampleProducts = [];
 
         let selectedProducts = [];
-        let currentBrand = 'daikin';
+        let currentBrand = 'vertro';
         let currentSubcategory = ''; // Start with no subcategory filter
         let currentCurrency = 'usd';
         let exchangeRates = {
@@ -5663,77 +5737,77 @@
         }
 
 
-        // Comprehensive product database for all brands - make it global
+        // Comprehensive product database for all ventilation brands - make it global
         window.allBrandProducts = {
-            daikin: [
-                { model: 'FTXS25K', title: 'Daikin FTXS25K Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 850, capacity: 9000, type: 'split' },
-                { model: 'FTXS35K', title: 'Daikin FTXS35K Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 950, capacity: 12000, type: 'split' },
-                { model: 'FTXS50K', title: 'Daikin FTXS50K Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1150, capacity: 18000, type: 'split' },
-                { model: 'FCAG71A', title: 'Daikin FCAG71A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1650, capacity: 24000, type: 'cassette' },
-                { model: 'FDXS35F', title: 'Daikin FDXS35F Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1100, capacity: 12000, type: 'floor' }
+            vertro: [
+                { model: 'AVM-500', title: 'Vertro AVM-500 Приточно-вытяжная установка', specs: '500 м³/ч, рекуперация 85%', price: 1250, capacity: 500, type: 'ventilation-unit' },
+                { model: 'AVM-800', title: 'Vertro AVM-800 Приточно-вытяжная установка', specs: '800 м³/ч, рекуперация 87%', price: 1850, capacity: 800, type: 'ventilation-unit' },
+                { model: 'AVMD-1200', title: 'Vertro AVMD-1200 Установка с увлажнением', specs: '1200 м³/ч, рекуперация + увлажнение', price: 2650, capacity: 1200, type: 'ventilation-unit' },
+                { model: 'FAN-315', title: 'Vertro FAN-315 Канальный вентилятор', specs: '315мм, 1200 м³/ч, EC мотор', price: 350, capacity: 1200, type: 'fan' },
+                { model: 'HEAT-REC-500', title: 'Vertro HEAT-REC-500 Рекуператор', specs: '500 м³/ч, пластинчатый, 82%', price: 680, capacity: 500, type: 'recuperator' }
             ],
-            mitsubishi: [
-                { model: 'MSZ-AP25VG', title: 'Mitsubishi MSZ-AP25VG Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 900, capacity: 9000, type: 'split' },
-                { model: 'MSZ-AP35VG', title: 'Mitsubishi MSZ-AP35VG Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1000, capacity: 12000, type: 'split' },
-                { model: 'MSZ-EF50VE', title: 'Mitsubishi MSZ-EF50VE Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1200, capacity: 18000, type: 'split' },
-                { model: 'PLA-M71EA', title: 'Mitsubishi PLA-M71EA Ceiling System', specs: '24,000 BTU/h, A+ Energy Class', price: 1700, capacity: 24000, type: 'ceiling' },
-                { model: 'MLZ-KP25VF', title: 'Mitsubishi MLZ-KP25VF Floor System', specs: '9,000 BTU/h, A++ Energy Class', price: 950, capacity: 9000, type: 'floor' }
+            turkov: [
+                { model: 'ZENIT-700EC', title: 'Turkov ZENIT-700EC Приточно-вытяжная установка', specs: '700 м³/ч, EC моторы, рекуперация 90%', price: 2150, capacity: 700, type: 'ventilation-unit' },
+                { model: 'ZENIT-1500EC', title: 'Turkov ZENIT-1500EC Установка', specs: '1500 м³/ч, роторный рекуператор, 85%', price: 3850, capacity: 1500, type: 'ventilation-unit' },
+                { model: 'CAPSULE-500', title: 'Turkov CAPSULE-500 Компактная установка', specs: '500 м³/ч, пластинчатый рекуператор', price: 1450, capacity: 500, type: 'ventilation-unit' },
+                { model: 'WIND-200', title: 'Turkov WIND-200 Канальный вентилятор', specs: '200мм, 800 м³/ч, низкий шум', price: 280, capacity: 800, type: 'fan' },
+                { model: 'PLATE-800', title: 'Turkov PLATE-800 Пластинчатый рекуператор', specs: '800 м³/ч, эффективность 78%', price: 950, capacity: 800, type: 'recuperator' }
             ],
-            lg: [
-                { model: 'S09EQ', title: 'LG S09EQ Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 750, capacity: 9000, type: 'split' },
-                { model: 'S12EQ', title: 'LG S12EQ Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 850, capacity: 12000, type: 'split' },
-                { model: 'S18EQ', title: 'LG S18EQ Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1050, capacity: 18000, type: 'split' },
-                { model: 'CT24F', title: 'LG CT24F Cassette System', specs: '24,000 BTU/h, A++ Energy Class', price: 1550, capacity: 24000, type: 'cassette' },
-                { model: 'UV42F', title: 'LG UV42F Floor System', specs: '12,000 BTU/h, A+ Energy Class', price: 980, capacity: 12000, type: 'floor' }
+            breezart: [
+                { model: '1000-LOFT', title: 'Breezart 1000 Loft Приточно-вытяжная установка', specs: '1000 м³/ч, энтальпийный рекуператор', price: 2850, capacity: 1000, type: 'ventilation-unit' },
+                { model: '2700-AQUA', title: 'Breezart 2700 Aqua Установка для бассейнов', specs: '2700 м³/ч, осушение + рекуперация', price: 4950, capacity: 2700, type: 'pool-ventilation' },
+                { model: '550-LITE', title: 'Breezart 550 Lite Компактная установка', specs: '550 м³/ч, базовая комплектация', price: 1680, capacity: 550, type: 'ventilation-unit' },
+                { model: 'HUM-12', title: 'Breezart HUM-12 Увлажнитель воздуха', specs: '12 кг/ч, ультразвуковой', price: 850, capacity: 12, type: 'humidifier' },
+                { model: 'FILTER-G4', title: 'Breezart FILTER-G4 Фильтр', specs: 'G4 класс, 287x592x45мм', price: 45, capacity: 0, type: 'filter' }
             ],
-            panasonic: [
-                { model: 'CS-Z25TKEW', title: 'Panasonic CS-Z25TKEW Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 950, capacity: 9000, type: 'split' },
-                { model: 'CS-Z35TKEW', title: 'Panasonic CS-Z35TKEW Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1050, capacity: 12000, type: 'split' },
-                { model: 'CS-Z50TKEW', title: 'Panasonic CS-Z50TKEW Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1250, capacity: 18000, type: 'split' },
-                { model: 'S-71PU2E5A', title: 'Panasonic S-71PU2E5A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1750, capacity: 24000, type: 'cassette' },
-                { model: 'S-35PF2E5A', title: 'Panasonic S-35PF2E5A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1150, capacity: 12000, type: 'floor' }
+            rowen: [
+                { model: 'ROWEN-800V', title: 'Rowen 800V Вытяжная установка', specs: '800 м³/ч, центробежный вентилятор', price: 650, capacity: 800, type: 'exhaust-unit' },
+                { model: 'ROWEN-1200S', title: 'Rowen 1200S Приточная установка', specs: '1200 м³/ч, нагрев + фильтрация', price: 1150, capacity: 1200, type: 'supply-unit' },
+                { model: 'ROWEN-REC-600', title: 'Rowen REC-600 Рекуперативная установка', specs: '600 м³/ч, перекрестный теплообменник', price: 1850, capacity: 600, type: 'ventilation-unit' },
+                { model: 'ROWEN-FAN-315', title: 'Rowen FAN-315 Канальный вентилятор', specs: '315мм, переменная скорость', price: 320, capacity: 1100, type: 'fan' },
+                { model: 'ROWEN-GRILLE-300', title: 'Rowen GRILLE-300 Вентиляционная решетка', specs: '300x300мм, регулируемая', price: 65, capacity: 0, type: 'grille' }
             ],
-            toshiba: [
-                { model: 'RAS-25PKVSG', title: 'Toshiba RAS-25PKVSG Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 820, capacity: 9000, type: 'split' },
-                { model: 'RAS-35PKVSG', title: 'Toshiba RAS-35PKVSG Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 920, capacity: 12000, type: 'split' },
-                { model: 'RAS-50PKVSG', title: 'Toshiba RAS-50PKVSG Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1120, capacity: 18000, type: 'split' },
-                { model: 'RAV-SM804CTP', title: 'Toshiba RAV-SM804CTP Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1620, capacity: 24000, type: 'cassette' },
-                { model: 'RAV-SM364FTP', title: 'Toshiba RAV-SM364FTP Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1050, capacity: 12000, type: 'floor' }
+            vents: [
+                { model: 'VUTS-600-PE', title: 'Vents VUTS-600-PE Приточно-вытяжная установка', specs: '600 м³/ч, пластинчатый рекуператор', price: 1950, capacity: 600, type: 'ventilation-unit' },
+                { model: 'VUT-200-H', title: 'Vents VUT-200-H Установка с нагревом', specs: '200 м³/ч, электронагрев 1кВт', price: 850, capacity: 200, type: 'supply-unit' },
+                { model: 'VK-200', title: 'Vents VK-200 Канальный вентилятор', specs: '200мм, смешанного типа, 780 м³/ч', price: 180, capacity: 780, type: 'fan' },
+                { model: 'FK-250', title: 'Vents FK-250 Канальный вентилятор', specs: '250мм, центробежный, 1050 м³/ч', price: 250, capacity: 1050, type: 'fan' },
+                { model: 'MPA-100', title: 'Vents MPA-100 Решетка наружная', specs: '100мм, защита от дождя', price: 25, capacity: 0, type: 'grille' }
             ],
-            fujitsu: [
-                { model: 'ASYG09KMCC', title: 'Fujitsu ASYG09KMCC Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 880, capacity: 9000, type: 'split' },
-                { model: 'ASYG12KMCC', title: 'Fujitsu ASYG12KMCC Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 980, capacity: 12000, type: 'split' },
-                { model: 'ASYG18KMCC', title: 'Fujitsu ASYG18KMCC Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1180, capacity: 18000, type: 'split' },
-                { model: 'AUYG24LVLA', title: 'Fujitsu AUYG24LVLA Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1680, capacity: 24000, type: 'cassette' },
-                { model: 'AGYG12LVCB', title: 'Fujitsu AGYG12LVCB Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1080, capacity: 12000, type: 'floor' }
+            blauberg: [
+                { model: 'KOMFORT-ULTRA-L400', title: 'Blauberg KOMFORT ULTRA L400', specs: '400 м³/ч, энтальпийный рекуператор', price: 2450, capacity: 400, type: 'ventilation-unit' },
+                { model: 'FRESHBOX-100', title: 'Blauberg FRESHBOX-100 Децентрализованная вентиляция', specs: '100 м³/ч, керамический рекуператор', price: 680, capacity: 100, type: 'decentralized-unit' },
+                { model: 'CENTRIFUGAL-250', title: 'Blauberg CENTRIFUGAL-250 Канальный вентилятор', specs: '250мм, центробежный, EC мотор', price: 420, capacity: 1200, type: 'fan' },
+                { model: 'TUBE-125', title: 'Blauberg TUBE-125 Осевой вентилятор', specs: '125мм, низкое энергопотребление', price: 95, capacity: 180, type: 'fan' },
+                { model: 'FILTER-POCKET-F7', title: 'Blauberg FILTER-POCKET-F7', specs: 'F7 класс, карманный фильтр', price: 85, capacity: 0, type: 'filter' }
             ],
-            carrier: [
-                { model: '42QHC009DS', title: 'Carrier 42QHC009DS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 780, capacity: 9000, type: 'split' },
-                { model: '42QHC012DS', title: 'Carrier 42QHC012DS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 880, capacity: 12000, type: 'split' },
-                { model: '42QHC018DS', title: 'Carrier 42QHC018DS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1080, capacity: 18000, type: 'split' },
-                { model: '42GW024DS', title: 'Carrier 42GW024DS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1580, capacity: 24000, type: 'cassette' },
-                { model: '42GW012DS', title: 'Carrier 42GW012DS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 980, capacity: 12000, type: 'floor' }
+            halton: [
+                { model: 'HALTON-KWL-EC-1000', title: 'Halton KWL-EC-1000 Приточно-вытяжная установка', specs: '1000 м³/ч, EC моторы, 92% рекуперация', price: 4250, capacity: 1000, type: 'ventilation-unit' },
+                { model: 'HALTON-M.A.R.V.E.L-500', title: 'Halton M.A.R.V.E.L-500 Умная установка', specs: '500 м³/ч, IoT управление, сенсоры качества', price: 3650, capacity: 500, type: 'smart-ventilation' },
+                { model: 'HALTON-CAPTURE-JET', title: 'Halton CAPTURE JET Вытяжной зонт', specs: 'Индукционная технология, для кухонь', price: 2850, capacity: 2000, type: 'exhaust-hood' },
+                { model: 'HALTON-KMA-400', title: 'Halton KMA-400 Приточный модуль', specs: '400 м³/ч, встраиваемый потолочный', price: 1450, capacity: 400, type: 'supply-module' },
+                { model: 'HALTON-VITA-250', title: 'Halton VITA-250 Компактная установка', specs: '250 м³/ч, для квартир, тихая работа', price: 1850, capacity: 250, type: 'residential-unit' }
             ],
-            york: [
-                { model: 'YHFC09FS', title: 'York YHFC09FS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 760, capacity: 9000, type: 'split' },
-                { model: 'YHFC12FS', title: 'York YHFC12FS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 860, capacity: 12000, type: 'split' },
-                { model: 'YHFC18FS', title: 'York YHFC18FS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1060, capacity: 18000, type: 'split' },
-                { model: 'YCAC024FS', title: 'York YCAC024FS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1560, capacity: 24000, type: 'cassette' },
-                { model: 'YFAC012FS', title: 'York YFAC012FS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 960, capacity: 12000, type: 'floor' }
+            ventoxx: [
+                { model: 'VENTOXX-CHAMPION-800', title: 'Ventoxx Champion-800 Рекуператор', specs: '800 м³/ч, эффективность 98%, медный теплообменник', price: 1250, capacity: 800, type: 'recuperator' },
+                { model: 'VENTOXX-HARMONY-350', title: 'Ventoxx Harmony-350 Компактная установка', specs: '350 м³/ч, для квартир, низкий шум', price: 950, capacity: 350, type: 'residential-unit' },
+                { model: 'VENTOXX-TWIN-600', title: 'Ventoxx Twin-600 Двойная установка', specs: '600 м³/ч, раздельные контуры', price: 1650, capacity: 600, type: 'twin-unit' },
+                { model: 'VENTOXX-FILTER-H13', title: 'Ventoxx FILTER-H13 HEPA фильтр', specs: 'H13 класс, 99.95% эффективность', price: 125, capacity: 0, type: 'filter' },
+                { model: 'VENTOXX-SENSOR-CO2', title: 'Ventoxx SENSOR-CO2 Датчик качества воздуха', specs: 'CO2, VOC, влажность, температура', price: 185, capacity: 0, type: 'sensor' }
             ],
-            trane: [
-                { model: '4TXK3009A', title: 'Trane 4TXK3009A Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 800, capacity: 9000, type: 'split' },
-                { model: '4TXK3012A', title: 'Trane 4TXK3012A Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 900, capacity: 12000, type: 'split' },
-                { model: '4TXK3018A', title: 'Trane 4TXK3018A Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1100, capacity: 18000, type: 'split' },
-                { model: '4TCC4024A', title: 'Trane 4TCC4024A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1600, capacity: 24000, type: 'cassette' },
-                { model: '4TFC4012A', title: 'Trane 4TFC4012A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1000, capacity: 12000, type: 'floor' }
+            systemair: [
+                { model: 'SYSTEMAIR-SAVE-VTR-300', title: 'Systemair SAVE VTR-300 Приточно-вытяжная установка', specs: '300 м³/ч, роторный рекуператор, 85%', price: 3450, capacity: 300, type: 'ventilation-unit' },
+                { model: 'SYSTEMAIR-TOPVEX-TR04', title: 'Systemair TOPVEX TR04 Крышная установка', specs: '4000 м³/ч, для промышленных объектов', price: 12500, capacity: 4000, type: 'roof-unit' },
+                { model: 'SYSTEMAIR-KD-250-XL1', title: 'Systemair KD-250-XL1 Канальный вентилятор', specs: '250мм, смешанного типа, EC мотор', price: 650, capacity: 1250, type: 'fan' },
+                { model: 'SYSTEMAIR-DVS-SILEO-100', title: 'Systemair DVS SILEO-100 Бесшумный вентилятор', specs: '100мм, для ванных комнат, 7 дБ', price: 280, capacity: 95, type: 'bathroom-fan' },
+                { model: 'SYSTEMAIR-REC-250-EX', title: 'Systemair REC-250-EX Взрывозащищенный вентилятор', specs: '250мм, для опасных зон', price: 1250, capacity: 900, type: 'explosion-proof-fan' }
             ],
-            lennox: [
-                { model: 'MLA009S4M', title: 'Lennox MLA009S4M Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 790, capacity: 9000, type: 'split' },
-                { model: 'MLA012S4M', title: 'Lennox MLA012S4M Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 890, capacity: 12000, type: 'split' },
-                { model: 'MLA018S4M', title: 'Lennox MLA018S4M Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1090, capacity: 18000, type: 'split' },
-                { model: 'MCA024S4M', title: 'Lennox MCA024S4M Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1590, capacity: 24000, type: 'cassette' },
-                { model: 'MFA012S4M', title: 'Lennox MFA012S4M Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 990, capacity: 12000, type: 'floor' }
+            ostberg: [
+                { model: 'OSTBERG-CK-315C', title: 'Ostberg CK-315C Канальный вентилятор', specs: '315мм, центробежный, высокая эффективность', price: 580, capacity: 1650, type: 'fan' },
+                { model: 'OSTBERG-LPKB-200A', title: 'Ostberg LPKB-200A Канальный вентилятор', specs: '200мм, радиальный, компактный', price: 420, capacity: 920, type: 'fan' },
+                { model: 'OSTBERG-TKH-250A', title: 'Ostberg TKH-250A Крышный вентилятор', specs: '250мм, горизонтальный выброс', price: 750, capacity: 1100, type: 'roof-fan' },
+                { model: 'OSTBERG-RSI-160', title: 'Ostberg RSI-160 Радиальный вентилятор', specs: '160мм, низкий уровень шума', price: 380, capacity: 680, type: 'radial-fan' },
+                { model: 'OSTBERG-GRID-200', title: 'Ostberg GRID-200 Защитная решетка', specs: '200мм, нержавеющая сталь', price: 45, capacity: 0, type: 'grille' }
             ]
         };
         

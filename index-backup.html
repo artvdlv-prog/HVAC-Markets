@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HVAC Markets - Heating Platform</title>
+    <title>HVAC Markets - Air Conditioning Platform</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -40,14 +40,6 @@
             --warning-yellow: #FF9800;
             --error-red: #F44336;
             --search-header-gray: #EEEEEE;
-            
-            /* Platform theme colors */
-            --heating-color: #FF6B35;
-            --heating-light: rgba(255, 107, 53, 0.15);
-            --ventilation-color: #4CAF50;
-            --ventilation-light: rgba(76, 175, 80, 0.15);
-            --airconditioning-color: #1464F4;
-            --airconditioning-light: rgba(20, 100, 244, 0.15);
         }
 
         /* Typography */
@@ -118,62 +110,20 @@
 
 
         /* Heating platform styles */
-        .hvac-letter[data-platform="heating"]:hover,
-        .hvac-letter[data-platform="heating"].active,
-        .platform-heating .hvac-letter[data-platform="heating"] {
+        .hvac-letter[data-platform="heating"]:hover {
             background: rgba(255, 107, 53, 0.15);
             color: #FF6B35;
         }
 
-        .platform-heating .platform-subtitle {
-            color: #FF6B35;
-        }
-
-        .platform-heating .nav-item:hover {
-            color: #FF6B35;
-        }
-
-        .platform-heating .nav-item.active {
-            color: #FF6B35;
-        }
-
         /* Ventilation platform styles */
-        .hvac-letter[data-platform="ventilation"]:hover,
-        .hvac-letter[data-platform="ventilation"].active,
-        .platform-ventilation .hvac-letter[data-platform="ventilation"] {
+        .hvac-letter[data-platform="ventilation"]:hover {
             background: rgba(76, 175, 80, 0.15);
             color: #4CAF50;
         }
 
-        .platform-ventilation .platform-subtitle {
-            color: #4CAF50;
-        }
-
-        .platform-ventilation .nav-item:hover {
-            color: #4CAF50;
-        }
-
-        .platform-ventilation .nav-item.active {
-            color: #4CAF50;
-        }
-
         /* Air Conditioning platform styles (default) */
-        .hvac-letter[data-platform="airconditioning"]:hover,
-        .hvac-letter[data-platform="airconditioning"].active,
-        .platform-airconditioning .hvac-letter[data-platform="airconditioning"] {
+        .hvac-letter[data-platform="airconditioning"]:hover {
             background: rgba(20, 100, 244, 0.15);
-            color: var(--signature-blue);
-        }
-
-        .platform-airconditioning .platform-subtitle {
-            color: var(--signature-blue);
-        }
-
-        .platform-airconditioning .nav-item:hover {
-            color: var(--signature-blue);
-        }
-
-        .platform-airconditioning .nav-item.active {
             color: var(--signature-blue);
         }
 
@@ -327,158 +277,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        /* Cart Tabs */
-        .cart-tabs {
-            display: flex;
-            background: var(--warm-gray);
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .cart-tab {
-            flex: 1;
-            background: none;
-            border: none;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--deep-graphite);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
-
-        .cart-tab:hover {
-            background: var(--primary-white);
-            color: var(--signature-blue);
-        }
-
-        .cart-tab.active {
-            background: var(--primary-white);
-            color: var(--signature-blue);
-            border-bottom-color: var(--signature-blue);
-        }
-
-        /* Cart Tab Content */
-        .cart-tab-content {
-            display: none;
-        }
-
-        .cart-tab-content.active {
-            display: block;
-        }
-
-        /* Quote Builder Layout */
-        .quote-builder {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 0;
-            min-height: 500px;
-        }
-
-        /* Quote Settings Sidebar */
-        .quote-settings-sidebar {
-            background: var(--warm-gray);
-            padding: 1.5rem;
-            border-right: 1px solid var(--light-gray);
-        }
-
-        .quote-settings-section {
-            margin-bottom: 2rem;
-        }
-
-        .quote-settings-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--deep-graphite);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .quote-setting-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .quote-setting-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--deep-graphite);
-            margin-bottom: 0.5rem;
-        }
-
-        .quote-setting-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--light-gray);
-            border-radius: 4px;
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        .quote-setting-range {
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-
-        /* Brand Discounts */
-        .brand-discount-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .brand-discount-label {
-            flex: 1;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .brand-discount-input {
-            width: 80px;
-            padding: 0.5rem;
-            border: 1px solid var(--light-gray);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        /* Profitability Display */
-        .profitability-display {
-            background: var(--primary-white);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--light-gray);
-            margin-top: 1rem;
-        }
-
-        .profit-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .profit-value {
-            font-weight: 600;
-        }
-
-        .profit-value.positive {
-            color: var(--success-green);
-        }
-
-        .profit-value.negative {
-            color: var(--error-red);
-        }
-
-        /* Quote Content Area */
-        .quote-content {
-            padding: 1.5rem;
-            max-height: 500px;
-            overflow-y: auto;
         }
 
         .cart-title {
@@ -887,50 +685,6 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        /* Language Toggle */
-        .language-toggle {
-            display: flex;
-            gap: 0;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: 2px solid var(--light-gray);
-            color: var(--deep-graphite);
-            padding: 0.5rem 1rem;
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .lang-btn:hover {
-            border-color: var(--signature-blue);
-            color: var(--signature-blue);
-        }
-
-        .lang-btn.active {
-            background: var(--signature-blue);
-            border-color: var(--signature-blue);
-            color: var(--primary-white);
-        }
-
-        .lang-btn:first-child {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .lang-btn:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-left: none;
-        }
-
         /* Mobile Menu Toggle */
         .mobile-menu-toggle {
             display: none;
@@ -1167,13 +921,6 @@
             padding: 2rem;
             min-height: 80vh;
             width: 100%;
-        }
-
-        /* Fix for anchor links under fixed navigation */
-        #scout, #match {
-            scroll-margin-top: 80px;
-            padding-top: 80px;
-            margin-top: -80px;
         }
 
         .module-content.active {
@@ -1851,7 +1598,7 @@
         }
 
         .brand-tab.active {
-            color: #FF6B35;
+            color: var(--signature-blue);
             background: var(--primary-white);
         }
 
@@ -1862,7 +1609,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: #FF6B35;
+            background: var(--signature-blue);
         }
 
         .brand-tab:hover:not(.active) {
@@ -1915,16 +1662,16 @@
         }
 
         .category-btn:hover {
-            border-color: #FF6B35;
-            background: rgba(255, 107, 53, 0.05);
-            color: #FF6B35;
+            border-color: var(--signature-blue);
+            background: rgba(20, 100, 244, 0.05);
+            color: var(--signature-blue);
         }
 
         .category-btn.active {
-            background: #FF6B35;
+            background: var(--signature-blue);
             color: var(--primary-white);
-            border-color: #FF6B35;
-            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            border-color: var(--signature-blue);
+            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.3);
         }
 
         .category-btn.active .dropdown-arrow {
@@ -2069,7 +1816,7 @@
         }
 
         .price-input:focus, .area-input:focus, .capacity-input:focus {
-            border-color: #FF6B35;
+            border-color: var(--signature-blue);
             outline: none;
         }
 
@@ -2532,8 +2279,8 @@
         }
 
         .filter-checkbox.checked {
-            background: #FF6B35;
-            border-color: #FF6B35;
+            background: var(--signature-blue);
+            border-color: var(--signature-blue);
         }
 
         .filter-checkbox.checked::after {
@@ -2619,8 +2366,8 @@
         }
 
         .product-card:hover {
-            background: rgba(255, 107, 53, 0.02);
-            border-color: #FF6B35;
+            background: rgba(20, 100, 244, 0.02);
+            border-color: var(--signature-blue);
             z-index: 2;
         }
 
@@ -2704,8 +2451,8 @@
         }
 
         .price-retail {
-            color: #333;
-            font-weight: 600;
+            color: #999;
+            text-decoration: line-through;
         }
 
         .price-purchase {
@@ -2713,7 +2460,7 @@
         }
 
         .price-sale {
-            color: #FF6B35;
+            color: var(--signature-blue);
             font-size: 0.9rem;
             font-weight: 700;
         }
@@ -4127,7 +3874,7 @@
         }
     </style>
 </head>
-<body class="platform-heating" data-current-platform="heating">
+<body>
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-logo">
@@ -4143,11 +3890,11 @@
         <div class="nav-menu">
             <a href="#scout" class="nav-item active" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="heating/sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="heating/design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="heating/service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="heating/forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="heating/installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <!-- AI Search Button -->
@@ -4203,11 +3950,11 @@
         <div class="mobile-menu-content">
             <a href="#scout" class="mobile-menu-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="#match" class="mobile-menu-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="heating/sales.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="heating/design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="heating/service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="heating/forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="heating/installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="quote.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
     </div>
 
@@ -4236,16 +3983,16 @@
                 <!-- Brand Tabs with Client Discount -->
                 <div class="brand-tabs">
                     <div class="brand-tabs-left">
-                        <button class="brand-tab active" data-brand="lemax">Lemax</button>
-                        <button class="brand-tab" data-brand="konord">Konord</button>
-                        <button class="brand-tab" data-brand="neva">Neva</button>
-                        <button class="brand-tab" data-brand="baxi">Baxi</button>
-                        <button class="brand-tab" data-brand="viessmann">Viessmann</button>
-                        <button class="brand-tab" data-brand="buderus">Buderus</button>
-                        <button class="brand-tab" data-brand="vaillant">Vaillant</button>
-                        <button class="brand-tab" data-brand="protherm">Protherm</button>
-                        <button class="brand-tab" data-brand="bosch">Bosch</button>
-                        <button class="brand-tab" data-brand="ariston">Ariston</button>
+                        <button class="brand-tab active" data-brand="daikin">Daikin</button>
+                        <button class="brand-tab" data-brand="mitsubishi">Mitsubishi</button>
+                        <button class="brand-tab" data-brand="lg">LG</button>
+                        <button class="brand-tab" data-brand="panasonic">Panasonic</button>
+                        <button class="brand-tab" data-brand="toshiba">Toshiba</button>
+                        <button class="brand-tab" data-brand="fujitsu">Fujitsu</button>
+                        <button class="brand-tab" data-brand="carrier">Carrier</button>
+                        <button class="brand-tab" data-brand="york">York</button>
+                        <button class="brand-tab" data-brand="trane">Trane</button>
+                        <button class="brand-tab" data-brand="lennox">Lennox</button>
                     </div>
                     <div class="brand-tabs-right">
                         <div class="setting-group">
@@ -4270,37 +4017,35 @@
                             </div>
                         </div>
 
-                        <!-- Fuel Type Filter -->
+                        <!-- Technology Filter -->
                         <div class="horizontal-filter">
-                            <label class="filter-label" data-en="Fuel Type" data-ru="Тип топлива">Fuel Type</label>
+                            <label class="filter-label" data-en="Technology" data-ru="Технология">Technology</label>
                             <select class="filter-select" id="technologyFilter">
                                 <option value="" data-en="All" data-ru="Все">All</option>
-                                <option value="gas" data-en="Gas" data-ru="Газ">Gas</option>
-                                <option value="electric" data-en="Electric" data-ru="Электричество">Electric</option>
-                                <option value="solid-fuel" data-en="Solid Fuel" data-ru="Твердое топливо">Solid Fuel</option>
-                                <option value="heat-pump" data-en="Heat Pump" data-ru="Тепловой насос">Heat Pump</option>
+                                <option value="full-dc-inverter" data-en="Full DC Inverter" data-ru="Full DC Инвертор">Full DC Inverter</option>
+                                <option value="inverter" data-en="Inverter" data-ru="Инвертор">Inverter</option>
+                                <option value="on-off" data-en="On/Off" data-ru="Вкл/Выкл">On/Off</option>
                             </select>
                         </div>
 
-                        <!-- Power Range Filter -->
+                        <!-- Room Area Filter -->
                         <div class="horizontal-filter">
-                            <label class="filter-label" data-en="Power Range" data-ru="Мощность">Power Range</label>
+                            <label class="filter-label" data-en="Room Area" data-ru="Площадь">Room Area</label>
                             <div class="area-range-compact">
-                                <input type="number" class="area-input-compact" id="areaFromH" placeholder="5" />
+                                <input type="number" class="area-input-compact" id="areaFromH" placeholder="10" />
                                 <span>—</span>
-                                <input type="number" class="area-input-compact" id="areaToH" placeholder="50" />
-                                <span class="unit">кВт</span>
+                                <input type="number" class="area-input-compact" id="areaToH" placeholder="200" />
+                                <span class="unit">м²</span>
                             </div>
                         </div>
 
-                        <!-- Efficiency Class Filter -->
+                        <!-- Wi-Fi Management Filter -->
                         <div class="horizontal-filter">
-                            <label class="filter-label" data-en="Efficiency" data-ru="КПД">Efficiency</label>
+                            <label class="filter-label" data-en="Wi-Fi" data-ru="Wi-Fi">Wi-Fi</label>
                             <select class="filter-select" id="wifiFilter">
                                 <option value="" data-en="All" data-ru="Все">All</option>
-                                <option value="condensing" data-en="Condensing (>100%)" data-ru="Конденсационный (>100%)">Condensing (>100%)</option>
-                                <option value="high-efficiency" data-en="High Efficiency (90-99%)" data-ru="Высокий КПД (90-99%)">High Efficiency (90-99%)</option>
-                                <option value="standard" data-en="Standard (80-89%)" data-ru="Стандарт (80-89%)">Standard (80-89%)</option>
+                                <option value="yes" data-en="Yes" data-ru="Да">Yes</option>
+                                <option value="no" data-en="No" data-ru="Нет">No</option>
                             </select>
                         </div>
 
@@ -4342,8 +4087,141 @@
                 <div class="products-layout">
                     <!-- Equipment Type Sidebar -->
                     <div class="equipment-sidebar">
+                        <!-- Air Conditioning Equipment -->
+                        <div class="equipment-type-item active" data-subcategory="split-systems">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="8" width="8" height="6" rx="1"/>
+                                    <rect x="14" y="8" width="8" height="6" rx="1"/>
+                                    <path d="m10 11 4 0"/>
+                                    <path d="M6 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+                                    <path d="M6 14v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Split Systems" data-ru="Сплит-системы">Split Systems</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="multi-split">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="6" width="6" height="4" rx="1"/>
+                                    <rect x="2" y="14" width="6" height="4" rx="1"/>
+                                    <rect x="16" y="10" width="6" height="4" rx="1"/>
+                                    <path d="m8 8 8 4"/>
+                                    <path d="m8 16 8-4"/>
+                                    <circle cx="13" cy="12" r="1" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Multi-Split" data-ru="Мульти-сплит">Multi-Split</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="vrf">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="9" y="2" width="6" height="4" rx="1"/>
+                                    <rect x="2" y="9" width="4" height="6" rx="1"/>
+                                    <rect x="18" y="9" width="4" height="6" rx="1"/>
+                                    <rect x="9" y="18" width="6" height="4" rx="1"/>
+                                    <path d="m9 6 0 3"/>
+                                    <path d="m15 6 0 3"/>
+                                    <path d="m6 9 3 0"/>
+                                    <path d="m6 15 3 0"/>
+                                    <path d="m15 9 3 0"/>
+                                    <path d="m15 15 3 0"/>
+                                    <path d="m9 15 0 3"/>
+                                    <path d="m15 15 0 3"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="VRF Systems" data-ru="VRF системы">VRF Systems</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="accessories">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="m12 1 0 6"/>
+                                    <path d="m12 17 0 6"/>
+                                    <path d="m1 12 6 0"/>
+                                    <path d="m17 12 6 0"/>
+                                    <path d="m4.22 4.22 4.24 4.24"/>
+                                    <path d="m15.54 15.54 4.24 4.24"/>
+                                    <path d="m4.22 19.78 4.24-4.24"/>
+                                    <path d="m15.54 8.46 4.24-4.24"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="AC Accessories" data-ru="Аксессуары">AC Accessories</div>
+                        </div>
+                        
+                        <!-- Ventilation Equipment -->
+                        <div class="equipment-type-item" data-subcategory="supply-ventilation">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="8" width="8" height="8" rx="1"/>
+                                    <path d="m11 12 6 0"/>
+                                    <path d="m14 9 3 3-3 3"/>
+                                    <path d="M6 11v2"/>
+                                    <path d="M8 11v2"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Supply Ventilation" data-ru="Приточная вентиляция">Supply Ventilation</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="exhaust-ventilation">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="13" y="8" width="8" height="8" rx="1"/>
+                                    <path d="m7 12 6 0"/>
+                                    <path d="m10 9-3 3 3 3"/>
+                                    <path d="M16 11v2"/>
+                                    <path d="M18 11v2"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Exhaust Ventilation" data-ru="Вытяжная вентиляция">Exhaust Ventilation</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="heat-recovery">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                                    <path d="M7 10h4l2 4h4"/>
+                                    <path d="M17 14h-4l-2-4H7"/>
+                                    <path d="m1 10 2 0"/>
+                                    <path d="m1 14 2 0"/>
+                                    <path d="m21 10 2 0"/>
+                                    <path d="m21 14 2 0"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Heat Recovery" data-ru="Рекуперация">Heat Recovery</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="air-handling">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                                    <rect x="6" y="9" width="3" height="6" rx="0.5"/>
+                                    <rect x="11" y="9" width="3" height="6" rx="0.5"/>
+                                    <rect x="16" y="9" width="3" height="6" rx="0.5"/>
+                                    <path d="M2 12h2"/>
+                                    <path d="M20 12h2"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Air Handling Units" data-ru="Приточные установки">Air Handling Units</div>
+                        </div>
+                        <div class="equipment-type-item" data-subcategory="fans">
+                            <div class="equipment-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M12 2v4"/>
+                                    <path d="M12 18v4"/>
+                                    <path d="M2 12h4"/>
+                                    <path d="M18 12h4"/>
+                                    <path d="m6.34 6.34 2.83 2.83"/>
+                                    <path d="m14.83 14.83 2.83 2.83"/>
+                                    <path d="m6.34 17.66 2.83-2.83"/>
+                                    <path d="m14.83 9.17 2.83-2.83"/>
+                                </svg>
+                            </div>
+                            <div class="equipment-tooltip" data-en="Fans" data-ru="Вентиляторы">Fans</div>
+                        </div>
+                        
                         <!-- Heating Equipment -->
-                        <div class="equipment-type-item active" data-subcategory="heat-pumps">
+                        <div class="equipment-type-item" data-subcategory="heat-pumps">
                             <div class="equipment-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <rect x="4" y="6" width="16" height="12" rx="2"/>
@@ -5102,171 +4980,42 @@
                 <button class="cart-close" onclick="closeCart()" title="Закрыть">×</button>
             </div>
             
-            <!-- Cart Tabs -->
-            <div class="cart-tabs">
-                <button class="cart-tab active" data-cart-tab="cart" data-en="Cart" data-ru="Корзина">Корзина</button>
-                <button class="cart-tab" data-cart-tab="quote" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Коммерческое предложение</button>
-            </div>
-            
-            <!-- Cart Tab Content -->
-            <div class="cart-tab-content active" data-cart-content="cart">
-                <div class="cart-body">
-                    <!-- Cart Items by Brand -->
-                    <div class="cart-items" id="cartItems">
-                        <!-- Items will be dynamically generated here -->
+            <div class="cart-body">
+                <!-- Cart Items by Brand -->
+                <div class="cart-items" id="cartItems">
+                    <!-- Items will be dynamically generated here -->
+                </div>
+                
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
+                        <span id="cartTotalProducts">0</span>
                     </div>
-                    
-                    <!-- Cart Summary -->
-                    <div class="cart-summary">
-                        <div class="summary-row">
-                            <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
-                            <span id="cartTotalProducts">0</span>
-                        </div>
-                        <div class="summary-row">
-                            <span data-en="Total Brands:" data-ru="Всего брендов:">Всего брендов:</span>
-                            <span id="cartTotalBrands">0</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span data-en="Total Price:" data-ru="Общая стоимость:">Общая стоимость:</span>
-                            <span id="cartTotalPrice">$0</span>
-                        </div>
+                    <div class="summary-row">
+                        <span data-en="Total Brands:" data-ru="Всего брендов:">Всего брендов:</span>
+                        <span id="cartTotalBrands">0</span>
                     </div>
-                    
-                    <!-- Cart Actions -->
-                    <div class="cart-actions">
-                        <button class="btn-cart-action btn-primary" onclick="generatePDFQuote()" data-en="Generate PDF Quote" data-ru="Создать PDF КП">Создать PDF КП</button>
-                        <button class="btn-cart-action btn-secondary" onclick="sendQuoteRequest()" data-en="Send Request" data-ru="Отправить запрос">Отправить запрос</button>
-                        <button class="btn-cart-action btn-danger" onclick="clearCart()" data-en="Clear Cart" data-ru="Очистить корзину">Очистить корзину</button>
+                    <div class="summary-row total">
+                        <span data-en="Total Price:" data-ru="Общая стоимость:">Общая стоимость:</span>
+                        <span id="cartTotalPrice">$0</span>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Quote Tab Content -->
-            <div class="cart-tab-content" data-cart-content="quote">
-                <div class="quote-builder">
-                    <!-- Quote Settings Sidebar -->
-                    <div class="quote-settings-sidebar">
-                        <!-- Global Settings -->
-                        <div class="quote-settings-section">
-                            <h3 class="quote-settings-title" data-en="Global Settings" data-ru="Общие настройки">Общие настройки</h3>
-                            
-                            <div class="quote-setting-group">
-                                <label class="quote-setting-label" data-en="Dealer Discount (%):" data-ru="Дилерская скидка (%):">Дилерская скидка (%):</label>
-                                <input type="number" class="quote-setting-input" id="quoteDealerDiscount" value="15" min="0" max="50" step="0.1">
-                            </div>
-                            
-                            <div class="quote-setting-group">
-                                <label class="quote-setting-label" data-en="Client Discount (%):" data-ru="Скидка клиента (%):">Скидка клиента (%):</label>
-                                <input type="number" class="quote-setting-input" id="quoteClientDiscount" value="5" min="0" max="30" step="0.1">
-                            </div>
-                            
-                            <div class="quote-setting-group">
-                                <label class="quote-setting-label" data-en="Profit Margin (%):" data-ru="Наценка (%):">Наценка (%):</label>
-                                <input type="range" class="quote-setting-range" id="quoteProfitMargin" value="20" min="5" max="100" step="1">
-                                <div style="text-align: center; font-weight: 600; color: var(--signature-blue);">
-                                    <span id="quoteProfitMarginValue">20</span>%
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Brand Discounts -->
-                        <div class="quote-settings-section">
-                            <h3 class="quote-settings-title" data-en="Brand Discounts" data-ru="Скидки по брендам">Скидки по брендам</h3>
-                            <div id="quoteBrandDiscounts">
-                                <!-- Brand discount controls will be generated here -->
-                            </div>
-                        </div>
-                        
-                        <!-- Profitability Display -->
-                        <div class="quote-settings-section">
-                            <h3 class="quote-settings-title" data-en="Profitability" data-ru="Доходность">Доходность</h3>
-                            <div class="profitability-display">
-                                <div class="profit-item">
-                                    <span data-en="Cost Price:" data-ru="Себестоимость:">Себестоимость:</span>
-                                    <span class="profit-value" id="quoteCostPrice">$0</span>
-                                </div>
-                                <div class="profit-item">
-                                    <span data-en="Sale Price:" data-ru="Цена продажи:">Цена продажи:</span>
-                                    <span class="profit-value" id="quoteSalePrice">$0</span>
-                                </div>
-                                <div class="profit-item">
-                                    <span data-en="Profit:" data-ru="Прибыль:">Прибыль:</span>
-                                    <span class="profit-value positive" id="quoteProfit">$0</span>
-                                </div>
-                                <div class="profit-item">
-                                    <span data-en="Margin:" data-ru="Маржа:">Маржа:</span>
-                                    <span class="profit-value positive" id="quoteProfitPercent">0%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Quote Content -->
-                    <div class="quote-content">
-                        <div id="quoteItems">
-                            <!-- Quote items will be generated here -->
-                        </div>
-                        
-                        <!-- Quote Summary -->
-                        <div class="cart-summary" style="margin-top: 2rem;">
-                            <div class="summary-row">
-                                <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
-                                <span id="quoteTotalProducts">0</span>
-                            </div>
-                            <div class="summary-row total">
-                                <span data-en="Total Price:" data-ru="Итоговая стоимость:">Итоговая стоимость:</span>
-                                <span id="quoteTotalPrice">$0</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Quote Actions -->
-                        <div class="cart-actions" style="margin-top: 2rem;">
-                            <button class="btn-cart-action btn-primary" onclick="saveQuoteToSales()" data-en="Save Quote" data-ru="Сохранить КП">Сохранить КП</button>
-                            <button class="btn-cart-action btn-success" onclick="generatePDFFromQuote()" data-en="Generate PDF" data-ru="Создать PDF">Создать PDF</button>
-                            <button class="btn-cart-action btn-secondary" onclick="sendQuoteEmail()" data-en="Send Email" data-ru="Отправить Email">Отправить Email</button>
-                        </div>
-                    </div>
+                
+                <!-- Cart Actions -->
+                <div class="cart-actions">
+                    <button class="btn-cart-action btn-primary" onclick="generatePDFQuote()" data-en="Generate PDF Quote" data-ru="Создать PDF КП">Создать PDF КП</button>
+                    <button class="btn-cart-action btn-secondary" onclick="sendQuoteRequest()" data-en="Send Request" data-ru="Отправить запрос">Отправить запрос</button>
+                    <button class="btn-cart-action btn-danger" onclick="clearCart()" data-en="Clear Cart" data-ru="Очистить корзину">Очистить корзину</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Platform System Variables
-        let currentPlatform = 'heating';
-        let globalQuoteData = {}; // This will be platform-specific
-        
-        const platformData = {
-            heating: {
-                name: 'Heating',
-                color: '#FF6B35',
-                subtitle: 'Heating',
-                brands: ['viessmann', 'bosch', 'vaillant', 'buderus', 'wolf'],
-                categories: ['boilers', 'radiators', 'thermostats', 'pipework']
-            },
-            ventilation: {
-                name: 'Ventilation', 
-                color: '#4CAF50',
-                subtitle: 'Ventilation',
-                brands: ['systemair', 'swegon', 'komfovent', 'salda', 'vents'],
-                categories: ['fans', 'ducts', 'filters', 'heat_recovery', 'controllers']
-            },
-            airconditioning: {
-                name: 'Air Conditioning',
-                color: '#1464F4', 
-                subtitle: 'Air Conditioning',
-                brands: ['daikin', 'mitsubishi', 'panasonic', 'toshiba', 'fujitsu', 'lg', 'samsung'],
-                categories: ['split_systems', 'multi_split', 'vrv_vrf', 'cassette', 'ducted', 'portable']
-            }
-        };
-
-        // Platform System Initialization
-        function initPlatformSystem() {
-            console.log('Initializing platform system...');
-            
-            // Load saved platform or default to air conditioning
-            const savedPlatform = 'heating';
-            console.log('Loading saved platform:', savedPlatform);
+        // HVAC Navigation System
+        function initHVACNavigation() {
+            console.log('Initializing HVAC navigation...');
             
             // Add click events to HVAC letters
             const letters = document.querySelectorAll('.hvac-letter');
@@ -5278,171 +5027,31 @@
                     e.preventDefault();
                     e.stopPropagation();
                     const platform = this.getAttribute('data-platform');
-                    console.log('========== LETTER CLICKED ==========');
-                    console.log('Letter clicked:', this.textContent, 'switching to platform:', platform);
+                    console.log('Letter clicked:', this.textContent, 'navigating to platform:', platform);
                     
                     // Navigate to respective platform file
                     if (platform === 'heating') {
-                        // Stay on current heating page, just refresh
-                        window.location.reload();
+                        window.location.href = 'heating.html';
                     } else if (platform === 'ventilation') {
-                        window.open('ventilation.html', '_blank');
+                        window.location.href = 'ventilation.html';
                     } else if (platform === 'airconditioning') {
-                        window.open('air-conditioning.html', '_blank');
+                        window.location.href = 'index.html';
                     }
-                    console.log('====================================');
                 });
                 
-                // Also add hover effect for debugging
+                // Also add hover effect
                 letter.addEventListener('mouseenter', function() {
                     console.log('Hovering over letter:', this.textContent);
                 });
             });
-            
-            // Switch to saved platform
-            switchToPlatform(savedPlatform);
-        }
-
-        // Switch to specific platform
-        function switchToPlatform(platform) {
-            console.log('Switching to platform:', platform);
-            
-            // Save current platform's cart data before switching
-            if (currentPlatform && Object.keys(globalQuoteData).length > 0) {
-                localStorage.setItem(`globalQuoteData_${currentPlatform}`, JSON.stringify(globalQuoteData));
-            }
-            
-            // Update current platform
-            currentPlatform = platform;
-            localStorage.setItem('currentPlatform', platform);
-            
-            // Load cart data for new platform
-            globalQuoteData = JSON.parse(localStorage.getItem(`globalQuoteData_${platform}`) || '{}');
-            
-            // Update body class
-            document.body.className = `platform-${platform}`;
-            document.body.setAttribute('data-current-platform', platform);
-            
-            // Update platform subtitle
-            const subtitle = document.getElementById('platformSubtitle');
-            if (subtitle) {
-                subtitle.textContent = platformData[platform].subtitle;
-            }
-            
-            // Update HVAC letters active state
-            document.querySelectorAll('.hvac-letter').forEach(letter => {
-                if (letter.getAttribute('data-platform') === platform) {
-                    letter.classList.add('active');
-                } else {
-                    letter.classList.remove('active');
-                }
-            });
-            
-            // Update equipment sidebar for current platform
-            updateEquipmentSidebar(platform);
-            
-            // Update search filters for current platform
-            updateSearchFilters(platform);
-            
-            // Update cart badge for new platform
-            updateCartBadge();
-            
-            console.log('Platform switched to:', platform);
-        }
-
-        // Update equipment sidebar based on platform
-        function updateEquipmentSidebar(platform) {
-            console.log('Updating equipment sidebar for platform:', platform);
-            const sidebar = document.querySelector('.equipment-sidebar');
-            if (!sidebar) {
-                console.log('Equipment sidebar not found');
-                return;
-            }
-            
-            const data = platformData[platform];
-            console.log('Platform data:', data);
-            
-            // Hide all equipment items first
-            const allItems = sidebar.querySelectorAll('.equipment-type-item');
-            console.log('Found equipment items:', allItems.length);
-            allItems.forEach(item => {
-                item.style.display = 'none';
-                console.log('Hidden item:', item.getAttribute('data-subcategory'));
-            });
-            
-            // Show only relevant equipment for the platform
-            let defaultCategory = null;
-            if (platform === 'heating') {
-                console.log('Showing heating equipment');
-                showEquipmentItems(['heat-pumps', 'boilers', 'radiators', 'floor-heating']);
-                defaultCategory = 'heat-pumps';
-            } else if (platform === 'ventilation') {
-                console.log('Showing ventilation equipment');
-                showEquipmentItems(['supply-ventilation', 'exhaust-ventilation', 'heat-recovery', 'fans']);
-                defaultCategory = 'supply-ventilation';
-            } else if (platform === 'airconditioning') {
-                console.log('Showing air conditioning equipment');
-                showEquipmentItems(['split-systems', 'multi-split', 'vrf', 'accessories']);
-                defaultCategory = 'split-systems';
-            }
-            
-            // Set the first visible item as active and generate products
-            if (defaultCategory) {
-                const defaultItem = sidebar.querySelector(`[data-subcategory="${defaultCategory}"]`);
-                if (defaultItem) {
-                    // Remove active from all items
-                    sidebar.querySelectorAll('.equipment-type-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    
-                    // Make default item active
-                    defaultItem.classList.add('active');
-                    
-                    // Update current subcategory
-                    window.currentSubcategory = defaultCategory;
-                    
-                    // Generate products for this category
-                    if (typeof generateSampleProducts === 'function') {
-                        console.log('Generating sample products for category:', defaultCategory);
-                        generateSampleProducts();
-                    }
-                }
-            }
-            
-            console.log('Updated sidebar for platform:', platform);
-        }
-        
-        // Show specific equipment items
-        function showEquipmentItems(categories) {
-            console.log('Showing equipment items:', categories);
-            const sidebar = document.querySelector('.equipment-sidebar');
-            if (!sidebar) return;
-            
-            categories.forEach(category => {
-                const item = sidebar.querySelector(`[data-subcategory="${category}"]`);
-                console.log(`Looking for item with data-subcategory="${category}":`, item ? 'found' : 'not found');
-                if (item) {
-                    item.style.display = 'flex';
-                    console.log('Showed item:', category);
-                } else {
-                    console.log('Item not found:', category);
-                }
-            });
-        }
-
-        // Update search filters based on platform
-        function updateSearchFilters(platform) {
-            const data = platformData[platform];
-            // This will filter brands and categories based on platform
-            console.log('Updating filters for platform:', platform, 'with brands:', data.brands);
         }
 
         // Dashboard JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, starting initialization...');
             try {
-                initPlatformSystem();
-                console.log('✓ initPlatformSystem completed');
+                initHVACNavigation();
+                console.log('✓ initHVACNavigation completed');
                 initChatbot();
                 console.log('✓ initChatbot completed');
                 initAnimations();
@@ -5472,44 +5081,8 @@
             // Force product generation after everything is loaded
             setTimeout(() => {
                 console.log('Force generating products...');
-                console.log('Current brand:', currentBrand);
-                console.log('Available brands:', Object.keys(window.allBrandProducts));
-                
-                // Immediately call renderProducts with sample data as fallback
-                if (!window.allBrandProducts[currentBrand] || window.allBrandProducts[currentBrand].length === 0) {
-                    console.error('No products found for brand:', currentBrand);
-                    console.log('Setting fallback to first available brand');
-                    const availableBrands = Object.keys(window.allBrandProducts);
-                    if (availableBrands.length > 0) {
-                        currentBrand = availableBrands[0];
-                        console.log('Changed currentBrand to:', currentBrand);
-                    }
-                }
-                
-                // Force active tab to match currentBrand
-                const activeTab = document.querySelector(`.brand-tab[data-brand="${currentBrand}"]`);
-                if (activeTab) {
-                    document.querySelectorAll('.brand-tab').forEach(tab => tab.classList.remove('active'));
-                    activeTab.classList.add('active');
-                    console.log('Set active tab to:', currentBrand);
-                } else {
-                    console.error('Active tab not found for brand:', currentBrand);
-                }
-                
                 generateSampleProducts();
-                
-                // Double-check that products were generated
-                setTimeout(() => {
-                    if (sampleProducts.length === 0) {
-                        console.error('EMERGENCY: No products generated! Forcing manual generation...');
-                        const emergencyProducts = [
-                            { id: 1, title: 'Test Product 1', model: 'TEST-1', specs: 'Test specs', price: 100, capacity: 1000, type: 'test', brand: currentBrand, stock: 10 }
-                        ];
-                        renderProducts(emergencyProducts);
-                    }
-                }, 100);
-                
-            }, 800);
+            }, 500);
             
             // Handle hash navigation on page load
             handleHashNavigation();
@@ -5531,61 +5104,14 @@
 
         // Equipment Search System
         function initEquipmentSearch() {
-            console.log('=== INIT EQUIPMENT SEARCH ===');
-            console.log('Current brand at start:', currentBrand);
-            console.log('Brand products available:', Object.keys(window.allBrandProducts));
-            
             initScoutTabs();
-            console.log('✓ initScoutTabs completed');
-            
             initBrandTabs();
-            console.log('✓ initBrandTabs completed');
-            
             initFilters();
-            console.log('✓ initFilters completed');
-            
             initProductCards();
-            console.log('✓ initProductCards completed');
-            
             initSettingsPanel();
-            console.log('✓ initSettingsPanel completed');
-            
             initAISearch();
-            console.log('✓ initAISearch completed');
-            
             initAIChat();
-            console.log('✓ initAIChat completed');
-            
-            console.log('About to call generateSampleProducts');
-            
-            // Add a delay to ensure everything is properly loaded
-            setTimeout(() => {
-                console.log('Delayed call to generateSampleProducts');
-                try {
-                    generateSampleProducts();
-                    console.log('✓ generateSampleProducts called successfully');
-                } catch (error) {
-                    console.error('Error calling generateSampleProducts:', error);
-                    
-                    // Emergency fallback - render at least one test product
-                    const emergencyProducts = [{
-                        id: 1,
-                        title: 'Test Heating Product',
-                        model: 'TEST-1',
-                        specs: 'Test specifications',
-                        price: 100,
-                        capacity: 1000,
-                        type: 'test',
-                        brand: currentBrand,
-                        stock: 10
-                    }];
-                    
-                    console.log('Rendering emergency fallback products');
-                    renderProducts(emergencyProducts);
-                }
-            }, 500);
-            
-            console.log('✓ generateSampleProducts scheduled');
+            generateSampleProducts();
         }
 
         // Scout Sub-tabs functionality
@@ -5732,33 +5258,33 @@
                 cb.classList.remove('checked');
             });
 
-            // Smart query processing for heating equipment
-            if (lowerQuery.includes('boiler') || lowerQuery.includes('котел')) {
-                document.querySelector('[data-filter="boiler"]')?.classList.add('checked');
+            // Smart query processing
+            if (lowerQuery.includes('split') || lowerQuery.includes('сплит')) {
+                document.querySelector('[data-filter="split"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('condensing') || lowerQuery.includes('конденсационн')) {
-                document.querySelector('[data-filter="condensing"]')?.classList.add('checked');
+            if (lowerQuery.includes('multi') || lowerQuery.includes('мульти')) {
+                document.querySelector('[data-filter="multi"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('radiator') || lowerQuery.includes('радиатор')) {
-                document.querySelector('[data-filter="radiator"]')?.classList.add('checked');
+            if (lowerQuery.includes('vrf') || lowerQuery.includes('vrv')) {
+                document.querySelector('[data-filter="vrf"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('heat pump') || lowerQuery.includes('тепловой насос')) {
-                document.querySelector('[data-filter="heat-pump"]')?.classList.add('checked');
+            if (lowerQuery.includes('inverter') || lowerQuery.includes('инвертор')) {
+                document.querySelector('[data-filter="inverter"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('floor heating') || lowerQuery.includes('теплый пол')) {
-                document.querySelector('[data-filter="floor-heating"]')?.classList.add('checked');
+            if (lowerQuery.includes('wifi') || lowerQuery.includes('wi-fi') || lowerQuery.includes('вай-фай')) {
+                document.querySelector('[data-filter="wifi"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('solid fuel') || lowerQuery.includes('твердотопливн')) {
-                document.querySelector('[data-filter="solid-fuel"]')?.classList.add('checked');
+            if (lowerQuery.includes('heating') || lowerQuery.includes('heat') || lowerQuery.includes('обогрев') || lowerQuery.includes('тепло')) {
+                document.querySelector('[data-filter="heating"]')?.classList.add('checked');
             }
             
-            if (lowerQuery.includes('gas') || lowerQuery.includes('газов')) {
-                document.querySelector('[data-filter="gas"]')?.classList.add('checked');
+            if (lowerQuery.includes('quiet') || lowerQuery.includes('тихий') || lowerQuery.includes('бесшумн')) {
+                document.querySelector('[data-filter="quiet"]')?.classList.add('checked');
             }
 
             // Energy class detection
@@ -5771,7 +5297,7 @@
             }
 
             // Brand detection
-            const brands = ['lemax', 'konord', 'neva', 'baxi', 'viessmann', 'buderus', 'vaillant', 'protherm', 'bosch', 'ariston', 'beretta', 'ferroli', 'immergas', 'hermann', 'rinnai'];
+            const brands = ['daikin', 'mitsubishi', 'lg', 'panasonic', 'toshiba', 'fujitsu', 'carrier', 'york', 'trane', 'lennox'];
             brands.forEach(brand => {
                 if (lowerQuery.includes(brand)) {
                     const brandTab = document.querySelector(`[data-brand="${brand}"]`);
@@ -5932,7 +5458,7 @@
         let sampleProducts = [];
 
         let selectedProducts = [];
-        let currentBrand = 'lemax';
+        let currentBrand = 'daikin';
         let currentSubcategory = ''; // Start with no subcategory filter
         let currentCurrency = 'usd';
         let exchangeRates = {
@@ -6003,87 +5529,79 @@
         }
 
 
-        // Comprehensive product database for all heating brands - make it global
-        console.log('=== DEFINING BRAND PRODUCTS DATABASE ===');
+        // Comprehensive product database for all brands - make it global
         window.allBrandProducts = {
-            lemax: [
-                { model: 'LUX-24K', title: 'Lemax LUX-24K Газовый котел', specs: '24 кВт, КПД 92%, одноконтурный', price: 750, capacity: 24000, type: 'boiler' },
-                { model: 'LUX-32K', title: 'Lemax LUX-32K Газовый котел', specs: '32 кВт, КПД 92%, двухконтурный', price: 950, capacity: 32000, type: 'boiler' },
-                { model: 'PRIME-12K', title: 'Lemax PRIME-12K Газовый котел', specs: '12 кВт, КПД 90%, одноконтурный', price: 550, capacity: 12000, type: 'boiler' },
-                { model: 'RADIATOR-500', title: 'Lemax RADIATOR-500 Стальной радиатор', specs: '500Вт, 22 тип, 500x600мм', price: 65, capacity: 500, type: 'radiator' },
-                { model: 'RADIATOR-1000', title: 'Lemax RADIATOR-1000 Стальной радиатор', specs: '1000Вт, 22 тип, 500x1200мм', price: 95, capacity: 1000, type: 'radiator' }
+            daikin: [
+                { model: 'FTXS25K', title: 'Daikin FTXS25K Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 850, capacity: 9000, type: 'split' },
+                { model: 'FTXS35K', title: 'Daikin FTXS35K Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 950, capacity: 12000, type: 'split' },
+                { model: 'FTXS50K', title: 'Daikin FTXS50K Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1150, capacity: 18000, type: 'split' },
+                { model: 'FCAG71A', title: 'Daikin FCAG71A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1650, capacity: 24000, type: 'cassette' },
+                { model: 'FDXS35F', title: 'Daikin FDXS35F Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1100, capacity: 12000, type: 'floor' }
             ],
-            konord: [
-                { model: 'KSG-16', title: 'Konord KSG-16 Газовый котел', specs: '16 кВт, КПД 91%, одноконтурный', price: 680, capacity: 16000, type: 'boiler' },
-                { model: 'KSG-24D', title: 'Konord KSG-24D Газовый котел', specs: '24 кВт, КПД 91%, двухконтурный', price: 820, capacity: 24000, type: 'boiler' },
-                { model: 'THERM-20', title: 'Konord THERM-20 Твердотопливный котел', specs: '20 кВт, сталь 4мм, ручная загрузка', price: 1200, capacity: 20000, type: 'solid-fuel' },
-                { model: 'PANEL-600', title: 'Konord PANEL-600 Панельный радиатор', specs: '600Вт, 11 тип, белый', price: 55, capacity: 600, type: 'radiator' },
-                { model: 'PANEL-1200', title: 'Konord PANEL-1200 Панельный радиатор', specs: '1200Вт, 22 тип, белый', price: 85, capacity: 1200, type: 'radiator' }
+            mitsubishi: [
+                { model: 'MSZ-AP25VG', title: 'Mitsubishi MSZ-AP25VG Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 900, capacity: 9000, type: 'split' },
+                { model: 'MSZ-AP35VG', title: 'Mitsubishi MSZ-AP35VG Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1000, capacity: 12000, type: 'split' },
+                { model: 'MSZ-EF50VE', title: 'Mitsubishi MSZ-EF50VE Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1200, capacity: 18000, type: 'split' },
+                { model: 'PLA-M71EA', title: 'Mitsubishi PLA-M71EA Ceiling System', specs: '24,000 BTU/h, A+ Energy Class', price: 1700, capacity: 24000, type: 'ceiling' },
+                { model: 'MLZ-KP25VF', title: 'Mitsubishi MLZ-KP25VF Floor System', specs: '9,000 BTU/h, A++ Energy Class', price: 950, capacity: 9000, type: 'floor' }
             ],
-            neva: [
-                { model: 'NEVA-LUX-14', title: 'Neva LUX-14 Газовая колонка', specs: '14 л/мин, пьезорозжиг, модуляция', price: 320, capacity: 14000, type: 'water-heater' },
-                { model: 'NEVA-LUX-16', title: 'Neva LUX-16 Газовая колонка', specs: '16 л/мин, автоматический розжиг', price: 380, capacity: 16000, type: 'water-heater' },
-                { model: 'NEVA-5514', title: 'Neva 5514 Газовый котел', specs: '14 кВт, одноконтурный, напольный', price: 650, capacity: 14000, type: 'boiler' },
-                { model: 'NEVA-THERM-80', title: 'Neva THERM-80 Бойлер', specs: '80л, электрический, эмаль', price: 280, capacity: 80, type: 'boiler' },
-                { model: 'NEVA-RAD-800', title: 'Neva RAD-800 Алюминиевый радиатор', specs: '800Вт, 8 секций, 500мм', price: 75, capacity: 800, type: 'radiator' }
+            lg: [
+                { model: 'S09EQ', title: 'LG S09EQ Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 750, capacity: 9000, type: 'split' },
+                { model: 'S12EQ', title: 'LG S12EQ Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 850, capacity: 12000, type: 'split' },
+                { model: 'S18EQ', title: 'LG S18EQ Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1050, capacity: 18000, type: 'split' },
+                { model: 'CT24F', title: 'LG CT24F Cassette System', specs: '24,000 BTU/h, A++ Energy Class', price: 1550, capacity: 24000, type: 'cassette' },
+                { model: 'UV42F', title: 'LG UV42F Floor System', specs: '12,000 BTU/h, A+ Energy Class', price: 980, capacity: 12000, type: 'floor' }
             ],
-            baxi: [
-                { model: 'BAXI-ECO-24F', title: 'Baxi ECO Four 24F Газовый котел', specs: '24 кВт, КПД 93%, двухконтурный', price: 1250, capacity: 24000, type: 'boiler' },
-                { model: 'BAXI-MAIN-24', title: 'Baxi MAIN Four 24 Газовый котел', specs: '24 кВт, КПД 92%, двухконтурный', price: 950, capacity: 24000, type: 'boiler' },
-                { model: 'BAXI-DUO-28', title: 'Baxi DUO-tec Compact 28 Газовый котел', specs: '28 кВт, конденсационный, КПД 105%', price: 1580, capacity: 28000, type: 'condensing-boiler' },
-                { model: 'BAXI-SLIM-1600', title: 'Baxi SLIM Алюминиевый радиатор', specs: '1600Вт, 10 секций, высота 1800мм', price: 120, capacity: 1600, type: 'radiator' },
-                { model: 'BAXI-THERM-100', title: 'Baxi THERM Бойлер косвенного нагрева', specs: '100л, эмаль, одноконтурный', price: 450, capacity: 100, type: 'boiler' }
+            panasonic: [
+                { model: 'CS-Z25TKEW', title: 'Panasonic CS-Z25TKEW Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 950, capacity: 9000, type: 'split' },
+                { model: 'CS-Z35TKEW', title: 'Panasonic CS-Z35TKEW Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 1050, capacity: 12000, type: 'split' },
+                { model: 'CS-Z50TKEW', title: 'Panasonic CS-Z50TKEW Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1250, capacity: 18000, type: 'split' },
+                { model: 'S-71PU2E5A', title: 'Panasonic S-71PU2E5A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1750, capacity: 24000, type: 'cassette' },
+                { model: 'S-35PF2E5A', title: 'Panasonic S-35PF2E5A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1150, capacity: 12000, type: 'floor' }
             ],
-            viessmann: [
-                { model: 'VIESSMANN-200-W-26', title: 'Viessmann Vitopend 200-W 26 Газовый котел', specs: '26 кВт, конденсационный, КПД 108%', price: 1850, capacity: 26000, type: 'condensing-boiler' },
-                { model: 'VIESSMANN-100-W-24', title: 'Viessmann Vitopend 100-W 24 Газовый котел', specs: '24 кВт, КПД 93%, двухконтурный', price: 1350, capacity: 24000, type: 'boiler' },
-                { model: 'VIESSMANN-SOLID-20', title: 'Viessmann Vitoligno 20 Твердотопливный котел', specs: '20 кВт, пиролизный, автоматика', price: 2800, capacity: 20000, type: 'solid-fuel' },
-                { model: 'VIESSMANN-RAD-1400', title: 'Viessmann Стальной радиатор', specs: '1400Вт, 22 тип, нижнее подключение', price: 180, capacity: 1400, type: 'radiator' },
-                { model: 'VIESSMANN-HEAT-300', title: 'Viessmann Тепловой насос', specs: '12 кВт, воздух-вода, инвертор', price: 8500, capacity: 12000, type: 'heat-pump' }
+            toshiba: [
+                { model: 'RAS-25PKVSG', title: 'Toshiba RAS-25PKVSG Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 820, capacity: 9000, type: 'split' },
+                { model: 'RAS-35PKVSG', title: 'Toshiba RAS-35PKVSG Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 920, capacity: 12000, type: 'split' },
+                { model: 'RAS-50PKVSG', title: 'Toshiba RAS-50PKVSG Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1120, capacity: 18000, type: 'split' },
+                { model: 'RAV-SM804CTP', title: 'Toshiba RAV-SM804CTP Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1620, capacity: 24000, type: 'cassette' },
+                { model: 'RAV-SM364FTP', title: 'Toshiba RAV-SM364FTP Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1050, capacity: 12000, type: 'floor' }
             ],
-            buderus: [
-                { model: 'BUDERUS-U072-24K', title: 'Buderus Logamax U072-24K Газовый котел', specs: '24 кВт, КПД 93%, компактный', price: 1450, capacity: 24000, type: 'boiler' },
-                { model: 'BUDERUS-GB172-24K', title: 'Buderus Logamax GB172-24K Конденсационный котел', specs: '24 кВт, КПД 109%, модуляция', price: 2150, capacity: 24000, type: 'condensing-boiler' },
-                { model: 'BUDERUS-G124-32', title: 'Buderus Logano G124-32 Напольный котел', specs: '32 кВт, чугун, атмосферная горелка', price: 1850, capacity: 32000, type: 'floor-boiler' },
-                { model: 'BUDERUS-K-PROF-22', title: 'Buderus K-Profil 22 Стальной радиатор', specs: '22 тип, боковое подключение', price: 150, capacity: 1200, type: 'radiator' },
-                { model: 'BUDERUS-LOGATREND-600', title: 'Buderus Logatrend Алюминиевый радиатор', specs: '600Вт, 4 секции, 500мм', price: 95, capacity: 600, type: 'radiator' }
+            fujitsu: [
+                { model: 'ASYG09KMCC', title: 'Fujitsu ASYG09KMCC Split System', specs: '9,000 BTU/h, A+++ Energy Class', price: 880, capacity: 9000, type: 'split' },
+                { model: 'ASYG12KMCC', title: 'Fujitsu ASYG12KMCC Split System', specs: '12,000 BTU/h, A+++ Energy Class', price: 980, capacity: 12000, type: 'split' },
+                { model: 'ASYG18KMCC', title: 'Fujitsu ASYG18KMCC Split System', specs: '18,000 BTU/h, A++ Energy Class', price: 1180, capacity: 18000, type: 'split' },
+                { model: 'AUYG24LVLA', title: 'Fujitsu AUYG24LVLA Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1680, capacity: 24000, type: 'cassette' },
+                { model: 'AGYG12LVCB', title: 'Fujitsu AGYG12LVCB Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1080, capacity: 12000, type: 'floor' }
             ],
-            vaillant: [
-                { model: 'VAILLANT-TURBO-24', title: 'Vaillant turboTEC plus VUW 24 Газовый котел', specs: '24 кВт, КПД 93%, двухконтурный', price: 1550, capacity: 24000, type: 'boiler' },
-                { model: 'VAILLANT-ECO-32', title: 'Vaillant ecoTEC plus VUW 32 Конденсационный котел', specs: '32 кВт, КПД 108%, премиум', price: 2250, capacity: 32000, type: 'condensing-boiler' },
-                { model: 'VAILLANT-ATMO-20', title: 'Vaillant atmoTEC plus VUW 20 Газовый котел', specs: '20 кВт, открытая камера сгорания', price: 1250, capacity: 20000, type: 'boiler' },
-                { model: 'VAILLANT-K22-600', title: 'Vaillant K-Profil-22 Стальной радиатор', specs: '22 тип, 600х1400мм, белый', price: 165, capacity: 1800, type: 'radiator' },
-                { model: 'VAILLANT-HEAT-12', title: 'Vaillant aroTHERM Тепловой насос', specs: '12 кВт, инверторный, R32', price: 9200, capacity: 12000, type: 'heat-pump' }
+            carrier: [
+                { model: '42QHC009DS', title: 'Carrier 42QHC009DS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 780, capacity: 9000, type: 'split' },
+                { model: '42QHC012DS', title: 'Carrier 42QHC012DS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 880, capacity: 12000, type: 'split' },
+                { model: '42QHC018DS', title: 'Carrier 42QHC018DS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1080, capacity: 18000, type: 'split' },
+                { model: '42GW024DS', title: 'Carrier 42GW024DS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1580, capacity: 24000, type: 'cassette' },
+                { model: '42GW012DS', title: 'Carrier 42GW012DS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 980, capacity: 12000, type: 'floor' }
             ],
-            protherm: [
-                { model: 'PROTHERM-LYNX-24', title: 'Protherm Lynx 24 Конденсационный котел', specs: '24 кВт, КПД 107%, компактный', price: 1750, capacity: 24000, type: 'condensing-boiler' },
-                { model: 'PROTHERM-GEPARD-23', title: 'Protherm Gepard 23 Газовый котел', specs: '23 кВт, КПД 92%, двухконтурный', price: 1150, capacity: 23000, type: 'boiler' },
-                { model: 'PROTHERM-BEAR-40', title: 'Protherm Bear 40 Напольный котел', specs: '35 кВт, чугунный, одноконтурный', price: 1680, capacity: 35000, type: 'floor-boiler' },
-                { model: 'PROTHERM-RAD-11-600', title: 'Protherm RAD.11 Стальной радиатор', specs: '11 тип, 600х900мм', price: 85, capacity: 900, type: 'radiator' },
-                { model: 'PROTHERM-ALU-800', title: 'Protherm ALU Алюминиевый радиатор', specs: '800Вт, 5 секций', price: 95, capacity: 800, type: 'radiator' }
+            york: [
+                { model: 'YHFC09FS', title: 'York YHFC09FS Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 760, capacity: 9000, type: 'split' },
+                { model: 'YHFC12FS', title: 'York YHFC12FS Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 860, capacity: 12000, type: 'split' },
+                { model: 'YHFC18FS', title: 'York YHFC18FS Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1060, capacity: 18000, type: 'split' },
+                { model: 'YCAC024FS', title: 'York YCAC024FS Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1560, capacity: 24000, type: 'cassette' },
+                { model: 'YFAC012FS', title: 'York YFAC012FS Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 960, capacity: 12000, type: 'floor' }
             ],
-            bosch: [
-                { model: 'BOSCH-GAZ-6000-24', title: 'Bosch Gaz 6000 W WBN 24 Газовый котел', specs: '24 кВт, КПД 93%, турбированный', price: 1350, capacity: 24000, type: 'boiler' },
-                { model: 'BOSCH-CONDENS-28', title: 'Bosch Condens 7000 W 28 Конденсационный котел', specs: '28 кВт, КПД 109%, премиум', price: 2450, capacity: 28000, type: 'condensing-boiler' },
-                { model: 'BOSCH-SOLID-2000B-20', title: 'Bosch Solid 2000B-20 Твердотопливный котел', specs: '20 кВт, сталь, ручная загрузка', price: 1450, capacity: 20000, type: 'solid-fuel' },
-                { model: 'BOSCH-PANEL-22', title: 'Bosch Панельный радиатор 22 тип', specs: '22 тип, нижнее подключение', price: 145, capacity: 1300, type: 'radiator' },
-                { model: 'BOSCH-THERM-120', title: 'Bosch ST 120-2 Бойлер', specs: '120л, косвенного нагрева, эмаль', price: 520, capacity: 120, type: 'boiler' }
+            trane: [
+                { model: '4TXK3009A', title: 'Trane 4TXK3009A Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 800, capacity: 9000, type: 'split' },
+                { model: '4TXK3012A', title: 'Trane 4TXK3012A Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 900, capacity: 12000, type: 'split' },
+                { model: '4TXK3018A', title: 'Trane 4TXK3018A Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1100, capacity: 18000, type: 'split' },
+                { model: '4TCC4024A', title: 'Trane 4TCC4024A Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1600, capacity: 24000, type: 'cassette' },
+                { model: '4TFC4012A', title: 'Trane 4TFC4012A Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 1000, capacity: 12000, type: 'floor' }
             ],
-            ariston: [
-                { model: 'ARISTON-ALTEAS-24', title: 'Ariston ALTEAS X 24 CF Газовый котел', specs: '24 кВт, КПД 93%, двухконтурный', price: 1150, capacity: 24000, type: 'boiler' },
-                { model: 'ARISTON-CLAS-28', title: 'Ariston CLAS X 28 CF Газовый котел', specs: '28 кВт, КПД 92%, турбо', price: 980, capacity: 28000, type: 'boiler' },
-                { model: 'ARISTON-GENUS-35', title: 'Ariston GENUS X 35 Конденсационный котел', specs: '35 кВт, КПД 108%, премиум', price: 1950, capacity: 35000, type: 'condensing-boiler' },
-                { model: 'ARISTON-GLOBAL-600', title: 'Ariston Global Алюминиевый радиатор', specs: '600Вт, 4 секции, 500мм', price: 85, capacity: 600, type: 'radiator' },
-                { model: 'ARISTON-THERM-100', title: 'Ariston BLU1 R 100 Бойлер', specs: '100л, электрический, эмаль', price: 380, capacity: 100, type: 'boiler' }
+            lennox: [
+                { model: 'MLA009S4M', title: 'Lennox MLA009S4M Split System', specs: '9,000 BTU/h, A++ Energy Class', price: 790, capacity: 9000, type: 'split' },
+                { model: 'MLA012S4M', title: 'Lennox MLA012S4M Split System', specs: '12,000 BTU/h, A++ Energy Class', price: 890, capacity: 12000, type: 'split' },
+                { model: 'MLA018S4M', title: 'Lennox MLA018S4M Split System', specs: '18,000 BTU/h, A+ Energy Class', price: 1090, capacity: 18000, type: 'split' },
+                { model: 'MCA024S4M', title: 'Lennox MCA024S4M Cassette System', specs: '24,000 BTU/h, A+ Energy Class', price: 1590, capacity: 24000, type: 'cassette' },
+                { model: 'MFA012S4M', title: 'Lennox MFA012S4M Floor System', specs: '12,000 BTU/h, A++ Energy Class', price: 990, capacity: 12000, type: 'floor' }
             ]
         };
-        
-        console.log('=== BRAND PRODUCTS DATABASE LOADED ===');
-        console.log('Available brands:', Object.keys(window.allBrandProducts));
-        console.log('Total products per brand:');
-        Object.keys(window.allBrandProducts).forEach(brand => {
-            console.log(`${brand}: ${window.allBrandProducts[brand].length} products`);
-        });
         
         // Selection view toggle function
         function toggleSelectionView() {
@@ -6137,9 +5655,6 @@
         
         function generateSampleProducts() {
             console.log('=== GENERATING SAMPLE PRODUCTS FOR BRAND:', currentBrand, '===');
-            console.log('Time:', new Date().toISOString());
-            console.log('Function called from stack trace:');
-            console.trace();
             
             // Очищаем массив
             sampleProducts.splice(0, sampleProducts.length);
@@ -6148,8 +5663,6 @@
             const brandProducts = window.allBrandProducts[currentBrand] || [];
             
             console.log('Adding products to array for brand:', currentBrand);
-            console.log('Found brand products:', brandProducts.length);
-            console.log('Brand products data:', brandProducts);
             brandProducts.forEach((product, index) => {
                 sampleProducts.push({
                     id: index + 1,
@@ -6235,7 +5748,7 @@
                             </div>
                             <div class="price-item">
                                 <span class="price-label">Клиент:</span>
-                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.4, true))}</span>
+                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.25, true))}</span>
                             </div>
                         </div>
                         
@@ -7011,11 +6524,6 @@
             const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
             const inputElement = document.getElementById('messageInput');
             
-            if (!languageSelect) {
-                console.warn('Language select element not found');
-                return;
-            }
-            
             let currentLang = localStorage.getItem('preferredLanguage') || 'en';
             languageSelect.value = currentLang;
             switchLanguage(currentLang);
@@ -7055,13 +6563,9 @@
                 }
                 
                 // Update language select dropdown
-                if (languageSelect) {
-                    languageSelect.value = lang;
-                }
+                languageSelect.value = lang;
                 
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
-                
-                console.log('Language switched to:', lang);
             }
         }
 
@@ -7944,9 +7448,6 @@
             console.log('Cart modal element:', cartModal);
             
             if (cartModal) {
-                // Initialize cart tabs
-                initCartTabs();
-                
                 cartModal.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
                 console.log('Cart modal display set to flex');
@@ -7966,34 +7467,6 @@
                 document.body.style.overflow = '';
                 console.log('Cart closed');
             }
-        }
-
-        // Cart Tab Switching
-        function initCartTabs() {
-            const cartTabs = document.querySelectorAll('.cart-tab');
-            const cartContents = document.querySelectorAll('.cart-tab-content');
-
-            cartTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const targetTab = this.getAttribute('data-cart-tab');
-                    
-                    // Remove active class from all tabs and contents
-                    cartTabs.forEach(t => t.classList.remove('active'));
-                    cartContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    this.classList.add('active');
-                    const targetContent = document.querySelector(`[data-cart-content="${targetTab}"]`);
-                    if (targetContent) {
-                        targetContent.classList.add('active');
-                        
-                        // If switching to quote tab, populate quote data
-                        if (targetTab === 'quote') {
-                            populateQuoteBuilder();
-                        }
-                    }
-                });
-            });
         }
 
         function populateCartItems() {
@@ -8147,256 +7620,6 @@
             };
             
             return brandMappings[normalized] || normalized;
-        }
-
-        // Quote Builder Functions
-        let quoteSettings = {
-            dealerDiscount: 15,
-            clientDiscount: 5,
-            profitMargin: 20,
-            brandDiscounts: {}
-        };
-
-        function populateQuoteBuilder() {
-            console.log('Populating quote builder with cart data');
-            
-            // Update quote items from cart data
-            updateQuoteItems();
-            
-            // Generate brand discounts
-            generateQuoteBrandDiscounts();
-            
-            // Initialize settings event listeners
-            initQuoteSettings();
-            
-            // Update profitability calculations
-            updateProfitability();
-        }
-
-        function updateQuoteItems() {
-            const quoteItems = document.getElementById('quoteItems');
-            if (!quoteItems) return;
-
-            if (Object.keys(globalQuoteData).length === 0) {
-                quoteItems.innerHTML = `
-                    <div class="cart-empty">
-                        <div class="cart-empty-icon">📝</div>
-                        <div class="cart-empty-text" data-en="No products selected" data-ru="Товары не выбраны">Товары не выбраны</div>
-                        <div class="cart-empty-subtext" data-en="Add products to cart first" data-ru="Сначала добавьте товары в корзину">Сначала добавьте товары в корзину</div>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            Object.keys(globalQuoteData).forEach(brand => {
-                const products = globalQuoteData[brand];
-                const brandInfo = getBrandInfo(brand);
-                
-                html += `
-                    <div class="cart-brand-section" data-brand="${brand}">
-                        <div class="cart-brand-header" style="background: ${brandInfo.color}; color: ${brandInfo.textColor};">
-                            <div class="cart-brand-logo">
-                                <span class="cart-brand-name">${brandInfo.displayName}</span>
-                            </div>
-                            <div class="cart-brand-count">${products.length}</div>
-                        </div>
-                        <div class="cart-brand-products">
-                `;
-                
-                products.forEach(product => {
-                    const discountedPrice = applyQuoteDiscounts(product.salePrice, brand);
-                    html += `
-                        <div class="cart-product-item">
-                            <div class="cart-product-icon">🌀</div>
-                            <div class="cart-product-info">
-                                <div class="cart-product-name">${product.title}</div>
-                                <div class="cart-product-specs">${product.specs}</div>
-                                ${product.analog ? `<div class="cart-product-analog">Аналог</div>` : ''}
-                            </div>
-                            <div class="cart-product-price">${formatPrice(discountedPrice)}</div>
-                        </div>
-                    `;
-                });
-                
-                html += `
-                        </div>
-                    </div>
-                `;
-            });
-            
-            quoteItems.innerHTML = html;
-            updateQuoteSummary();
-        }
-
-        function generateQuoteBrandDiscounts() {
-            const container = document.getElementById('quoteBrandDiscounts');
-            if (!container) return;
-            
-            const brands = Object.keys(globalQuoteData);
-            if (brands.length === 0) {
-                container.innerHTML = '<p style="color: #666; font-size: 0.8rem;">Бренды появятся после добавления товаров</p>';
-                return;
-            }
-
-            let html = '';
-            brands.forEach(brand => {
-                const brandName = brand.charAt(0).toUpperCase() + brand.slice(1);
-                const discount = quoteSettings.brandDiscounts[brand] || 0;
-                
-                html += `
-                    <div class="brand-discount-item">
-                        <span class="brand-discount-label">${brandName}:</span>
-                        <input type="number" class="brand-discount-input" 
-                               data-brand="${brand}" value="${discount}" 
-                               min="0" max="50" step="0.1">
-                        <span>%</span>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-            
-            // Add event listeners
-            container.querySelectorAll('.brand-discount-input').forEach(input => {
-                input.addEventListener('input', function() {
-                    quoteSettings.brandDiscounts[this.dataset.brand] = parseFloat(this.value) || 0;
-                    updateQuoteItems();
-                    updateProfitability();
-                });
-            });
-        }
-
-        function initQuoteSettings() {
-            // Dealer discount
-            const dealerInput = document.getElementById('quoteDealerDiscount');
-            if (dealerInput) {
-                dealerInput.addEventListener('input', function() {
-                    quoteSettings.dealerDiscount = parseFloat(this.value) || 0;
-                    updateQuoteItems();
-                    updateProfitability();
-                });
-            }
-            
-            // Client discount
-            const clientInput = document.getElementById('quoteClientDiscount');
-            if (clientInput) {
-                clientInput.addEventListener('input', function() {
-                    quoteSettings.clientDiscount = parseFloat(this.value) || 0;
-                    updateQuoteItems();
-                    updateProfitability();
-                });
-            }
-            
-            // Profit margin slider
-            const marginSlider = document.getElementById('quoteProfitMargin');
-            const marginValue = document.getElementById('quoteProfitMarginValue');
-            if (marginSlider && marginValue) {
-                marginSlider.addEventListener('input', function() {
-                    quoteSettings.profitMargin = parseFloat(this.value) || 20;
-                    marginValue.textContent = quoteSettings.profitMargin;
-                    updateQuoteItems();
-                    updateProfitability();
-                });
-            }
-        }
-
-        function applyQuoteDiscounts(price, brand) {
-            const dealerDiscount = quoteSettings.dealerDiscount / 100;
-            const clientDiscount = quoteSettings.clientDiscount / 100;
-            const brandDiscount = (quoteSettings.brandDiscounts[brand] || 0) / 100;
-            const profitMargin = quoteSettings.profitMargin / 100;
-            
-            // Apply discounts first, then profit margin
-            let discountedPrice = price * (1 - dealerDiscount);
-            discountedPrice = discountedPrice * (1 - clientDiscount);
-            discountedPrice = discountedPrice * (1 - brandDiscount);
-            discountedPrice = discountedPrice * (1 + profitMargin);
-            
-            return discountedPrice;
-        }
-
-        function updateProfitability() {
-            let costPrice = 0;
-            let salePrice = 0;
-            
-            Object.keys(globalQuoteData).forEach(brand => {
-                const products = globalQuoteData[brand];
-                products.forEach(product => {
-                    costPrice += product.salePrice; // Original price as cost
-                    salePrice += applyQuoteDiscounts(product.salePrice, brand);
-                });
-            });
-            
-            const profit = salePrice - costPrice;
-            const profitPercent = costPrice > 0 ? ((profit / costPrice) * 100) : 0;
-            
-            document.getElementById('quoteCostPrice').textContent = formatPrice(costPrice);
-            document.getElementById('quoteSalePrice').textContent = formatPrice(salePrice);
-            document.getElementById('quoteProfit').textContent = formatPrice(profit);
-            document.getElementById('quoteProfitPercent').textContent = profitPercent.toFixed(1) + '%';
-            
-            // Update profit value classes
-            const profitElement = document.getElementById('quoteProfit');
-            const profitPercentElement = document.getElementById('quoteProfitPercent');
-            
-            profitElement.className = profit >= 0 ? 'profit-value positive' : 'profit-value negative';
-            profitPercentElement.className = profit >= 0 ? 'profit-value positive' : 'profit-value negative';
-        }
-
-        function updateQuoteSummary() {
-            const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
-                return sum + brandProducts.length;
-            }, 0);
-
-            let totalPrice = 0;
-            Object.keys(globalQuoteData).forEach(brand => {
-                const products = globalQuoteData[brand];
-                products.forEach(product => {
-                    totalPrice += applyQuoteDiscounts(product.salePrice, brand);
-                });
-            });
-
-            document.getElementById('quoteTotalProducts').textContent = totalProducts;
-            document.getElementById('quoteTotalPrice').textContent = formatPrice(totalPrice);
-        }
-
-        // Quote management functions
-        function saveQuoteToSales() {
-            if (Object.keys(globalQuoteData).length === 0) {
-                alert('Корзина пуста. Добавьте товары для создания КП.');
-                return;
-            }
-            
-            const quoteData = {
-                id: 'KP-' + Date.now(),
-                date: new Date().toISOString(),
-                platform: currentPlatform,
-                products: globalQuoteData,
-                settings: quoteSettings,
-                totalProducts: Object.values(globalQuoteData).reduce((sum, brandProducts) => sum + brandProducts.length, 0),
-                totalPrice: Object.keys(globalQuoteData).reduce((total, brand) => {
-                    return total + globalQuoteData[brand].reduce((brandTotal, product) => {
-                        return brandTotal + applyQuoteDiscounts(product.salePrice, brand);
-                    }, 0);
-                }, 0)
-            };
-            
-            // Save to localStorage
-            let savedQuotes = JSON.parse(localStorage.getItem('savedQuotes') || '[]');
-            savedQuotes.push(quoteData);
-            localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
-            
-            alert(`КП сохранено с номером ${quoteData.id}`);
-            console.log('Quote saved:', quoteData);
-        }
-
-        function generatePDFFromQuote() {
-            alert('Функция создания PDF в разработке');
-        }
-
-        function sendQuoteEmail() {
-            alert('Функция отправки Email в разработке');
         }
 
         function updateCartSummary() {

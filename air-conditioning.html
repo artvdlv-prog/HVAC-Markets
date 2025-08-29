@@ -5313,11 +5313,12 @@
                     
                     // Navigate to respective platform file
                     if (platform === 'heating') {
-                        window.location.href = 'heating.html';
+                        window.open('heating.html', '_blank');
                     } else if (platform === 'ventilation') {
-                        window.location.href = 'ventilation.html';
+                        window.open('ventilation.html', '_blank');
                     } else if (platform === 'airconditioning') {
-                        window.location.href = 'air-conditioning.html';
+                        // Stay on current air-conditioning page, just refresh
+                        window.location.reload();
                     }
                 });
                 
