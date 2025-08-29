@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Markets - Cart</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1A1A1A;
+            background: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Color variables */
+        :root {
+            --primary-white: #FFFFFF;
+            --deep-graphite: #1A1A1A;
+            --signature-blue: #1464F4;
+            --warm-gray: #F4F4F4;
+            --lemon: #F4E146;
+            --turquoise: #46F4E1;
+            --light-gray: #E5E5E5;
+            --orange: #FF6B35;
+            --success-green: #4CAF50;
+            --warning-yellow: #FF9800;
+            --error-red: #F44336;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-decoration: none;
+        }
+
+        .logo-main {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .hvac-letters {
+            display: flex;
+            gap: 0.05rem;
+            align-items: center;
+        }
+
+        .hvac-letter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.1rem;
+            border-radius: 4px;
+            position: relative;
+            margin: 0;
+        }
+
+        .markets-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0.1em;
+        }
+
+        /* Heating platform styles */
+        .hvac-letter[data-platform="heating"]:hover {
+            background: rgba(255, 107, 53, 0.15);
+            color: #FF6B35;
+        }
+
+        /* Ventilation platform styles */
+        .hvac-letter[data-platform="ventilation"]:hover {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        /* Air Conditioning platform styles (default) */
+        .hvac-letter[data-platform="airconditioning"] {
+            background: rgba(20, 100, 244, 0.15);
+            color: var(--signature-blue);
+        }
+
+        .hvac-letter[data-platform="airconditioning"]:hover {
+            background: rgba(20, 100, 244, 0.25);
+            color: var(--signature-blue);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--deep-graphite);
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--signature-blue);
+        }
+
+        .nav-item.active {
+            color: var(--signature-blue);
+        }
+
+        /* Navigation Right Side */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+            transform: scale(1.05);
+        }
+
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .profile-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+            transform: scale(1.05);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--signature-blue);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 18px;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--light-gray);
+            color: var(--deep-graphite);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+        }
+
+        /* Navigation Dropdowns */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-select {
+            background: transparent;
+            border: 1px solid rgba(26, 26, 26, 0.2);
+            color: var(--deep-graphite);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .nav-select:hover {
+            border-color: var(--signature-blue);
+            background-color: rgba(20, 100, 244, 0.05);
+        }
+
+        .nav-select:focus {
+            outline: none;
+            border-color: var(--signature-blue);
+            background-color: rgba(20, 100, 244, 0.1);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 24px;
+            height: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle:hover {
+            background-color: rgba(20, 100, 244, 0.1);
+        }
+
+        .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background-color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu-item {
+            text-decoration: none;
+            color: var(--deep-graphite);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu-item:hover {
+            color: var(--signature-blue);
+            transform: translateX(10px);
+        }
+
+        /* Main Container */
+        .cart-container {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: var(--warm-gray);
+        }
+
+        .cart-header {
+            text-align: center;
+            padding: 2rem 0;
+            background: var(--primary-white);
+            margin-bottom: 2rem;
+        }
+
+        .cart-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--deep-graphite);
+        }
+
+        .cart-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 400;
+            text-transform: none;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: var(--primary-white);
+            border-bottom: 1px solid var(--light-gray);
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tab-nav-item {
+            background: none;
+            border: none;
+            padding: 1.5rem 3rem;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-nav-item.active {
+            color: var(--signature-blue);
+        }
+
+        .tab-nav-item:hover {
+            color: var(--signature-blue);
+        }
+
+        .tab-nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--signature-blue);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* KP Tab Styles */
+        .kp-section {
+            background: var(--primary-white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand-group {
+            margin-bottom: 3rem;
+        }
+
+        .brand-header {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .brand-total {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .brand-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remove-brand-btn {
+            background: var(--error-red);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-brand-btn:hover {
+            background: #c62828;
+            transform: scale(1.1);
+        }
+
+        .brand-products {
+            border: 1px solid var(--light-gray);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .product-row {
+            display: grid;
+            grid-template-columns: auto 60px 2fr 150px 100px 120px auto;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            align-items: center;
+        }
+
+        .product-row:last-child {
+            border-bottom: none;
+        }
+
+        .product-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--signature-blue);
+        }
+
+        .product-image {
+            width: 50px;
+            height: 40px;
+            background: var(--warm-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #999;
+            border-radius: 6px;
+        }
+
+        .product-info {
+            min-width: 0;
+        }
+
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--deep-graphite);
+        }
+
+        .product-specs {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--light-gray);
+            background: var(--primary-white);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue);
+        }
+
+        .quantity-input {
+            width: 60px;
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .product-price {
+            text-align: right;
+        }
+
+        .price-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--signature-blue);
+        }
+
+        .remove-btn {
+            background: var(--error-red);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .remove-btn:hover {
+            background: var(--deep-graphite);
+            transform: scale(1.05);
+        }
+
+        /* Summary Section */
+        .kp-summary {
+            background: var(--deep-graphite);
+            color: var(--primary-white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .summary-total {
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--lemon);
+        }
+
+        /* Price Configuration Panel Styles */
+        .price-config-panel {
+            background: var(--warm-gray);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .config-header {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .config-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .config-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--primary-white);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .config-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .config-content {
+            padding: 1.5rem;
+        }
+
+        .config-section {
+            margin-bottom: 2rem;
+        }
+
+        .config-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .config-section h4 {
+            color: var(--deep-graphite);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .config-item label {
+            font-weight: 500;
+            color: var(--deep-graphite);
+            font-size: 0.9rem;
+        }
+
+        .config-item input, .config-item select {
+            padding: 0.75rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .config-item input:focus, .config-item select:focus {
+            outline: none;
+            border-color: var(--signature-blue);
+        }
+
+        .brand-discounts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand-discount-item {
+            display: flex;
+            align-items: center;
+            background: var(--primary-white);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            gap: 0.75rem;
+            min-width: 200px;
+        }
+
+        .brand-discount-item .brand-name {
+            font-weight: 600;
+            color: var(--deep-graphite);
+            min-width: 80px;
+        }
+
+        .brand-discount-item input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .profit-analysis {
+            background: var(--primary-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--light-gray);
+        }
+
+        .profit-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .profit-row:last-child {
+            border-bottom: none;
+        }
+
+        .profit-row span:first-child {
+            font-weight: 500;
+            color: var(--deep-graphite);
+        }
+
+        .profit-row span:last-child {
+            font-weight: 600;
+            color: var(--signature-blue);
+        }
+
+        .profit-highlight {
+            background: var(--warm-gray);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .profit-highlight span:last-child {
+            color: var(--success-green);
+            font-weight: 700;
+        }
+
+        /* Mobile responsiveness for price config */
+        @media (max-width: 768px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .brand-discounts {
+                flex-direction: column;
+            }
+            
+            .brand-discount-item {
+                min-width: unset;
+            }
+        }
+
+        /* Requests Tab Styles */
+        .request-form {
+            background: var(--primary-white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--deep-graphite);
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+        }
+
+        .equipment-list {
+            background: var(--warm-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .equipment-item {
+            display: grid;
+            grid-template-columns: 1fr 150px 100px;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--primary-white);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .equipment-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .equipment-info {
+            min-width: 0;
+        }
+
+        .equipment-model {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--deep-graphite);
+            margin-bottom: 0.25rem;
+        }
+
+        .equipment-brand {
+            color: var(--signature-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .equipment-specs {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .equipment-type {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .equipment-quantity {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--signature-blue);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--deep-graphite);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--signature-blue);
+            border: 2px solid var(--signature-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: var(--primary-white);
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-warning {
+            background: var(--orange);
+            color: var(--primary-white);
+        }
+
+        .btn-warning:hover {
+            background: #e55a2b;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Catalog Tab Styles */
+        .catalog-section {
+            background: var(--primary-white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .specs-comparison {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--light-gray);
+            vertical-align: top;
+        }
+
+        .specs-table th {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background: var(--warm-gray);
+        }
+
+        .brand-column {
+            font-weight: 600;
+            color: var(--signature-blue);
+        }
+
+        .spec-value {
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .spec-difference {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .compatibility-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .compatibility-card {
+            background: var(--warm-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--signature-blue);
+        }
+
+        .compatibility-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .brand-comparison {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--deep-graphite);
+        }
+
+        .compatibility-score {
+            font-size: 1.2rem;
+            font-weight: 800;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--primary-white);
+        }
+
+        .compatibility-high {
+            background: var(--success-green);
+        }
+
+        .compatibility-medium {
+            background: var(--warning-yellow);
+        }
+
+        .compatibility-low {
+            background: var(--error-red);
+        }
+
+        .compatibility-details {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .compatibility-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.25rem 0;
+        }
+
+        .compatibility-item:last-child {
+            border-top: 1px solid var(--light-gray);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                gap: 1rem;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+            }
+
+            .product-row {
+                grid-template-columns: auto 1fr 100px auto;
+                gap: 0.75rem;
+            }
+
+            .product-image,
+            .quantity-control,
+            .product-specs {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .cart-container {
+                padding-top: 90px;
+            }
+
+            .cart-title {
+                font-size: 2rem;
+            }
+
+            .tab-navigation {
+                padding: 0 1rem;
+            }
+
+            .tab-nav-item {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .tab-content {
+                padding: 1rem;
+            }
+
+            .kp-section,
+            .request-form {
+                padding: 1rem;
+                margin: 0 0 1rem 0;
+            }
+
+            .product-row {
+                grid-template-columns: 1fr auto;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .equipment-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <div class="logo-main">
+                <div class="hvac-letters">
+                    <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
+                    <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
+                    <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+                </div>
+                <span class="markets-text">MARKETS</span>
+            </div>
+        </div>
+        <div class="nav-menu">
+            <a href="../air-conditioning.html#scout" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="../air-conditioning.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+        </div>
+        <div class="nav-right">
+            <!-- AI Search Button -->
+            <button class="nav-icon" id="searchBtn" title="AI Search / ИИ Поиск">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+            
+            <!-- Personal Account -->
+            <a href="../account.html" class="profile-icon" title="Personal Account / Личный кабинет">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+            </a>
+            
+            <!-- Quote Cart -->
+            <button class="nav-icon active" id="cartBtn" title="Quote Cart / Корзина КП">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                </svg>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            
+            <!-- Language Selection Dropdown -->
+            <div class="nav-dropdown">
+                <select class="nav-select" id="languageSelect">
+                    <option value="en" selected>EN</option>
+                    <option value="ru">RU</option>
+                </select>
+            </div>
+            
+            <!-- Currency Selection Dropdown -->
+            <div class="nav-dropdown">
+                <select class="nav-select" id="currencySelect">
+                    <option value="usd" selected>USD ($)</option>
+                    <option value="rub">RUB (₽)</option>
+                    <option value="eur">EUR (€)</option>
+                </select>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <a href="../air-conditioning.html#scout" class="mobile-menu-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="../air-conditioning.html#match" class="mobile-menu-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="sales.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+        </div>
+    </div>
+
+    <!-- Cart Container -->
+    <div class="cart-container">
+        <!-- Cart Header -->
+        <div class="cart-header">
+            <h1 class="cart-title" data-en="Shopping Cart" data-ru="Корзина">Shopping Cart</h1>
+            <p class="cart-subtitle" data-en="Equipment selection and supplier requests" data-ru="Выбор оборудования и запросы поставщикам">Equipment selection and supplier requests</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-nav-item active" data-tab="kp" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Commercial Proposal</button>
+            <button class="tab-nav-item" data-tab="requests" data-en="Supplier Requests" data-ru="Запросы поставщикам">Supplier Requests</button>
+            <button class="tab-nav-item" data-tab="catalog" data-en="Technical Catalog" data-ru="Технический каталог">Technical Catalog</button>
+        </div>
+
+        <!-- KP Tab Content -->
+        <div class="tab-content active" id="kp-tab">
+            <div class="kp-section">
+                <div id="kp-brands-container">
+                    <!-- Brands with products will be loaded here -->
+                </div>
+
+                <!-- Price Configuration Panel -->
+                <div class="price-config-panel">
+                    <div class="config-header">
+                        <h3 data-en="Price Configuration" data-ru="Конфигурация цен">Price Configuration</h3>
+                        <button class="config-toggle" data-en="Settings" data-ru="Настройки">⚙</button>
+                    </div>
+                    
+                    <div class="config-content">
+                        <!-- Brand Discount Settings -->
+                        <div class="config-section">
+                            <h4 data-en="Brand Discounts (%)" data-ru="Скидки по брендам (%)">Brand Discounts (%)</h4>
+                            <div class="brand-discounts" id="brand-discounts">
+                                <!-- Dynamic brand discount controls will be added here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Global Settings -->
+                        <div class="config-section">
+                            <h4 data-en="Global Settings" data-ru="Общие настройки">Global Settings</h4>
+                            <div class="config-grid">
+                                <div class="config-item">
+                                    <label data-en="Client Discount (%):" data-ru="Скидка клиенту (%):">Client Discount (%):</label>
+                                    <input type="number" id="client-discount" min="0" max="50" value="0" step="0.5">
+                                </div>
+                                <div class="config-item">
+                                    <label data-en="Target Margin (%):" data-ru="Целевая маржа (%):">Target Margin (%):</label>
+                                    <input type="number" id="target-margin" min="5" max="100" value="25" step="1">
+                                </div>
+                                <div class="config-item">
+                                    <label data-en="Currency:" data-ru="Валюта:">Currency:</label>
+                                    <select id="quote-currency">
+                                        <option value="USD">USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="RUB">RUB (₽)</option>
+                                    </select>
+                                </div>
+                                <div class="config-item">
+                                    <label data-en="Quote Valid (days):" data-ru="Срок действия КП (дней):">Quote Valid (days):</label>
+                                    <input type="number" id="quote-validity" min="1" max="365" value="30" step="1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profitability Analysis -->
+                        <div class="config-section">
+                            <h4 data-en="Profitability Analysis" data-ru="Анализ прибыльности">Profitability Analysis</h4>
+                            <div class="profit-analysis">
+                                <div class="profit-row">
+                                    <span data-en="Base Cost:" data-ru="Базовая стоимость:">Base Cost:</span>
+                                    <span id="base-cost">$0</span>
+                                </div>
+                                <div class="profit-row">
+                                    <span data-en="After Discounts:" data-ru="После скидок:">After Discounts:</span>
+                                    <span id="discounted-cost">$0</span>
+                                </div>
+                                <div class="profit-row">
+                                    <span data-en="Quote Price:" data-ru="Цена КП:">Quote Price:</span>
+                                    <span id="quote-price">$0</span>
+                                </div>
+                                <div class="profit-row profit-highlight">
+                                    <span data-en="Estimated Profit:" data-ru="Расчетная прибыль:">Estimated Profit:</span>
+                                    <span id="estimated-profit">$0 (0%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KP Summary -->
+                <div class="kp-summary">
+                    <div class="summary-row">
+                        <span data-en="Selected Products:" data-ru="Выбранных продуктов:">Selected Products:</span>
+                        <span id="kp-product-count">0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span data-en="Subtotal:" data-ru="Подитог:">Subtotal:</span>
+                        <span id="kp-subtotal">$0</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span data-en="TOTAL:" data-ru="ИТОГО:">TOTAL:</span>
+                        <span id="kp-total">$0</span>
+                    </div>
+                </div>
+
+                <!-- KP Actions -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="create-quote-btn" data-en="Create Quote" data-ru="Создать КП">Create Quote</button>
+                    <button class="btn btn-secondary" id="clear-kp-btn" data-en="Clear Selection" data-ru="Очистить выбор">Clear Selection</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requests Tab Content -->
+        <div class="tab-content" id="requests-tab">
+            <div class="request-form">
+                <div class="form-section">
+                    <h2 class="section-title" data-en="Selected Equipment" data-ru="Выбранное оборудование">Selected Equipment</h2>
+                    <div class="equipment-list" id="request-equipment-list">
+                        <!-- Equipment items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Request Actions -->
+                <div class="action-buttons">
+                    <button class="btn btn-success" id="export-excel-btn" data-en="Export to Excel" data-ru="Экспорт в Excel">Export to Excel</button>
+                    <button class="btn btn-warning" id="send-email-btn" data-en="Send via Email" data-ru="Отправить по Email">Send via Email</button>
+                    <button class="btn btn-secondary" id="clear-requests-btn" data-en="Clear List" data-ru="Очистить список">Clear List</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catalog Tab Content -->
+        <div class="tab-content" id="catalog-tab">
+            <div class="catalog-section">
+                <div class="form-section">
+                    <h2 class="section-title" data-en="Technical Specifications Comparison" data-ru="Сравнение технических характеристик">Technical Specifications Comparison</h2>
+                    <div class="specs-comparison" id="specs-comparison">
+                        <!-- Technical specifications will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title" data-en="Brand Compatibility Analysis" data-ru="Анализ совместимости брендов">Brand Compatibility Analysis</h2>
+                    <div class="compatibility-analysis" id="compatibility-analysis">
+                        <!-- Compatibility analysis will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Cart page JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initCartPage();
+            initLanguageToggle();
+            initMobileMenu();
+            loadCartData();
+        });
+
+        let cartData = {
+            kp: [],
+            requests: []
+        };
+
+        // Initialize cart page
+        function initCartPage() {
+            initTabNavigation();
+            setupEventListeners();
+            initPriceConfiguration();
+            loadPriceConfig();
+            initLogoNavigation();
+        }
+
+        // Initialize logo navigation
+        function initLogoNavigation() {
+            const letters = document.querySelectorAll('.hvac-letter');
+            letters.forEach(letter => {
+                letter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const platform = this.getAttribute('data-platform');
+                    
+                    // Navigate to the appropriate platform page
+                    switch(platform) {
+                        case 'heating':
+                            window.location.href = '../heating.html';
+                            break;
+                        case 'ventilation':
+                            window.location.href = '../ventilation.html';
+                            break;
+                        case 'airconditioning':
+                            window.location.href = '../air-conditioning.html';
+                            break;
+                        default:
+                            window.location.href = '../air-conditioning.html';
+                    }
+                });
+            });
+        }
+
+        // Initialize tab navigation
+        function initTabNavigation() {
+            const tabButtons = document.querySelectorAll('.tab-nav-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.dataset.tab;
+                    
+                    // Remove active class from all tabs and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    button.classList.add('active');
+                    document.getElementById(`${targetTab}-tab`).classList.add('active');
+                });
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // KP Actions
+            document.getElementById('create-quote-btn').addEventListener('click', createQuote);
+            document.getElementById('clear-kp-btn').addEventListener('click', clearKPSelection);
+            
+            // Request Actions
+            document.getElementById('export-excel-btn').addEventListener('click', exportToExcel);
+            document.getElementById('send-email-btn').addEventListener('click', sendViaEmail);
+            document.getElementById('clear-requests-btn').addEventListener('click', clearRequests);
+
+            // Navigation
+            document.getElementById('searchBtn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Load cart data
+        function loadCartData() {
+            // Load from globalQuoteData and other sources
+            const globalQuoteData = JSON.parse(localStorage.getItem('globalQuoteData') || '{}');
+            const selectedProducts = JSON.parse(localStorage.getItem('selectedProducts') || '[]');
+            const requestProducts = JSON.parse(localStorage.getItem('requestProducts') || '[]');
+            
+
+            // Convert globalQuoteData to cart format (primary source)
+            if (Object.keys(globalQuoteData).length > 0) {
+                cartData.kp = [];
+                Object.keys(globalQuoteData).forEach((brand, brandIndex) => {
+                    globalQuoteData[brand].forEach((product, productIndex) => {
+                        cartData.kp.push({
+                            ...product,
+                            id: `${brand}_${brandIndex}_${productIndex}`,
+                            brand: brand, // Brand is already normalized in globalQuoteData
+                            title: product.title || product.model,
+                            specs: product.specs || `${product.capacity || 'N/A'} BTU/h`,
+                            price: product.price || 0,
+                            quantity: product.quantity || 1,
+                            selected: true
+                        });
+                    });
+                });
+            } else {
+                // Fallback to selectedProducts only if no globalQuoteData
+                cartData.kp = [];
+                selectedProducts.forEach((product, index) => {
+                    cartData.kp.push({
+                        ...product,
+                        id: product.id || `selected_${index}`,
+                        brand: product.brand || product.originalBrand || 'unknown',
+                        selected: true
+                    });
+                });
+            }
+
+            // Set requests data
+            cartData.requests = requestProducts.map((product, index) => ({
+                ...product,
+                id: product.id || `request_${index}`,
+                model: product.model || product.title,
+                brand: product.brand,
+                type: product.type || 'N/A',
+                specs: product.specs || `${product.cooling || 'N/A'} kW cooling`,
+                quantity: product.quantity || 1
+            }));
+
+            displayKPData();
+            displayRequestsData();
+            displayCatalogData();
+            updateCartBadge();
+        }
+
+        // Display KP data
+        function displayKPData() {
+            const container = document.getElementById('kp-brands-container');
+            
+            if (cartData.kp.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3 data-en="No products in cart" data-ru="Корзина пуста">No products in cart</h3>
+                        <p data-en="Add products to your cart to create commercial proposals" data-ru="Добавьте товары в корзину для создания КП">Add products to your cart to create commercial proposals</p>
+                        <a href="catalog.html" class="btn btn-primary" data-en="Browse Catalog" data-ru="Перейти в каталог">Browse Catalog</a>
+                    </div>
+                `;
+                updateKPSummary();
+                return;
+            }
+
+            // Group products by brand
+            const productsByBrand = {};
+            cartData.kp.forEach(product => {
+                const brand = product.brand || 'unknown';
+                if (!productsByBrand[brand]) {
+                    productsByBrand[brand] = [];
+                }
+                productsByBrand[brand].push(product);
+            });
+            
+
+            let html = '';
+            Object.keys(productsByBrand).forEach(brand => {
+                const products = productsByBrand[brand];
+                const brandTotal = products.reduce((sum, product) => {
+                    return product.selected ? sum + ((product.price || 0) * (product.quantity || 1)) : sum;
+                }, 0);
+
+                html += `
+                    <div class="brand-group">
+                        <div class="brand-header">
+                            <div class="brand-info">
+                                <div class="brand-name">${brand.charAt(0).toUpperCase() + brand.slice(1)}</div>
+                                <div class="brand-total">$${brandTotal.toFixed(0)}</div>
+                            </div>
+                            <div class="brand-actions">
+                                <button class="remove-brand-btn" onclick="removeBrand('${brand}')" 
+                                        title="Remove all ${brand} products">✕</button>
+                            </div>
+                        </div>
+                        <div class="brand-products">
+                            ${products.map(product => `
+                                <div class="product-row">
+                                    <input type="checkbox" class="product-checkbox" 
+                                           ${product.selected ? 'checked' : ''} 
+                                           onchange="toggleProductSelection('${product.id}')">
+                                    <div class="product-image">🌀</div>
+                                    <div class="product-info">
+                                        <div class="product-name">${product.title || product.model}</div>
+                                        <div class="product-specs">${product.specs || 'No specifications'}</div>
+                                    </div>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn" onclick="changeQuantity('${product.id}', -1)">-</button>
+                                        <input type="number" class="quantity-input" value="${product.quantity || 1}" 
+                                               onchange="updateQuantity('${product.id}', this.value)" min="1">
+                                        <button class="quantity-btn" onclick="changeQuantity('${product.id}', 1)">+</button>
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="price-value">$${((product.price || 0) * (product.quantity || 1)).toFixed(0)}</div>
+                                    </div>
+                                    <button class="remove-btn" onclick="removeProduct('${product.id}')" 
+                                            title="Remove product">×</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            updateKPSummary();
+        }
+
+        // Display requests data
+        function displayRequestsData() {
+            const container = document.getElementById('request-equipment-list');
+            
+            if (cartData.requests.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3 data-en="No equipment selected" data-ru="Оборудование не выбрано">No equipment selected</h3>
+                        <p data-en="Select equipment to send requests to suppliers" data-ru="Выберите оборудование для отправки запросов поставщикам">Select equipment to send requests to suppliers</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            cartData.requests.forEach(equipment => {
+                html += `
+                    <div class="equipment-item">
+                        <div class="equipment-info">
+                            <div class="equipment-model">${equipment.model}</div>
+                            <div class="equipment-brand">${equipment.brand}</div>
+                            <div class="equipment-specs">${equipment.specs}</div>
+                        </div>
+                        <div class="equipment-type">${equipment.type}</div>
+                        <div class="equipment-quantity">Qty: ${equipment.quantity}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Display catalog data
+        function displayCatalogData() {
+            // Load catalog products from localStorage
+            const catalogProducts = JSON.parse(localStorage.getItem('catalogProducts') || '[]');
+            
+            if (catalogProducts.length === 0) {
+                document.getElementById('specs-comparison').innerHTML = `
+                    <div class="empty-state">
+                        <h3 data-en="No products to compare" data-ru="Нет товаров для сравнения">No products to compare</h3>
+                        <p data-en="Add products using 'Catalog' button first" data-ru="Сначала добавьте товары кнопкой 'Каталог'">Add products using 'Catalog' button first</p>
+                    </div>
+                `;
+                document.getElementById('compatibility-analysis').innerHTML = '';
+                return;
+            }
+
+            displayTechnicalComparison(catalogProducts);
+            displayCompatibilityAnalysis(catalogProducts);
+        }
+
+        // Display technical specifications comparison
+        function displayTechnicalComparison(catalogProducts = []) {
+            const container = document.getElementById('specs-comparison');
+            
+            // If no catalog products provided, use empty array
+            if (catalogProducts.length === 0) {
+                catalogProducts = JSON.parse(localStorage.getItem('catalogProducts') || '[]');
+            }
+            
+            // Group products by brand for comparison
+            const productsByBrand = {};
+            catalogProducts.forEach(product => {
+                const brand = product.brand || 'unknown';
+                if (!productsByBrand[brand]) {
+                    productsByBrand[brand] = [];
+                }
+                productsByBrand[brand].push(product);
+            });
+
+            const brands = Object.keys(productsByBrand);
+            if (brands.length === 0) return;
+
+            // Create comparison table
+            let html = `
+                <table class="specs-table">
+                    <thead>
+                        <tr>
+                            <th data-en="Specification" data-ru="Характеристика">Specification</th>
+                            ${brands.map(brand => `<th class="brand-column">${brand.charAt(0).toUpperCase() + brand.slice(1)}</th>`).join('')}
+                            <th data-en="Difference" data-ru="Различие">Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            // Common specifications to compare
+            const specsToCompare = [
+                { key: 'model', label: { en: 'Model', ru: 'Модель' } },
+                { key: 'capacity', label: { en: 'Capacity (BTU/h)', ru: 'Мощность (BTU/ч)' } },
+                { key: 'cooling_capacity', label: { en: 'Cooling (kW)', ru: 'Охлаждение (кВт)' } },
+                { key: 'heating_capacity', label: { en: 'Heating (kW)', ru: 'Обогрев (кВт)' } },
+                { key: 'power', label: { en: 'Power (kW)', ru: 'Мощность (кВт)' } },
+                { key: 'airflow', label: { en: 'Airflow (m³/h)', ru: 'Расход воздуха (м³/ч)' } },
+                { key: 'energy_class', label: { en: 'Energy Class', ru: 'Энерг. класс' } },
+                { key: 'price', label: { en: 'Price', ru: 'Цена' } }
+            ];
+
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+
+            specsToCompare.forEach(spec => {
+                const values = brands.map(brand => {
+                    const product = productsByBrand[brand][0]; // Take first product of brand
+                    return product[spec.key] || 'N/A';
+                });
+
+                const uniqueValues = [...new Set(values.filter(v => v !== 'N/A'))];
+                const hasDifferences = uniqueValues.length > 1;
+
+                html += `
+                    <tr>
+                        <td><strong>${spec.label[currentLang] || spec.label.en}</strong></td>
+                        ${values.map(value => `<td class="spec-value">${value}</td>`).join('')}
+                        <td class="spec-difference">${hasDifferences ? '⚠️ Yes' : '✅ No'}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Display compatibility analysis
+        function displayCompatibilityAnalysis(catalogProducts = []) {
+            const container = document.getElementById('compatibility-analysis');
+            
+            // If no catalog products provided, use empty array
+            if (catalogProducts.length === 0) {
+                catalogProducts = JSON.parse(localStorage.getItem('catalogProducts') || '[]');
+            }
+            
+            const productsByBrand = {};
+            catalogProducts.forEach(product => {
+                const brand = product.brand || 'unknown';
+                if (!productsByBrand[brand]) {
+                    productsByBrand[brand] = [];
+                }
+                productsByBrand[brand].push(product);
+            });
+
+            const brands = Object.keys(productsByBrand);
+            if (brands.length < 2) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <p data-en="Need at least 2 brands for compatibility analysis" data-ru="Для анализа совместимости нужно минимум 2 бренда">Need at least 2 brands for compatibility analysis</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+
+            // Compare each brand with others
+            for (let i = 0; i < brands.length; i++) {
+                for (let j = i + 1; j < brands.length; j++) {
+                    const brand1 = brands[i];
+                    const brand2 = brands[j];
+                    const product1 = productsByBrand[brand1][0];
+                    const product2 = productsByBrand[brand2][0];
+
+                    const compatibility = calculateCompatibility(product1, product2);
+
+                    const scoreClass = compatibility.score >= 80 ? 'compatibility-high' : 
+                                     compatibility.score >= 60 ? 'compatibility-medium' : 'compatibility-low';
+
+                    html += `
+                        <div class="compatibility-card">
+                            <div class="compatibility-header">
+                                <div class="brand-comparison">${brand1.charAt(0).toUpperCase() + brand1.slice(1)} vs ${brand2.charAt(0).toUpperCase() + brand2.slice(1)}</div>
+                                <div class="compatibility-score ${scoreClass}">${compatibility.score}%</div>
+                            </div>
+                            <div class="compatibility-details">
+                                ${compatibility.details.map(detail => `
+                                    <div class="compatibility-item">
+                                        <span>${detail.name}:</span>
+                                        <span>${detail.match ? '✅' : '❌'} ${detail.value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Calculate compatibility between two products
+        function calculateCompatibility(product1, product2) {
+            const checks = [
+                {
+                    name: 'Cooling Capacity',
+                    match: Math.abs((product1.cooling_capacity || 0) - (product2.cooling_capacity || 0)) <= 1,
+                    value: `±${Math.abs((product1.cooling_capacity || 0) - (product2.cooling_capacity || 0)).toFixed(1)} kW`
+                },
+                {
+                    name: 'Heating Capacity', 
+                    match: Math.abs((product1.heating_capacity || 0) - (product2.heating_capacity || 0)) <= 1,
+                    value: `±${Math.abs((product1.heating_capacity || 0) - (product2.heating_capacity || 0)).toFixed(1)} kW`
+                },
+                {
+                    name: 'Energy Class',
+                    match: (product1.energy_class || '').toLowerCase() === (product2.energy_class || '').toLowerCase(),
+                    value: `${product1.energy_class || 'N/A'} vs ${product2.energy_class || 'N/A'}`
+                },
+                {
+                    name: 'Type Compatibility',
+                    match: (product1.type || '') === (product2.type || ''),
+                    value: `${product1.type || 'N/A'} vs ${product2.type || 'N/A'}`
+                }
+            ];
+
+            const matches = checks.filter(check => check.match).length;
+            const score = Math.round((matches / checks.length) * 100);
+
+            return {
+                score: score,
+                details: checks
+            };
+        }
+
+        // Toggle product selection
+        function toggleProductSelection(productId) {
+            const product = cartData.kp.find(p => p.id === productId);
+            if (product) {
+                product.selected = !product.selected;
+                updateLocalStorage();
+                updateKPSummary();
+            }
+        }
+
+        // Change quantity
+        function changeQuantity(productId, change) {
+            const product = cartData.kp.find(p => p.id === productId);
+            if (product) {
+                product.quantity = Math.max(1, (product.quantity || 1) + change);
+                updateLocalStorage();
+                displayKPData();
+            }
+        }
+
+        // Update quantity
+        function updateQuantity(productId, newQuantity) {
+            const product = cartData.kp.find(p => p.id === productId);
+            if (product) {
+                product.quantity = Math.max(1, parseInt(newQuantity) || 1);
+                updateLocalStorage();
+                displayKPData();
+            }
+        }
+
+        // Remove product
+        function removeProduct(productId) {
+            cartData.kp = cartData.kp.filter(p => p.id !== productId);
+            
+            // Update localStorage
+            updateLocalStorage();
+            
+            displayKPData();
+            updateCartBadge();
+        }
+
+        // Remove all products from a brand
+        function removeBrand(brandName) {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const confirmMessage = currentLang === 'en' ? 
+                `Are you sure you want to remove all ${brandName} products from cart?` :
+                `Вы уверены, что хотите удалить все товары ${brandName} из корзины?`;
+                
+            if (confirm(confirmMessage)) {
+                cartData.kp = cartData.kp.filter(p => p.brand !== brandName);
+                
+                // Update localStorage
+                updateLocalStorage();
+                
+                displayKPData();
+                updateCartBadge();
+                
+                const successMessage = currentLang === 'en' ? 
+                    `All ${brandName} products removed from cart.` :
+                    `Все товары ${brandName} удалены из корзины.`;
+                
+                // Show brief notification instead of alert
+                showNotification(successMessage);
+            }
+        }
+
+        // Update localStorage with current cart data
+        function updateLocalStorage() {
+            // Update globalQuoteData
+            const globalQuoteData = {};
+            cartData.kp.forEach(product => {
+                const brand = product.brand || 'unknown';
+                if (!globalQuoteData[brand]) {
+                    globalQuoteData[brand] = [];
+                }
+                globalQuoteData[brand].push(product);
+            });
+            
+            localStorage.setItem('globalQuoteData', JSON.stringify(globalQuoteData));
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--success-green);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                z-index: 10000;
+                font-weight: 600;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
+                transform: translateX(100%);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Update KP summary
+        function updateKPSummary() {
+            const selectedProducts = cartData.kp.filter(p => p.selected);
+            const totalCount = selectedProducts.reduce((sum, product) => sum + (product.quantity || 1), 0);
+            const subtotal = selectedProducts.reduce((sum, product) => sum + ((product.price || 0) * (product.quantity || 1)), 0);
+            
+            document.getElementById('kp-product-count').textContent = totalCount;
+            document.getElementById('kp-subtotal').textContent = `$${subtotal.toFixed(0)}`;
+            document.getElementById('kp-total').textContent = `$${subtotal.toFixed(0)}`;
+            
+            // Update price configuration analysis
+            updatePriceAnalysis();
+        }
+
+        // Initialize Price Configuration
+        function initPriceConfiguration() {
+            // Initialize brand discount controls
+            const brandDiscountsContainer = document.getElementById('brand-discounts');
+            const brands = ['Daikin', 'Mitsubishi', 'LG', 'Panasonic', 'Toshiba'];
+            
+            brands.forEach(brand => {
+                const brandItem = document.createElement('div');
+                brandItem.className = 'brand-discount-item';
+                brandItem.innerHTML = `
+                    <span class="brand-name">${brand}:</span>
+                    <input type="number" id="discount-${brand.toLowerCase()}" min="0" max="50" value="0" step="0.5">
+                    <span>%</span>
+                `;
+                brandDiscountsContainer.appendChild(brandItem);
+                
+                // Add event listener for discount changes
+                const input = brandItem.querySelector('input');
+                input.addEventListener('input', updatePriceAnalysis);
+            });
+
+            // Add event listeners for global settings
+            document.getElementById('client-discount').addEventListener('input', updatePriceAnalysis);
+            document.getElementById('target-margin').addEventListener('input', updatePriceAnalysis);
+            document.getElementById('quote-currency').addEventListener('change', updatePriceAnalysis);
+            document.getElementById('quote-validity').addEventListener('input', updatePriceAnalysis);
+
+            // Toggle config panel
+            document.querySelector('.config-toggle').addEventListener('click', function() {
+                const content = document.querySelector('.config-content');
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            });
+
+            updatePriceAnalysis();
+        }
+
+        // Update Price Analysis
+        function updatePriceAnalysis() {
+            const selectedProducts = cartData.kp.filter(p => p.selected);
+            if (selectedProducts.length === 0) {
+                document.getElementById('base-cost').textContent = '$0';
+                document.getElementById('discounted-cost').textContent = '$0';
+                document.getElementById('quote-price').textContent = '$0';
+                document.getElementById('estimated-profit').textContent = '$0 (0%)';
+                return;
+            }
+
+            // Calculate base cost
+            const baseCost = selectedProducts.reduce((sum, product) => {
+                return sum + ((product.price || 0) * (product.quantity || 1));
+            }, 0);
+
+            // Apply brand discounts
+            let discountedCost = 0;
+            selectedProducts.forEach(product => {
+                const brand = (product.brand || 'unknown').toLowerCase();
+                const brandDiscount = parseFloat(document.getElementById(`discount-${brand}`)?.value || 0);
+                const productCost = (product.price || 0) * (product.quantity || 1);
+                const discountAmount = productCost * (brandDiscount / 100);
+                discountedCost += productCost - discountAmount;
+            });
+
+            // Apply client discount
+            const clientDiscount = parseFloat(document.getElementById('client-discount').value) || 0;
+            const afterClientDiscount = discountedCost * (1 - clientDiscount / 100);
+
+            // Calculate quote price with target margin
+            const targetMargin = parseFloat(document.getElementById('target-margin').value) || 25;
+            const quotePrice = afterClientDiscount * (1 + targetMargin / 100);
+
+            // Calculate profit
+            const estimatedProfit = quotePrice - afterClientDiscount;
+            const profitMargin = afterClientDiscount > 0 ? (estimatedProfit / afterClientDiscount * 100) : 0;
+
+            // Get currency symbol
+            const currency = document.getElementById('quote-currency').value;
+            const currencySymbol = currency === 'USD' ? '$' : currency === 'EUR' ? '€' : '₽';
+
+            // Update display
+            document.getElementById('base-cost').textContent = `${currencySymbol}${baseCost.toFixed(0)}`;
+            document.getElementById('discounted-cost').textContent = `${currencySymbol}${afterClientDiscount.toFixed(0)}`;
+            document.getElementById('quote-price').textContent = `${currencySymbol}${quotePrice.toFixed(0)}`;
+            document.getElementById('estimated-profit').textContent = `${currencySymbol}${estimatedProfit.toFixed(0)} (${profitMargin.toFixed(1)}%)`;
+
+            // Update summary with configured prices
+            document.getElementById('kp-subtotal').textContent = `${currencySymbol}${afterClientDiscount.toFixed(0)}`;
+            document.getElementById('kp-total').textContent = `${currencySymbol}${quotePrice.toFixed(0)}`;
+        }
+
+        // Export Price Configuration
+        function exportPriceConfig() {
+            const config = {
+                brandDiscounts: {},
+                clientDiscount: parseFloat(document.getElementById('client-discount').value) || 0,
+                targetMargin: parseFloat(document.getElementById('target-margin').value) || 25,
+                currency: document.getElementById('quote-currency').value,
+                validity: parseInt(document.getElementById('quote-validity').value) || 30
+            };
+
+            const brands = ['daikin', 'mitsubishi', 'lg', 'panasonic', 'toshiba'];
+            brands.forEach(brand => {
+                const input = document.getElementById(`discount-${brand}`);
+                if (input) {
+                    config.brandDiscounts[brand] = parseFloat(input.value) || 0;
+                }
+            });
+
+            localStorage.setItem('priceConfiguration', JSON.stringify(config));
+            return config;
+        }
+
+        // Load Price Configuration
+        function loadPriceConfig() {
+            const saved = localStorage.getItem('priceConfiguration');
+            if (!saved) return;
+
+            try {
+                const config = JSON.parse(saved);
+                
+                // Load brand discounts
+                Object.entries(config.brandDiscounts || {}).forEach(([brand, discount]) => {
+                    const input = document.getElementById(`discount-${brand}`);
+                    if (input) input.value = discount;
+                });
+
+                // Load global settings
+                if (config.clientDiscount !== undefined) {
+                    document.getElementById('client-discount').value = config.clientDiscount;
+                }
+                if (config.targetMargin !== undefined) {
+                    document.getElementById('target-margin').value = config.targetMargin;
+                }
+                if (config.currency) {
+                    document.getElementById('quote-currency').value = config.currency;
+                }
+                if (config.validity !== undefined) {
+                    document.getElementById('quote-validity').value = config.validity;
+                }
+
+                updatePriceAnalysis();
+            } catch (e) {
+                console.error('Error loading price configuration:', e);
+            }
+        }
+
+        // Create quote
+        function createQuote() {
+            const selectedProducts = cartData.kp.filter(p => p.selected);
+            
+            if (selectedProducts.length === 0) {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'Please select at least one product.' :
+                    'Пожалуйста, выберите хотя бы один продукт.';
+                alert(message);
+                return;
+            }
+
+            // Save selected products to localStorage
+            const globalQuoteData = {};
+            selectedProducts.forEach(product => {
+                const brand = product.brand || 'unknown';
+                if (!globalQuoteData[brand]) {
+                    globalQuoteData[brand] = [];
+                }
+                globalQuoteData[brand].push(product);
+            });
+
+            localStorage.setItem('globalQuoteData', JSON.stringify(globalQuoteData));
+            
+            // Redirect to quote page
+            window.location.href = 'quote.html';
+        }
+
+        // Clear KP selection
+        function clearKPSelection() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const confirmMessage = currentLang === 'en' ? 
+                'Are you sure you want to clear all selected products?' :
+                'Вы уверены, что хотите очистить все выбранные продукты?';
+                
+            if (confirm(confirmMessage)) {
+                // Clear all cart data
+                cartData.kp = [];
+                cartData.requests = [];
+                
+                // Clear all localStorage entries
+                localStorage.removeItem('globalQuoteData');
+                localStorage.removeItem('selectedProducts');
+                localStorage.removeItem('requestProducts');
+                localStorage.removeItem('catalogProducts');
+                
+                console.log('Cart cleared, all data removed');
+                
+                displayKPData();
+                displayRequestsData();
+                displayCatalogData();
+                updateCartBadge();
+                
+                // Show confirmation
+                showNotification(currentLang === 'en' ? 'Cart cleared successfully' : 'Корзина очищена');
+            }
+        }
+
+        // Export to Excel
+        function exportToExcel() {
+            if (cartData.requests.length === 0) {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'No equipment selected for export.' :
+                    'Нет оборудования для экспорта.';
+                alert(message);
+                return;
+            }
+
+            const worksheet = XLSX.utils.json_to_sheet(
+                cartData.requests.map(item => ({
+                    'Model': item.model,
+                    'Brand': item.brand,
+                    'Type': item.type,
+                    'Specifications': item.specs,
+                    'Quantity': item.quantity
+                }))
+            );
+
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Equipment List');
+            
+            const fileName = `equipment_request_${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(workbook, fileName);
+        }
+
+        // Send via email
+        function sendViaEmail() {
+            if (cartData.requests.length === 0) {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'No equipment selected to send.' :
+                    'Нет оборудования для отправки.';
+                alert(message);
+                return;
+            }
+
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const subject = currentLang === 'en' ? 
+                'HVAC Equipment Request' :
+                'Запрос на HVAC оборудование';
+            
+            const body = currentLang === 'en' ? 
+                'Dear Supplier,\n\nWe would like to request a quote for the following HVAC equipment:\n\n' :
+                'Уважаемый поставщик,\n\nПросим предоставить коммерческое предложение на следующее HVAC оборудование:\n\n';
+            
+            let equipmentList = '';
+            cartData.requests.forEach((item, index) => {
+                equipmentList += `${index + 1}. ${item.model} (${item.brand})\n`;
+                equipmentList += `   Type: ${item.type}\n`;
+                equipmentList += `   Specifications: ${item.specs}\n`;
+                equipmentList += `   Quantity: ${item.quantity}\n\n`;
+            });
+
+            const footer = currentLang === 'en' ? 
+                '\n\nPlease provide pricing and availability.\n\nBest regards,\n[Your Name]' :
+                '\n\nПросим указать цены и сроки поставки.\n\nС уважением,\n[Ваше имя]';
+
+            const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body + equipmentList + footer)}`;
+            window.location.href = mailtoLink;
+        }
+
+        // Clear requests
+        function clearRequests() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const confirmMessage = currentLang === 'en' ? 
+                'Are you sure you want to clear the equipment list?' :
+                'Вы уверены, что хотите очистить список оборудования?';
+                
+            if (confirm(confirmMessage)) {
+                cartData.requests = [];
+                localStorage.removeItem('requestProducts');
+                displayRequestsData();
+            }
+        }
+
+        // Update cart badge
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cartData.kp.reduce((sum, product) => sum + (product.quantity || 1), 0) +
+                              cartData.requests.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            badge.textContent = totalItems;
+        }
+
+        // Language switching functionality
+        function initLanguageToggle() {
+            const languageSelect = document.getElementById('languageSelect');
+            const currencySelect = document.getElementById('currencySelect');
+            const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
+            
+            let currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            let currentCurrency = localStorage.getItem('preferredCurrency') || 'usd';
+            
+            // Set initial values
+            if (languageSelect) {
+                languageSelect.value = currentLang;
+            }
+            if (currencySelect) {
+                currencySelect.value = currentCurrency;
+            }
+            
+            switchLanguage(currentLang);
+            
+            // Language change handler
+            if (languageSelect) {
+                languageSelect.addEventListener('change', function() {
+                    const newLang = this.value;
+                    if (newLang !== currentLang) {
+                        switchLanguage(newLang);
+                        currentLang = newLang;
+                        localStorage.setItem('preferredLanguage', newLang);
+                    }
+                });
+            }
+            
+            // Currency change handler
+            if (currencySelect) {
+                currencySelect.addEventListener('change', function() {
+                    const newCurrency = this.value;
+                    if (newCurrency !== currentCurrency) {
+                        currentCurrency = newCurrency;
+                        localStorage.setItem('preferredCurrency', newCurrency);
+                        // Update prices in cart if needed
+                        updatePricesForCurrency(newCurrency);
+                    }
+                });
+            }
+            
+            function switchLanguage(lang) {
+                elementsWithTranslations.forEach(element => {
+                    const translation = element.getAttribute(`data-${lang}`);
+                    if (translation) {
+                        if (element.tagName === 'INPUT' && element.type !== 'submit') {
+                            element.placeholder = translation;
+                        } else {
+                            element.innerHTML = translation;
+                        }
+                    }
+                });
+                
+                document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
+            }
+        }
+
+        // Update prices for selected currency
+        function updatePricesForCurrency(currency) {
+            // This function can be expanded to convert prices based on currency
+            console.log('Currency changed to:', currency);
+            // For now, just refresh the display
+            displayKPData();
+        }
+
+        // Initialize mobile menu
+        function initMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+
+                // Close menu when clicking on menu items
+                const mobileMenuItems = mobileMenu.querySelectorAll('.mobile-menu-item');
+                mobileMenuItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        mobileMenuToggle.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>

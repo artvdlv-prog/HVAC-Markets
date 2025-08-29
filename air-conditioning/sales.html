@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIR Dealer - Commercial Proposal</title>
+    <title>HVAC Markets - Sales</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         
@@ -107,26 +107,9 @@
             letter-spacing: 0.1em;
         }
 
-        /* Heating platform styles */
-        .hvac-letter[data-platform="heating"]:hover {
-            background: rgba(255, 107, 53, 0.15);
-            color: #FF6B35;
-        }
-
-        /* Ventilation platform styles */
-        .hvac-letter[data-platform="ventilation"]:hover {
-            background: rgba(76, 175, 80, 0.15);
-            color: #4CAF50;
-        }
-
-        /* Air Conditioning platform styles (default) */
-        .hvac-letter[data-platform="airconditioning"] {
+        .hvac-letter[data-platform="airconditioning"]:hover,
+        .hvac-letter[data-platform="airconditioning"].active {
             background: rgba(20, 100, 244, 0.15);
-            color: var(--signature-blue);
-        }
-
-        .hvac-letter[data-platform="airconditioning"]:hover {
-            background: rgba(20, 100, 244, 0.25);
             color: var(--signature-blue);
         }
 
@@ -152,7 +135,6 @@
             color: var(--signature-blue);
         }
 
-        /* Navigation Right Side */
         .nav-right {
             display: flex;
             align-items: center;
@@ -182,35 +164,6 @@
             transform: scale(1.05);
         }
 
-        .profile-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: transparent;
-            color: var(--deep-graphite);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: 2px solid transparent;
-        }
-
-        .profile-icon:hover {
-            background: var(--signature-blue);
-            color: var(--primary-white);
-            border-color: var(--signature-blue);
-            transform: scale(1.05);
-        }
-
-        .profile-icon svg {
-            transition: transform 0.3s ease;
-        }
-
-        .profile-icon:hover svg {
-            transform: scale(1.1);
-        }
-
         .cart-badge {
             position: absolute;
             top: -2px;
@@ -226,81 +179,604 @@
             font-size: 11px;
             font-weight: 600;
             min-width: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-badge.updated {
+            animation: cart-pulse 0.5s ease;
+            background: var(--success-green);
+        }
+        
+        @keyframes cart-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
         }
 
-        /* Language Toggle */
-        /* Navigation Dropdowns */
+        /* Cart Modal Styles */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .cart-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .cart-modal-content {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            max-height: 90vh;
+            width: 100%;
+            overflow: hidden;
+            animation: cart-modal-appear 0.3s ease;
+        }
+
+        @keyframes cart-modal-appear {
+            0% { opacity: 0; transform: scale(0.9) translateY(-20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .cart-header {
+            background: var(--signature-blue);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .cart-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Cart Tabs */
+        .cart-tabs {
+            display: flex;
+            background: var(--warm-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .cart-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .cart-tab.active {
+            background: white;
+            color: var(--signature-blue);
+            border-bottom-color: var(--signature-blue);
+        }
+        .cart-tab:hover {
+            background: rgba(20, 100, 244, 0.1);
+            color: var(--signature-blue);
+        }
+
+        /* Cart Tab Contents */
+        .cart-tab-content {
+            display: none;
+        }
+        .cart-tab-content.active {
+            display: block;
+        }
+
+        /* Quote Builder Styles */
+        .quote-builder h3 {
+            color: var(--signature-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .quote-settings {
+            background: var(--warm-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .settings-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .setting-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .setting-group label {
+            font-weight: 600;
+            color: var(--deep-graphite);
+            min-width: 120px;
+        }
+        .setting-group input {
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            width: 80px;
+        }
+        .setting-unit {
+            color: #666;
+            font-weight: 500;
+        }
+        .quote-summary h4 {
+            color: var(--signature-blue);
+            margin-bottom: 1rem;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--warm-gray);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--success-green);
+        }
+
+        .cart-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-brand-section {
+            margin-bottom: 2rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cart-brand-header {
+            background: var(--warm-gray);
+            padding: 1rem 1.5rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--deep-graphite);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .cart-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .cart-brand-name {
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .cart-brand-products {
+            background: white;
+        }
+
+        .cart-brand-count {
+            background: var(--signature-blue);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .cart-product-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            gap: 1rem;
+        }
+
+        .cart-product-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-product-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--warm-gray);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .cart-product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cart-product-name {
+            font-weight: 600;
+            color: var(--deep-graphite);
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+        }
+
+        .cart-product-specs {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .cart-product-price {
+            font-weight: 700;
+            color: var(--signature-blue);
+            font-size: 1.1rem;
+        }
+
+        .cart-product-remove {
+            background: var(--error-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .cart-product-remove:hover {
+            background: var(--deep-graphite);
+            transform: scale(1.05);
+        }
+
+        .cart-product-analog {
+            font-size: 0.75rem;
+            color: var(--signature-blue);
+            font-weight: 600;
+            background: rgba(20, 100, 244, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            margin-top: 0.25rem;
+            display: inline-block;
+        }
+
+        .cart-summary {
+            background: var(--warm-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--light-gray);
+            padding-top: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--signature-blue);
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-cart-action {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        .cart-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .cart-empty-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-empty-subtext {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .cart-modal-content {
+                margin: 1rem;
+                max-height: 95vh;
+            }
+
+            .cart-header {
+                padding: 1rem;
+            }
+
+            .cart-body {
+                padding: 1rem;
+            }
+
+            .cart-actions {
+                flex-direction: column;
+            }
+
+            .btn-cart-action {
+                min-width: auto;
+            }
+
+            .cart-product-item {
+                padding: 0.75rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .cart-product-info {
+                flex-basis: 100%;
+                order: 1;
+            }
+
+            .cart-product-price {
+                order: 2;
+            }
+
+            .cart-product-remove {
+                order: 3;
+            }
+        }
+
         .nav-dropdown {
             position: relative;
         }
 
         .nav-select {
-            background: transparent;
-            border: 1px solid rgba(26, 26, 26, 0.2);
-            color: var(--deep-graphite);
-            padding: 0.4rem 0.8rem;
+            background: var(--warm-gray);
+            border: 1px solid var(--light-gray);
             border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
+            padding: 0.5rem;
             font-size: 0.8rem;
             font-weight: 500;
+            color: var(--deep-graphite);
+            cursor: pointer;
+        }
+
+        /* AI Search Modal */
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(20, 100, 244, 0.08);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            opacity: 0;
+            transform: translateY(-100%);
             transition: all 0.3s ease;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
         }
 
-        .nav-select:hover {
-            border-color: var(--signature-blue);
-            background-color: rgba(20, 100, 244, 0.05);
+        .search-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .nav-select:focus {
+        .search-modal-content {
+            background: transparent;
+            border-radius: 0;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            overflow: visible;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .search-modal-header {
+            display: none;
+        }
+
+        .search-modal-title {
+            margin: 0;
+            color: var(--deep-graphite);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 1rem;
+            white-space: nowrap;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .search-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--deep-graphite);
+            position: absolute;
+            right: 2rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .search-modal-close:hover {
+            background: rgba(20, 100, 244, 0.15);
+        }
+
+        .search-modal-body {
+            padding: 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-modal-body .search-modal-title {
+            display: flex;
+        }
+
+        .ai-search-bar-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--primary-white);
+            border-radius: 25px;
+            padding: 8px 12px;
+            border: 2px solid rgba(20, 100, 244, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(20, 100, 244, 0.1);
+        }
+
+        .ai-search-bar-input:hover,
+        .ai-search-bar-input:focus-within {
+            border-color: rgba(20, 100, 244, 0.4);
+            box-shadow: 0 4px 12px rgba(20, 100, 244, 0.15);
+        }
+
+        .ai-search-input-bar {
+            flex: 1;
+            border: none;
             outline: none;
-            border-color: var(--signature-blue);
-            background-color: rgba(20, 100, 244, 0.1);
+            padding: 6px 12px;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--deep-graphite);
+            font-family: inherit;
         }
 
-        /* Mobile Menu Toggle */
+        .ai-search-input-bar::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .ai-search-submit {
+            background: var(--signature-blue);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin-left: 6px;
+        }
+
+        .ai-search-submit:hover {
+            background: var(--deep-graphite);
+            transform: scale(1.05);
+        }
+
+        /* Mobile menu toggle */
         .mobile-menu-toggle {
             display: none;
             flex-direction: column;
-            justify-content: space-around;
-            width: 24px;
-            height: 24px;
-            background: none;
-            border: none;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
             cursor: pointer;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-toggle:hover {
-            background-color: rgba(20, 100, 244, 0.1);
         }
 
         .hamburger-line {
             width: 100%;
             height: 2px;
-            background-color: var(--deep-graphite);
+            background: var(--deep-graphite);
             transition: all 0.3s ease;
-            transform-origin: center;
-        }
-
-        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         /* Mobile Menu */
@@ -315,8 +791,8 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            z-index: 999;
-            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            z-index: 9999;
+            border-bottom: 1px solid var(--light-gray);
         }
 
         .mobile-menu.active {
@@ -337,426 +813,342 @@
             color: var(--deep-graphite);
             font-weight: 600;
             font-size: 1.1rem;
-            letter-spacing: 0.05em;
             text-transform: uppercase;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+            letter-spacing: 0.05em;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid transparent;
             transition: all 0.3s ease;
-        }
-
-        .mobile-menu-item:last-child {
-            border-bottom: none;
         }
 
         .mobile-menu-item:hover {
             color: var(--signature-blue);
-            transform: translateX(10px);
+            border-bottom-color: var(--signature-blue);
         }
 
-        /* Main Quote Container */
-        .quote-container {
+        /* Sales Container */
+        .sales-container {
             padding-top: 100px;
             min-height: 100vh;
             background: var(--warm-gray);
         }
 
-        .quote-header {
+        .sales-header {
             text-align: center;
-            padding: 2rem 0;
+            padding: 3rem 0;
             background: var(--primary-white);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .quote-title {
-            font-size: 2.5rem;
+        .sales-title {
+            font-size: 3rem;
+            font-weight: 800;
             margin-bottom: 1rem;
             color: var(--deep-graphite);
         }
 
-        .quote-subtitle {
-            font-size: 1.2rem;
+        .sales-subtitle {
+            font-size: 1.1rem;
             color: #666;
             font-weight: 400;
             text-transform: none;
+            letter-spacing: normal;
         }
 
-        /* Currency Header */
-        .currency-header {
-            background: var(--signature-blue);
-            color: var(--primary-white);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .currency-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .currency-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .currency-select {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--primary-white);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .currency-select option {
-            background: var(--deep-graphite);
-            color: var(--primary-white);
-        }
-
-        .rate-display {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-
-        /* Quote Layout */
-        .quote-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 0;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Quote Settings Sidebar */
-        .quote-settings {
+        /* Filter Controls */
+        .filter-section {
             background: var(--primary-white);
-            padding: 2rem 1.5rem;
-            border-right: 1px solid var(--light-gray);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
+            padding: 2rem;
+            margin: 0 2rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .settings-section {
-            margin-bottom: 2rem;
-        }
-
-        .settings-title {
-            font-size: 1rem;
+        .filter-title {
+            font-size: 1.2rem;
             font-weight: 700;
+            margin-bottom: 1.5rem;
             color: var(--deep-graphite);
-            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .setting-group {
-            margin-bottom: 1.5rem;
+        .filter-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            align-items: end;
         }
 
-        .setting-label {
-            display: block;
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--deep-graphite);
-            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .setting-input {
-            width: 100%;
+        .filter-select, .filter-input {
             padding: 0.75rem;
             border: 2px solid var(--light-gray);
             border-radius: 6px;
             font-size: 0.9rem;
             font-family: inherit;
+            background: var(--primary-white);
             transition: border-color 0.3s ease;
         }
 
-        .setting-input:focus {
+        .filter-select:focus, .filter-input:focus {
             outline: none;
             border-color: var(--signature-blue);
         }
 
-        .setting-textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 0.75rem;
-            border: 2px solid var(--light-gray);
+        .refresh-btn {
+            background: var(--signature-blue);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
             border-radius: 6px;
-            font-size: 0.9rem;
-            font-family: inherit;
-            resize: vertical;
-            transition: border-color 0.3s ease;
-        }
-
-        .setting-textarea:focus {
-            outline: none;
-            border-color: var(--signature-blue);
-        }
-
-        .setting-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--light-gray);
-            border-radius: 4px;
             cursor: pointer;
-            position: relative;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             transition: all 0.3s ease;
         }
 
-        .checkbox.checked {
-            background: var(--signature-blue);
-            border-color: var(--signature-blue);
+        .refresh-btn:hover {
+            background: var(--deep-graphite);
+            transform: translateY(-2px);
         }
 
-        .checkbox.checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
+        /* Quotes List */
+        .quotes-section {
+            margin: 0 2rem 2rem;
         }
 
-        .checkbox-label {
-            font-size: 0.9rem;
-            color: var(--deep-graphite);
-            cursor: pointer;
-        }
-
-        .profitability-display {
-            background: var(--warm-gray);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .profit-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .profit-total {
-            border-top: 1px solid var(--light-gray);
-            padding-top: 0.5rem;
-            font-weight: 700;
-            color: var(--success-green);
-        }
-
-        /* Quote Content */
-        .quote-content {
+        .quotes-list {
             background: var(--primary-white);
-            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        .brand-section {
-            margin-bottom: 3rem;
-        }
-
-        .brand-header {
+        .quotes-header {
             background: var(--signature-blue);
-            color: var(--primary-white);
-            padding: 1rem 1.5rem;
-            border-radius: 8px 8px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .brand-total {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .brand-products {
-            border: 1px solid var(--light-gray);
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-        }
-
-        .product-row {
+            color: white;
+            padding: 1.5rem 2rem;
             display: grid;
-            grid-template-columns: 80px 2fr 1fr 1fr auto;
+            grid-template-columns: 120px 1fr 100px 150px 120px 180px;
             gap: 1rem;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--light-gray);
-            align-items: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .product-row:last-child {
+        .quote-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: grid;
+            grid-template-columns: 120px 1fr 100px 150px 120px 180px;
+            gap: 1rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .quote-item:hover {
+            background: rgba(20, 100, 244, 0.05);
+            transform: translateX(4px);
+        }
+
+        .quote-item:last-child {
             border-bottom: none;
         }
 
-        .product-image-small {
-            width: 60px;
-            height: 45px;
-            background: var(--warm-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #999;
-            border-radius: 6px;
+        .quote-id {
+            font-weight: 700;
+            color: var(--signature-blue);
+            font-size: 0.9rem;
         }
 
-        .product-info {
+        .quote-info {
             min-width: 0;
         }
 
-        .product-name {
-            font-size: 1rem;
-            font-weight: 600;
+        .quote-client {
+            font-weight: 700;
             margin-bottom: 0.25rem;
             color: var(--deep-graphite);
         }
 
-        .product-specs-brief {
-            font-size: 0.8rem;
+        .quote-description {
+            font-size: 0.85rem;
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .quote-platform {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .platform-icon {
+            font-size: 1.2rem;
+        }
+
+        .quote-products {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--deep-graphite);
+        }
+
+        .quote-date {
+            font-size: 0.85rem;
             color: #666;
             line-height: 1.3;
         }
 
-        .product-quantity {
-            text-align: center;
-        }
-
-        .quantity-label {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 0.25rem;
-        }
-
-        .quantity-value {
+        .quote-price {
+            font-weight: 800;
             font-size: 1.1rem;
-            font-weight: 600;
+            color: var(--success-green);
         }
 
-        .product-price {
-            text-align: right;
-        }
-
-        .price-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--signature-blue);
-        }
-
-        .remove-btn {
-            background: var(--error-red);
-            color: var(--primary-white);
-            border: none;
-            border-radius: 4px;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .remove-btn:hover {
-            background: var(--deep-graphite);
-            transform: scale(1.05);
-        }
-
-        /* Quote Summary */
-        .quote-summary {
-            background: var(--deep-graphite);
-            color: var(--primary-white);
-            padding: 2rem;
-            margin-top: 2rem;
-            border-radius: 8px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .summary-total {
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding-top: 1rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--lemon);
-        }
-
-        /* Action Buttons */
         .quote-actions {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
 
-        .btn-action {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
+        .btn-view {
+            background: var(--signature-blue);
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: var(--deep-graphite);
+            transform: scale(1.1);
+        }
+
+        .btn-edit {
+            background: var(--warning-yellow);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #F57C00;
+            transform: scale(1.1);
+        }
+
+        .btn-send {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-send:hover {
+            background: #388E3C;
+            transform: scale(1.1);
+        }
+
+        .btn-delete {
+            background: var(--error-red);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #C62828;
+            transform: scale(1.1);
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
             font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .btn-primary {
-            background: var(--signature-blue);
-            color: var(--primary-white);
+        .status-draft {
+            background: rgba(255, 152, 0, 0.15);
+            color: var(--warning-yellow);
+            border: 1px solid var(--warning-yellow);
         }
 
-        .btn-primary:hover {
-            background: var(--deep-graphite);
-        }
-
-        .btn-secondary {
-            background: transparent;
+        .status-sent {
+            background: rgba(20, 100, 244, 0.15);
             color: var(--signature-blue);
-            border: 2px solid var(--signature-blue);
+            border: 1px solid var(--signature-blue);
         }
 
-        .btn-secondary:hover {
-            background: var(--signature-blue);
-            color: var(--primary-white);
+        .status-approved {
+            background: rgba(76, 175, 80, 0.15);
+            color: var(--success-green);
+            border: 1px solid var(--success-green);
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .quote-layout {
-                grid-template-columns: 280px 1fr;
-            }
-
-            .quote-settings {
-                padding: 1.5rem 1rem;
-            }
+        .status-rejected {
+            background: rgba(244, 67, 54, 0.15);
+            color: var(--error-red);
+            border: 1px solid var(--error-red);
         }
 
-        /* Medium screens - adjust menu spacing */
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--deep-graphite);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .empty-description {
+            font-size: 1rem;
+            text-transform: none;
+            letter-spacing: normal;
+            font-weight: 400;
+        }
+
+        /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .nav-menu {
                 gap: 1rem;
@@ -779,67 +1171,67 @@
             .nav-menu {
                 display: none;
             }
-            
-            .nav-right {
-                gap: 1rem;
-            }
-            
-            .profile-icon {
-                width: 36px;
-                height: 36px;
+
+            .sales-container {
+                padding: 100px 1rem 2rem;
             }
 
-            .quote-layout {
+            .sales-title {
+                font-size: 2rem;
+            }
+
+            .filter-section {
+                margin: 0 0 2rem;
+                padding: 1.5rem;
+            }
+
+            .filter-controls {
                 grid-template-columns: 1fr;
             }
 
-            .quote-settings {
-                position: static;
-                border-right: none;
-                border-bottom: 1px solid var(--light-gray);
+            .quotes-section {
+                margin: 0 0 2rem;
             }
 
-            .currency-header {
-                flex-direction: column;
+            .quotes-header, .quote-item {
+                grid-template-columns: 1fr;
                 gap: 1rem;
-            }
-
-            .product-row {
-                grid-template-columns: 60px 1fr auto;
-                gap: 0.75rem;
-            }
-
-            .product-quantity,
-            .product-specs-brief {
-                display: none;
+                text-align: left;
+                padding: 1rem;
             }
 
             .quote-actions {
-                flex-direction: column;
-                align-items: center;
+                justify-content: center;
+                margin-top: 1rem;
             }
 
-            .btn-action {
-                width: 100%;
-                max-width: 300px;
+            .quote-info {
+                order: 1;
+            }
+
+            .quote-platform {
+                order: 2;
+            }
+
+            .quote-products {
+                order: 3;
+            }
+
+            .quote-date {
+                order: 4;
+            }
+
+            .quote-price {
+                order: 5;
+                font-size: 1.3rem;
+                text-align: center;
+            }
+
+            .quote-actions {
+                order: 6;
             }
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--light-gray);
-            border-top: 2px solid var(--signature-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
     </style>
 </head>
 <body>
@@ -848,15 +1240,15 @@
         <div class="nav-logo">
             <div class="logo-main">
                 <div class="hvac-letters">
-                    <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
-                    <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
-                    <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+                    <span class="hvac-letter" data-platform="heating" data-letter="h" onclick="window.location.href='../../heating.html'">H</span>
+                    <span class="hvac-letter" data-platform="ventilation" data-letter="v" onclick="window.location.href='../../ventilation.html'">V</span>
+                    <span class="hvac-letter active" data-platform="airconditioning" data-letter="ac" onclick="window.location.href='../air-conditioning.html'">AC</span>
                 </div>
                 <span class="markets-text">MARKETS</span>
             </div>
         </div>
         <div class="nav-menu">
-            <a href="../air-conditioning.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="../air-conditioning.html#scout" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="../air-conditioning.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
             <a href="sales.html" class="nav-item active" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
             <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
@@ -890,8 +1282,8 @@
             <!-- Language Selection Dropdown -->
             <div class="nav-dropdown">
                 <select class="nav-select" id="languageSelect">
-                    <option value="en" selected>EN</option>
-                    <option value="ru">RU</option>
+                    <option value="en">EN</option>
+                    <option value="ru" selected>RU</option>
                 </select>
             </div>
             
@@ -912,368 +1304,482 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-content">
-            <a href="../air-conditioning.html" class="mobile-menu-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
-            <a href="../air-conditioning.html#match" class="mobile-menu-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="sales.html" class="mobile-menu-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="mobile-menu-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="mobile-menu-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="mobile-menu-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="mobile-menu-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+    <!-- Sales Container -->
+    <div class="sales-container">
+        <!-- Sales Header -->
+        <div class="sales-header">
+            <h1 class="sales-title" data-en="Sales Management" data-ru="Управление продажами">Управление продажами</h1>
+            <p class="sales-subtitle" data-en="Manage commercial proposals, track quotes, and handle customer requests" data-ru="Управление коммерческими предложениями, отслеживание котировок и обработка клиентских запросов">Управление коммерческими предложениями, отслеживание котировок и обработка клиентских запросов</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h2 class="filter-title" data-en="Filter & Search" data-ru="Фильтрация и поиск">Фильтрация и поиск</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label class="filter-label" data-en="Platform" data-ru="Платформа">Платформа</label>
+                    <select class="filter-select" id="platformFilter">
+                        <option value="">Все платформы</option>
+                        <option value="heating">🔥 Отопление</option>
+                        <option value="ventilation">💨 Вентиляция</option>
+                        <option value="air-conditioning">❄️ Кондиционирование</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" data-en="Status" data-ru="Статус">Статус</label>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">Все статусы</option>
+                        <option value="draft">Черновик</option>
+                        <option value="sent">Отправлено</option>
+                        <option value="approved">Подтверждено</option>
+                        <option value="rejected">Отклонено</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" data-en="Date From" data-ru="Дата от">Дата от</label>
+                    <input type="date" class="filter-input" id="dateFromFilter">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label" data-en="Date To" data-ru="Дата до">Дата до</label>
+                    <input type="date" class="filter-input" id="dateToFilter">
+                </div>
+                
+                <div class="filter-group">
+                    <button class="refresh-btn" onclick="loadQuotes()" data-en="🔄 Refresh" data-ru="🔄 Обновить">🔄 Обновить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quotes Section -->
+        <div class="quotes-section">
+            <div class="quotes-list">
+                <div class="quotes-header">
+                    <div>ID КП</div>
+                    <div>Клиент и Описание</div>
+                    <div>Platform</div>
+                    <div>Дата создания</div>
+                    <div>Products</div>
+                    <div>Общая стоимость</div>
+                    <div>Действия</div>
+                </div>
+                
+                <div id="quotesContainer">
+                    <!-- Quotes will be loaded here -->
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Quote Container -->
-    <div class="quote-container">
-
-        <!-- Currency Header -->
-        <div class="currency-header">
-            <div class="currency-info">
-                <span class="currency-label" data-en="Currency:" data-ru="Валюта:">Currency:</span>
-                <select class="currency-select" id="quoteCurrencySelect">
-                    <option value="usd" selected>USD ($)</option>
-                    <option value="rub">RUB (₽)</option>
-                    <option value="eur">EUR (€)</option>
-                </select>
+    <!-- AI Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <div class="search-modal-body">
+                <h3 class="search-modal-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                    </svg>
+                    <span data-en="AI Search" data-ru="ИИ Поиск">ИИ Поиск</span>
+                </h3>
+                <div class="ai-search-bar-input">
+                    <input type="text" class="ai-search-input-bar" id="aiSearchInput" placeholder="Спросите меня о HVAC оборудовании..." data-en-placeholder="Ask me anything about HVAC equipment..." data-ru-placeholder="Спросите меня о HVAC оборудовании...">
+                    <button class="ai-search-submit" type="button" onclick="performAISearch()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div class="currency-info">
-                <span class="rate-display">USD/RUB: <span id="usdRubDisplay">75.50</span></span>
-            </div>
-            <div class="currency-info">
-                <span class="rate-display">USD/EUR: <span id="usdEurDisplay">0.85</span></span>
-            </div>
+            <button class="search-modal-close" id="searchModalClose">&times;</button>
         </div>
+    </div>
 
-        <!-- Quote Header -->
-        <div class="quote-header">
-            <h1 class="quote-title" id="quoteTitle" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Commercial Proposal</h1>
-            <p class="quote-subtitle" id="quoteSubtitle" data-en="Multi-brand HVAC equipment selection" data-ru="Многобрендовый подбор HVAC оборудования">Multi-brand HVAC equipment selection</p>
-        </div>
-
-        <!-- Quote Layout -->
-        <div class="quote-layout">
-            <!-- Quote Settings Sidebar -->
-            <div class="quote-settings">
-                <!-- Profitability Settings -->
-                <div class="settings-section">
-                    <h3 class="settings-title" data-en="Profitability" data-ru="Доходность">Profitability</h3>
-                    
-                    <div class="setting-group">
-                        <label class="setting-label" data-en="Global Dealer Discount (%):" data-ru="Общая скидка дилера (%):">Global Dealer Discount (%):</label>
-                        <input type="number" class="setting-input" id="globalDealerDiscount" value="0" min="0" max="100" step="0.1">
-                    </div>
-
-                    <div class="setting-group">
-                        <label class="setting-label" data-en="Global Client Discount (%):" data-ru="Общая скидка клиента (%):">Global Client Discount (%):</label>
-                        <input type="number" class="setting-input" id="globalClientDiscount" value="0" min="0" max="100" step="0.1">
-                    </div>
-
-                    <div class="profitability-display" id="profitabilityDisplay">
-                        <div class="profit-item">
-                            <span data-en="Total Cost:" data-ru="Общая стоимость:">Total Cost:</span>
-                            <span id="totalCost">$0</span>
-                        </div>
-                        <div class="profit-item">
-                            <span data-en="Sale Price:" data-ru="Цена продажи:">Sale Price:</span>
-                            <span id="totalSale">$0</span>
-                        </div>
-                        <div class="profit-item profit-total">
-                            <span data-en="Profit:" data-ru="Прибыль:">Profit:</span>
-                            <span id="totalProfit">$0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Brand Discounts -->
-                <div class="settings-section">
-                    <h3 class="settings-title" data-en="Brand Discounts" data-ru="Скидки по брендам">Brand Discounts</h3>
-                    <div id="brandDiscounts">
-                        <!-- Brand discount controls will be generated here -->
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div class="settings-section">
-                    <h3 class="settings-title" data-en="Description" data-ru="Описание">Description</h3>
-                    <div class="setting-group">
-                        <textarea class="setting-textarea" id="quoteDescription" placeholder="Enter quote description..." data-en-placeholder="Enter quote description..." data-ru-placeholder="Введите описание КП..."></textarea>
-                    </div>
-                </div>
-
-                <!-- Display Options -->
-                <div class="settings-section">
-                    <h3 class="settings-title" data-en="Display Options" data-ru="Опции отображения">Display Options</h3>
-                    
-                    <div class="setting-checkbox">
-                        <div class="checkbox checked" id="showPhotosCheck"></div>
-                        <label class="checkbox-label" data-en="Show Product Photos" data-ru="Отображать фото продуктов">Show Product Photos</label>
-                    </div>
-
-                    <div class="setting-checkbox">
-                        <div class="checkbox checked" id="showSpecsCheck"></div>
-                        <label class="checkbox-label" data-en="Show Technical Specifications" data-ru="Отображать тех. характеристики">Show Technical Specifications</label>
-                    </div>
-
-                    <div class="setting-checkbox">
-                        <div class="checkbox checked" id="showCapacityCheck"></div>
-                        <label class="checkbox-label" data-en="Show Capacity" data-ru="Отображать мощность">Show Capacity</label>
-                    </div>
-
-                    <div class="setting-checkbox">
-                        <div class="checkbox" id="showEnergyClassCheck"></div>
-                        <label class="checkbox-label" data-en="Show Energy Class" data-ru="Отображать энерг. класс">Show Energy Class</label>
-                    </div>
-                </div>
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal" style="display: none;">
+        <div class="cart-modal-overlay" onclick="closeCart()"></div>
+        <div class="cart-modal-content">
+            <div class="cart-header">
+                <h2 class="cart-title" data-en="Shopping Cart & Quote" data-ru="Корзина и КП">Корзина и КП</h2>
+                <button class="cart-close" onclick="closeCart()" title="Закрыть">×</button>
             </div>
-
-            <!-- Quote Content -->
-            <div class="quote-content">
-                <div id="quoteProductsByBrand">
-                    <!-- Brand sections will be generated here -->
+            
+            <!-- Cart Tabs -->
+            <div class="cart-tabs">
+                <button class="cart-tab active" data-tab="cart" data-en="Cart" data-ru="Корзина">Корзина</button>
+                <button class="cart-tab" data-tab="quote" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Коммерческое предложение</button>
+            </div>
+            
+            <div class="cart-body">
+                <!-- Cart Tab Content -->
+                <div class="cart-tab-content active" id="cartTabContent">
+                    <!-- Cart Items by Brand -->
+                    <div class="cart-items" id="cartItems">
+                        <!-- Items will be dynamically generated here -->
+                    </div>
+                    
+                    <!-- Cart Summary -->
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
+                            <span id="cartTotalProducts">0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span data-en="Total Brands:" data-ru="Всего брендов:">Всего брендов:</span>
+                            <span id="cartTotalBrands">0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span data-en="Total Price:" data-ru="Общая стоимость:">Общая стоимость:</span>
+                            <span id="cartTotalPrice">$0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Actions -->
+                    <div class="cart-actions">
+                        <button class="btn-cart-action btn-primary" onclick="generatePDFQuote()" data-en="Generate PDF Quote" data-ru="Создать PDF КП">Создать PDF КП</button>
+                        <button class="btn-cart-action btn-secondary" onclick="sendQuoteRequest()" data-en="Send Request" data-ru="Отправить запрос">Отправить запрос</button>
+                        <button class="btn-cart-action btn-danger" onclick="clearCart()" data-en="Clear Cart" data-ru="Очистить корзину">Очистить корзину</button>
+                    </div>
                 </div>
-
-                <!-- Quote Summary -->
-                <div class="quote-summary">
-                    <div class="summary-row">
-                        <span data-en="Total Products:" data-ru="Всего продуктов:">Total Products:</span>
-                        <span id="summaryProductCount">0</span>
+                
+                <!-- Quote Tab Content -->
+                <div class="cart-tab-content" id="quoteTabContent">
+                    <div class="quote-builder">
+                        <h3 data-en="Commercial Proposal Builder" data-ru="Конструктор коммерческого предложения">Конструктор коммерческого предложения</h3>
+                        
+                        <!-- Quote Settings -->
+                        <div class="quote-settings">
+                            <div class="settings-row">
+                                <div class="setting-group">
+                                    <label data-en="Client Discount:" data-ru="Скидка клиента:">Скидка клиента:</label>
+                                    <input type="number" id="clientDiscount" placeholder="0" min="0" max="100" step="0.1">
+                                    <span class="setting-unit">%</span>
+                                </div>
+                                <div class="setting-group">
+                                    <label data-en="Profitability:" data-ru="Доходность:">Доходность:</label>
+                                    <input type="number" id="profitability" placeholder="15" min="0" max="100" step="0.1">
+                                    <span class="setting-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quote Summary -->
+                        <div class="quote-summary">
+                            <h4 data-en="Quote Summary" data-ru="Итоги КП">Итоги КП</h4>
+                            <div class="summary-line">
+                                <span data-en="Final Amount:" data-ru="Итоговая сумма:">Итоговая сумма:</span>
+                                <span id="quoteFinalAmount">$0.00</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="summary-row">
-                        <span data-en="Subtotal:" data-ru="Подитог:">Subtotal:</span>
-                        <span id="summarySubtotal">$0</span>
-                    </div>
-                    <div class="summary-row">
-                        <span data-en="Total Discount:" data-ru="Общая скидка:">Total Discount:</span>
-                        <span id="summaryDiscount">$0</span>
-                    </div>
-                    <div class="summary-row summary-total">
-                        <span data-en="TOTAL:" data-ru="ИТОГО:">TOTAL:</span>
-                        <span id="summaryTotal">$0</span>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="quote-actions">
-                    <button class="btn-action btn-primary" id="generatePdfBtn" data-en="Generate PDF" data-ru="Создать PDF">Generate PDF</button>
-                    <button class="btn-action btn-secondary" id="saveQuoteBtn" data-en="Save Quote" data-ru="Сохранить КП">Save Quote</button>
-                    <button class="btn-action btn-secondary" onclick="window.history.back()" data-en="Back to Search" data-ru="Назад к поиску">Back to Search</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Quote page JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            initQuotePage();
-            initLanguageToggle();
-            loadSelectedProducts();
-        });
+        // Mock data for demonstration
+        let savedQuotes = [];
 
-        let currentCurrency = 'usd';
-        let exchangeRates = {
-            usd: 1,
-            rub: 75.50,
-            eur: 0.85
-        };
-
-        let selectedProducts = [];
-        let brandDiscounts = {};
-
-        // Initialize quote page
-        function initQuotePage() {
-            const currencySelect = document.getElementById('quoteCurrencySelect');
-            const navCurrencySelect = document.getElementById('currencySelect');
-            const globalDealerDiscount = document.getElementById('globalDealerDiscount');
-            const globalClientDiscount = document.getElementById('globalClientDiscount');
-
-            // Currency change handler for quote currency
-            currencySelect.addEventListener('change', function() {
-                currentCurrency = this.value;
-                // Sync with nav currency selector
-                if (navCurrencySelect) {
-                    navCurrencySelect.value = this.value;
-                }
-                updateDisplay();
-            });
-
-            // Currency change handler for nav currency
-            if (navCurrencySelect) {
-                navCurrencySelect.addEventListener('change', function() {
-                    currentCurrency = this.value;
-                    // Sync with quote currency selector
-                    currencySelect.value = this.value;
-                    updateDisplay();
-                });
-            }
-
-            // Discount change handlers
-            globalDealerDiscount.addEventListener('input', updateDisplay);
-            globalClientDiscount.addEventListener('input', updateDisplay);
-
-            // Checkbox handlers
-            initCheckboxes();
-        }
-
-        // Initialize checkboxes
-        function initCheckboxes() {
-            const checkboxes = document.querySelectorAll('.checkbox');
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function() {
-                    this.classList.toggle('checked');
-                    updateDisplay();
-                });
-            });
-        }
-
-        // Load selected products from globalQuoteData or fallback
-        function loadSelectedProducts() {
-            // Load currency settings
-            const storedCurrency = localStorage.getItem('quoteCurrency');
-            const storedRates = localStorage.getItem('quoteExchangeRates');
-            
-            if (storedCurrency) {
-                currentCurrency = storedCurrency;
-                document.getElementById('quoteCurrencySelect').value = currentCurrency;
-                localStorage.removeItem('quoteCurrency');
-            }
-            
-            if (storedRates) {
-                exchangeRates = JSON.parse(storedRates);
-                document.getElementById('usdRubDisplay').textContent = exchangeRates.rub.toFixed(2);
-                document.getElementById('usdEurDisplay').textContent = exchangeRates.eur.toFixed(3);
-                localStorage.removeItem('quoteExchangeRates');
-            }
-
-            // Try to get from globalQuoteData first
-            const globalQuoteData = JSON.parse(localStorage.getItem('globalQuoteData') || '{}');
-            
-            if (Object.keys(globalQuoteData).length > 0) {
-                // Convert globalQuoteData to selectedProducts format
-                selectedProducts = [];
-                Object.keys(globalQuoteData).forEach((brand, brandIndex) => {
-                    globalQuoteData[brand].forEach((product, productIndex) => {
-                        selectedProducts.push({
-                            ...product,
-                            id: (brandIndex * 100) + productIndex + 1, // Unique ID
-                            title: product.title || product.model,
-                            specs: product.specs || `${product.capacity || 'N/A'} BTU/h`,
-                            brand: brand,
-                            retailPrice: product.price * 1.3, // Estimate retail from price
-                            purchasePrice: product.price * 0.7, // Estimate purchase from price
-                            salePrice: product.price, // Use original price as sale price
-                            quantity: product.quantity || 1
-                        });
-                    });
-                });
-                console.log('Loaded products from globalQuoteData:', selectedProducts);
+        function loadQuotes() {
+            // Try to load from localStorage
+            const stored = localStorage.getItem('savedQuotes');
+            if (stored) {
+                savedQuotes = JSON.parse(stored);
             } else {
-                // Try legacy selectedProducts
-                const stored = localStorage.getItem('selectedProducts');
-                if (stored) {
-                    selectedProducts = JSON.parse(stored);
-                    localStorage.removeItem('selectedProducts'); // Clean up
-                } else {
-                    // Fallback: sample data for demo
-                    selectedProducts = [
-                        {
-                            id: 1,
-                            title: "Daikin FTXM35R Split System",
-                            specs: "12,000 BTU/h, A+++ Energy Class, Inverter",
-                            brand: "daikin",
-                            capacity: 12000,
-                            energyClass: "a+++",
-                            features: ["inverter", "wifi", "heating"],
-                            type: "split",
-                            retailPrice: 1299,
-                            purchasePrice: 899,
-                            salePrice: 1199,
-                            quantity: 2
-                        },
-                        {
-                            id: 2,
-                            title: "Mitsubishi MSZ-LN25VG Multi Split",
-                            specs: "9,000 BTU/h, A++ Energy Class, Wi-Fi Ready",
-                            brand: "mitsubishi",
-                            capacity: 9000,
-                            energyClass: "a++",
-                            features: ["wifi", "quiet"],
-                            type: "multi",
-                            retailPrice: 1599,
-                            purchasePrice: 1199,
-                            salePrice: 1459,
-                            quantity: 1
-                        }
-                    ];
-                }
+                // Create some sample data
+                savedQuotes = [
+                    {
+                        id: 'KP-1735484400000',
+                        date: new Date().toISOString(),
+                        platform: 'air-conditioning',
+                        client: 'ООО "Строй Комплект"',
+                        description: 'Системы кондиционирования для торгового центра',
+                        totalProducts: 12,
+                        totalPrice: 35680.50,
+                        status: 'sent'
+                    },
+                    {
+                        id: 'KP-1735470000000',
+                        date: new Date(Date.now() - 86400000).toISOString(),
+                        platform: 'air-conditioning',
+                        client: 'ИП Иванов А.С.',
+                        description: 'Кондиционеры для офиса',
+                        totalProducts: 3,
+                        totalPrice: 8450.00,
+                        status: 'approved'
+                    },
+                    {
+                        id: 'KP-1735383600000',
+                        date: new Date(Date.now() - 172800000).toISOString(),
+                        platform: 'air-conditioning',
+                        client: 'ЗАО "КлиматТех"',
+                        description: 'VRV системы для бизнес-центра',
+                        totalProducts: 8,
+                        totalPrice: 62100.75,
+                        status: 'draft'
+                    },
+                    {
+                        id: 'KP-1735297200000',
+                        date: new Date(Date.now() - 259200000).toISOString(),
+                        platform: 'air-conditioning',
+                        client: 'ГК "Премиум Строй"',
+                        description: 'Промышленное кондиционирование склада',
+                        totalProducts: 15,
+                        totalPrice: 89300.25,
+                        status: 'rejected'
+                    }
+                ];
+                localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
+            }
+            
+            renderQuotes();
+        }
+
+        function renderQuotes() {
+            const container = document.getElementById('quotesContainer');
+            
+            if (savedQuotes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div class="empty-title">КП не найдено</div>
+                        <div class="empty-description">Создайте первое коммерческое предложение через поиск и корзину</div>
+                    </div>
+                `;
+                return;
             }
 
-            generateBrandSections();
-            generateBrandDiscounts();
-            updateQuoteHeader();
-            updateDisplay();
+            let filteredQuotes = applyFilters();
+            
+            if (filteredQuotes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <div class="empty-title">Подходящих КП не найдено</div>
+                        <div class="empty-description">Попробуйте изменить критерии фильтрации</div>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = filteredQuotes.map(quote => {
+                const date = new Date(quote.date);
+                const formattedDate = date.toLocaleDateString('ru-RU') + '<br>' + date.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                const statusClass = `status-${quote.status}`;
+                const platformInfo = getPlatformInfo(quote.platform);
+                
+                return `
+                    <div class="quote-item">
+                        <div class="quote-id">${quote.id}</div>
+                        <div class="quote-info">
+                            <div class="quote-client">${quote.client || 'Клиент не указан'}</div>
+                            <div class="quote-description">${quote.description || 'Описание отсутствует'}</div>
+                        </div>
+                        <div class="quote-platform">
+                            <span class="platform-icon">${platformInfo.icon}</span>
+                            <span>${platformInfo.name}</span>
+                        </div>
+                        <div class="quote-date">${formattedDate}</div>
+                        <div class="quote-products">
+                            <div class="status-badge ${statusClass}">${quote.status.toUpperCase()}</div>
+                        </div>
+                        <div class="quote-price">$${quote.totalPrice.toLocaleString()}</div>
+                        <div class="quote-actions">
+                            <button class="action-btn btn-view" onclick="viewQuote('${quote.id}')" title="View Quote">👁</button>
+                            <button class="action-btn btn-edit" onclick="editQuote('${quote.id}')" title="Edit Quote">✏</button>
+                            <button class="action-btn btn-send" onclick="sendQuote('${quote.id}')" title="Send Quote">📧</button>
+                            <button class="action-btn btn-delete" onclick="deleteQuote('${quote.id}')" title="Delete Quote">🗑</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
+        }
+
+        function applyFilters() {
+            const platformFilter = document.getElementById('platformFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFromFilter = document.getElementById('dateFromFilter').value;
+            const dateToFilter = document.getElementById('dateToFilter').value;
+
+            return savedQuotes.filter(quote => {
+                if (platformFilter && quote.platform !== platformFilter) return false;
+                if (statusFilter && quote.status !== statusFilter) return false;
+                
+                const quoteDate = new Date(quote.date);
+                if (dateFromFilter && quoteDate < new Date(dateFromFilter)) return false;
+                if (dateToFilter && quoteDate > new Date(dateToFilter + 'T23:59:59')) return false;
+                
+                return true;
+            });
+        }
+
+        function getPlatformInfo(platform) {
+            switch (platform) {
+                case 'heating': return { icon: '🔥', name: 'Отопление' };
+                case 'ventilation': return { icon: '💨', name: 'Вентиляция' };
+                case 'air-conditioning': return { icon: '❄️', name: 'Кондиционирование' };
+                default: return { icon: '🏢', name: 'ОВК' };
+            }
+        }
+
+        function viewQuote(quoteId) {
+            const quote = savedQuotes.find(q => q.id === quoteId);
+            if (quote) {
+                alert(`📋 Детали КП: ${quoteId}\n\n` +
+                      `Клиент: ${quote.client}\n` +
+                      `Платформа: ${getPlatformInfo(quote.platform).name}\n` +
+                      `Товаров: ${quote.totalProducts} позиций\n` +
+                      `Сумма: $${quote.totalPrice.toLocaleString()}\n` +
+                      `Статус: ${quote.status.toUpperCase()}\n\n` +
+                      `(Подробный просмотр скоро будет доступен)`);
+            }
+        }
+
+        function editQuote(quoteId) {
+            alert(`✏️ Редактирование КП ${quoteId}\n\n(Функция редактирования в разработке)`);
+        }
+
+        function sendQuote(quoteId) {
+            const quote = savedQuotes.find(q => q.id === quoteId);
+            if (quote && quote.status !== 'sent') {
+                // Update status to sent
+                quote.status = 'sent';
+                localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
+                renderQuotes();
+                alert(`📧 КП ${quoteId} отправлено клиенту!`);
+            } else if (quote.status === 'sent') {
+                alert(`📧 КП ${quoteId} уже было отправлено.`);
+            }
+        }
+
+        function deleteQuote(quoteId) {
+            if (confirm(`🗑️ Вы уверены, что хотите удалить КП ${quoteId}?\n\nЭто действие нельзя отменить.`)) {
+                savedQuotes = savedQuotes.filter(q => q.id !== quoteId);
+                localStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
+                renderQuotes();
+                alert(`КП ${quoteId} удалён.`);
+            }
+        }
+
+        // Add event listeners for filters
+        document.getElementById('platformFilter').addEventListener('change', renderQuotes);
+        document.getElementById('statusFilter').addEventListener('change', renderQuotes);
+        document.getElementById('dateFromFilter').addEventListener('change', renderQuotes);
+        document.getElementById('dateToFilter').addEventListener('change', renderQuotes);
+
+        // Global quote storage for multi-brand support
+        let globalQuoteData = JSON.parse(localStorage.getItem('globalQuoteData') || '{}');
+        
+        function updateCartBadge(animate = false) {
+            const cartBadge = document.getElementById('cartBadge');
+            
+            if (cartBadge) {
+                const brandCount = Object.keys(globalQuoteData).length;
+                const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
+                    return sum + brandProducts.length;
+                }, 0);
+                
+                if (totalProducts > 0) {
+                    cartBadge.textContent = totalProducts;
+                    cartBadge.style.display = 'flex';
+                    
+                    // Add animation if requested
+                    if (animate) {
+                        cartBadge.classList.add('updated');
+                        setTimeout(() => {
+                            cartBadge.classList.remove('updated');
+                        }, 500);
+                    }
+                } else {
+                    cartBadge.textContent = '0';
+                    cartBadge.style.display = 'none';
+                    cartBadge.classList.remove('updated');
+                }
+            }
         }
         
-        // Update quote header with brand count
-        function updateQuoteHeader() {
-            const brands = [...new Set(selectedProducts.map(p => p.brand))];
-            const brandCount = brands.length;
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        // Cart Modal Functions
+        function openCart() {
+            console.log('openCart() called');
+            console.log('Current globalQuoteData:', globalQuoteData);
             
-            const subtitle = document.getElementById('quoteSubtitle');
-            if (subtitle && brandCount > 0) {
-                const text = currentLang === 'en' ? 
-                    `${brandCount} brand${brandCount > 1 ? 's' : ''} HVAC equipment selection` :
-                    `Подбор HVAC оборудования ${brandCount} бренд${brandCount > 1 ? (brandCount < 5 ? 'ов' : 'ов') : 'а'}`;
-                subtitle.textContent = text;
+            const cartModal = document.getElementById('cartModal');
+            console.log('Cart modal element:', cartModal);
+            
+            if (cartModal) {
+                cartModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                console.log('Cart modal display set to flex');
+                
+                populateCartItems();
+                updateCartSummary();
+                initCartTabs(); // Initialize tab switching
+                console.log('Cart opened with', Object.keys(globalQuoteData).length, 'brands');
+            } else {
+                console.error('Cart modal element not found!');
             }
         }
 
-        // Generate brand sections
-        function generateBrandSections() {
-            const container = document.getElementById('quoteProductsByBrand');
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            
-            // Group products by brand
-            const productsByBrand = {};
-            selectedProducts.forEach(product => {
-                if (!productsByBrand[product.brand]) {
-                    productsByBrand[product.brand] = [];
-                }
-                productsByBrand[product.brand].push(product);
-            });
+        function closeCart() {
+            const cartModal = document.getElementById('cartModal');
+            if (cartModal) {
+                cartModal.style.display = 'none';
+                document.body.style.overflow = '';
+                console.log('Cart closed');
+            }
+        }
+
+        function populateCartItems() {
+            const cartItems = document.getElementById('cartItems');
+            if (!cartItems) return;
+
+            if (Object.keys(globalQuoteData).length === 0) {
+                cartItems.innerHTML = `
+                    <div class="cart-empty">
+                        <div class="cart-empty-icon">🛒</div>
+                        <div class="cart-empty-text" data-en="Cart is empty" data-ru="Корзина пуста">Корзина пуста</div>
+                        <div class="cart-empty-subtext" data-en="Add products from different brands to create a quote" data-ru="Добавьте товары из разных брендов для создания КП">Добавьте товары из разных брендов для создания КП</div>
+                    </div>
+                `;
+                return;
+            }
 
             let html = '';
-            Object.keys(productsByBrand).forEach(brand => {
-                const products = productsByBrand[brand];
-                const brandTotal = products.reduce((sum, product) => {
-                    return sum + (applyProductDiscounts(product.salePrice, brand) * (product.quantity || 1));
-                }, 0);
+            
+            // Sort brands alphabetically for consistent display
+            const sortedBrands = Object.keys(globalQuoteData).sort();
+            
+            sortedBrands.forEach(brand => {
+                const products = globalQuoteData[brand];
+                if (!products || products.length === 0) return;
 
+                // Get brand display name and color
+                const brandInfo = getBrandInfo(brand);
+                
                 html += `
-                    <div class="brand-section" data-brand="${brand}">
-                        <div class="brand-header">
-                            <div class="brand-name">${brand.charAt(0).toUpperCase() + brand.slice(1)}</div>
-                            <div class="brand-total" id="brandTotal_${brand}">${formatPrice(brandTotal)}</div>
+                    <div class="cart-brand-section" data-brand="${brand}">
+                        <div class="cart-brand-header" style="background: ${brandInfo.color}; color: ${brandInfo.textColor};">
+                            <div class="cart-brand-logo">
+                                ${brandInfo.icon}
+                                <span class="cart-brand-name">${brandInfo.displayName}</span>
+                            </div>
+                            <div class="cart-brand-count">${products.length}</div>
                         </div>
-                        <div class="brand-products">
-                            ${products.map(product => `
-                                <div class="product-row" data-product-id="${product.id}">
-                                    <div class="product-image-small" style="display: ${document.getElementById('showPhotosCheck')?.classList.contains('checked') ? 'flex' : 'none'}">🌀</div>
-                                    <div class="product-info">
-                                        <div class="product-name">${product.title}</div>
-                                        <div class="product-specs-brief" style="display: ${document.getElementById('showSpecsCheck')?.classList.contains('checked') ? 'block' : 'none'}">${product.specs}</div>
+                        <div class="cart-brand-products">
+                            ${products.map((product, index) => `
+                                <div class="cart-product-item">
+                                    <div class="cart-product-icon">🌀</div>
+                                    <div class="cart-product-info">
+                                        <div class="cart-product-name">${product.title || product.model || product.name || 'Unnamed Product'}</div>
+                                        <div class="cart-product-specs">${formatProductSpecs(product)}</div>
+                                        ${product.isAnalog ? '<div class="cart-product-analog">🔄 Analog Match</div>' : ''}
                                     </div>
-                                    <div class="product-quantity">
-                                        <div class="quantity-label" data-en="Qty" data-ru="Кол-во">Qty</div>
-                                        <div class="quantity-value">${product.quantity || 1}</div>
-                                    </div>
-                                    <div class="product-price">
-                                        <div class="price-value">${formatPrice(applyProductDiscounts(product.salePrice, brand) * (product.quantity || 1))}</div>
-                                    </div>
-                                    <button class="remove-btn" onclick="removeProduct(${product.id})" title="${currentLang === 'en' ? 'Remove product' : 'Удалить продукт'}">×</button>
+                                    <div class="cart-product-price">${formatPrice(product.price || 0)}</div>
+                                    <button class="cart-product-remove" onclick="removeFromCart('${brand}', ${index})" title="Удалить товар">×</button>
                                 </div>
                             `).join('')}
                         </div>
@@ -1281,284 +1787,331 @@
                 `;
             });
 
-            container.innerHTML = html;
+            cartItems.innerHTML = html;
         }
 
-        // Generate brand discount controls
-        function generateBrandDiscounts() {
-            const container = document.getElementById('brandDiscounts');
-            const brands = [...new Set(selectedProducts.map(p => p.brand))];
+        function getBrandInfo(brand) {
+            const brandMap = {
+                'daikin': { 
+                    displayName: 'Daikin', 
+                    color: 'linear-gradient(135deg, #003DA5, #0056d6)', 
+                    textColor: 'white',
+                    icon: '❄️'
+                },
+                'mitsubishi': { 
+                    displayName: 'Mitsubishi Electric', 
+                    color: 'linear-gradient(135deg, #E60012, #ff1a2b)', 
+                    textColor: 'white',
+                    icon: '⚡'
+                },
+                'lg': { 
+                    displayName: 'LG Electronics', 
+                    color: 'linear-gradient(135deg, #A50034, #c7004b)', 
+                    textColor: 'white',
+                    icon: '🔴'
+                },
+                'panasonic': { 
+                    displayName: 'Panasonic', 
+                    color: 'linear-gradient(135deg, #0066cc, #0080ff)', 
+                    textColor: 'white',
+                    icon: '🔵'
+                },
+                'toshiba': { 
+                    displayName: 'Toshiba', 
+                    color: 'linear-gradient(135deg, #d50000, #ff1744)', 
+                    textColor: 'white',
+                    icon: '🔺'
+                }
+            };
             
-            let html = '';
-            brands.forEach(brand => {
-                if (!brandDiscounts[brand]) {
-                    brandDiscounts[brand] = 0;
+            return brandMap[brand.toLowerCase()] || {
+                displayName: brand.charAt(0).toUpperCase() + brand.slice(1),
+                color: 'linear-gradient(135deg, #666, #888)',
+                textColor: 'white',
+                icon: '🏢'
+            };
+        }
+
+        function formatProductSpecs(product) {
+            const specs = [];
+            if (product.capacity) specs.push(product.capacity);
+            if (product.cooling_capacity) specs.push(`Охлаждение: ${product.cooling_capacity}`);
+            if (product.heating_capacity) specs.push(`Обогрев: ${product.heating_capacity}`);
+            if (product.power_consumption) specs.push(`Потребление: ${product.power_consumption}`);
+            if (product.specs) specs.push(product.specs);
+            
+            return specs.length > 0 ? specs.join(' | ') : 'Технические характеристики не указаны';
+        }
+
+        function formatPrice(price) {
+            if (!price || price === 0) return 'Цена по запросу';
+            
+            const currencySelect = document.getElementById('currencySelect');
+            const currency = currencySelect ? currencySelect.value : 'usd';
+            
+            switch (currency) {
+                case 'rub':
+                    return `${(price * 75).toLocaleString('ru-RU')} ₽`;
+                case 'eur':
+                    return `${(price * 0.85).toLocaleString('de-DE')} €`;
+                default:
+                    return `$${price.toLocaleString('en-US')}`;
+            }
+        }
+
+        function updateCartSummary() {
+            const totalProducts = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
+                return sum + brandProducts.length;
+            }, 0);
+
+            const totalBrands = Object.keys(globalQuoteData).length;
+
+            const totalPrice = Object.values(globalQuoteData).reduce((sum, brandProducts) => {
+                return sum + brandProducts.reduce((brandSum, product) => {
+                    return brandSum + (product.price || 0);
+                }, 0);
+            }, 0);
+
+            document.getElementById('cartTotalProducts').textContent = totalProducts;
+            document.getElementById('cartTotalBrands').textContent = totalBrands;
+            document.getElementById('cartTotalPrice').textContent = `$${totalPrice.toFixed(0)}`;
+        }
+
+        function removeFromCart(brand, productIndex) {
+            if (globalQuoteData[brand] && globalQuoteData[brand][productIndex]) {
+                globalQuoteData[brand].splice(productIndex, 1);
+                
+                // Remove empty brand
+                if (globalQuoteData[brand].length === 0) {
+                    delete globalQuoteData[brand];
                 }
                 
-                html += `
-                    <div class="setting-group">
-                        <label class="setting-label">${brand.charAt(0).toUpperCase() + brand.slice(1)} (%):</label>
-                        <input type="number" class="setting-input brand-discount-input" 
-                               data-brand="${brand}" value="${brandDiscounts[brand]}" 
-                               min="0" max="100" step="0.1">
-                    </div>
-                `;
-            });
+                // Save to localStorage
+                localStorage.setItem('globalQuoteData', JSON.stringify(globalQuoteData));
+                
+                // Update UI
+                populateCartItems();
+                updateCartSummary();
+                updateCartBadge();
+                
+                console.log('Product removed from cart');
+            }
+        }
 
-            container.innerHTML = html;
+        function clearCart() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
+            const message = currentLang === 'en' ? 
+                'Are you sure you want to clear the entire cart?' :
+                'Вы уверены, что хотите очистить всю корзину?';
+            
+            if (confirm(message)) {
+                globalQuoteData = {};
+                localStorage.removeItem('globalQuoteData');
+                populateCartItems();
+                updateCartSummary();
+                updateCartBadge();
+                console.log('Cart cleared');
+            }
+        }
 
-            // Add event listeners
-            document.querySelectorAll('.brand-discount-input').forEach(input => {
-                input.addEventListener('input', function() {
-                    brandDiscounts[this.dataset.brand] = parseFloat(this.value) || 0;
-                    updateDisplay();
+        function generatePDFQuote() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
+            const message = currentLang === 'en' ? 
+                'PDF quote generation will be implemented soon.' :
+                'Генерация PDF КП будет реализована в ближайшее время.';
+            alert(message);
+        }
+
+        function sendQuoteRequest() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
+            const message = currentLang === 'en' ? 
+                'Quote request sending will be implemented soon.' :
+                'Отправка запроса КП будет реализована в ближайшее время.';
+            alert(message);
+        }
+
+        // Cart Tab Switching Functionality
+        function initCartTabs() {
+            const cartTabs = document.querySelectorAll('.cart-tab');
+            const cartTabContents = document.querySelectorAll('.cart-tab-content');
+
+            cartTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    cartTabs.forEach(t => t.classList.remove('active'));
+                    cartTabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const targetContent = document.getElementById(targetTab + 'TabContent');
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                    
+                    console.log('Switched to tab:', targetTab);
                 });
             });
         }
 
-        // Apply product discounts
-        function applyProductDiscounts(price, brand) {
-            const globalDealer = parseFloat(document.getElementById('globalDealerDiscount').value) || 0;
-            const globalClient = parseFloat(document.getElementById('globalClientDiscount').value) || 0;
-            const brandDiscount = brandDiscounts[brand] || 0;
+        // AI Search functionality
+        function initSearchModal() {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const searchModalClose = document.getElementById('searchModalClose');
+            let searchTimeout;
+            
+            // Search button hover functionality
+            if (searchBtn && searchModal) {
+                // Show search bar on hover
+                searchBtn.addEventListener('mouseenter', function() {
+                    clearTimeout(searchTimeout);
+                    searchModal.classList.add('active');
+                    
+                    // Focus on search input after animation
+                    const searchInput = document.getElementById('aiSearchInput');
+                    if (searchInput) {
+                        setTimeout(() => searchInput.focus(), 300);
+                    }
+                });
 
-            let discountedPrice = price * (1 - globalDealer / 100);
-            discountedPrice = discountedPrice * (1 - globalClient / 100);
-            discountedPrice = discountedPrice * (1 - brandDiscount / 100);
+                // Keep search bar open when hovering over it
+                searchModal.addEventListener('mouseenter', function() {
+                    clearTimeout(searchTimeout);
+                });
 
-            return discountedPrice;
+                // Hide search bar when leaving both button and modal
+                searchBtn.addEventListener('mouseleave', function() {
+                    searchTimeout = setTimeout(() => {
+                        if (!searchModal.matches(':hover')) {
+                            closeSearchModal();
+                        }
+                    }, 300);
+                });
+
+                searchModal.addEventListener('mouseleave', function() {
+                    searchTimeout = setTimeout(() => {
+                        closeSearchModal();
+                    }, 300);
+                });
+
+                // Also keep open when typing
+                const searchInput = document.getElementById('aiSearchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('focus', function() {
+                        clearTimeout(searchTimeout);
+                    });
+                    
+                    // Handle Enter key
+                    searchInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            performAISearch();
+                        }
+                    });
+                }
+            }
+            
+            // Close button functionality
+            if (searchModalClose) {
+                searchModalClose.addEventListener('click', closeSearchModal);
+            }
+            
+            // ESC key to close
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && searchModal.classList.contains('active')) {
+                    closeSearchModal();
+                }
+            });
         }
 
-        // Currency conversion function
-        function convertPrice(usdPrice) {
-            switch(currentCurrency) {
-                case 'rub':
-                    return usdPrice * exchangeRates.rub;
-                case 'eur':
-                    return usdPrice * exchangeRates.eur;
-                default:
-                    return usdPrice;
+        function closeSearchModal() {
+            const searchModal = document.getElementById('searchModal');
+            if (searchModal) {
+                searchModal.classList.remove('active');
             }
         }
 
-        // Format price with currency symbol
-        function formatPrice(price) {
-            const convertedPrice = convertPrice(price);
-            switch(currentCurrency) {
-                case 'rub':
-                    return `₽${Math.round(convertedPrice).toLocaleString()}`;
-                case 'eur':
-                    return `€${convertedPrice.toFixed(2)}`;
-                default:
-                    return `$${convertedPrice.toFixed(0)}`;
+        function performAISearch() {
+            const searchInput = document.getElementById('aiSearchInput');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                // Here you would integrate with actual AI search
+                alert(`🤖 ИИ поисковый запрос: "${query}"\n\n(Интеграция ИИ скоро будет доступна)`);
+                searchInput.value = '';
+                closeSearchModal();
+            } else {
+                searchInput.focus();
             }
         }
 
-        // Update entire display
-        function updateDisplay() {
-            generateBrandSections();
-            updateProfitability();
-            updateSummary();
-            updateCartBadge();
-        }
-
-        // Update profitability display
-        function updateProfitability() {
-            const totalCost = selectedProducts.reduce((sum, product) => {
-                return sum + (product.purchasePrice * (product.quantity || 1));
-            }, 0);
-
-            const totalSale = selectedProducts.reduce((sum, product) => {
-                return sum + (applyProductDiscounts(product.salePrice, product.brand) * (product.quantity || 1));
-            }, 0);
-
-            const profit = totalSale - totalCost;
-
-            document.getElementById('totalCost').textContent = formatPrice(totalCost);
-            document.getElementById('totalSale').textContent = formatPrice(totalSale);
-            document.getElementById('totalProfit').textContent = formatPrice(profit);
-        }
-
-        // Update summary
-        function updateSummary() {
-            const productCount = selectedProducts.reduce((sum, product) => sum + (product.quantity || 1), 0);
-            
-            const subtotal = selectedProducts.reduce((sum, product) => {
-                return sum + (product.salePrice * (product.quantity || 1));
-            }, 0);
-
-            const total = selectedProducts.reduce((sum, product) => {
-                return sum + (applyProductDiscounts(product.salePrice, product.brand) * (product.quantity || 1));
-            }, 0);
-
-            const discount = subtotal - total;
-
-            document.getElementById('summaryProductCount').textContent = productCount;
-            document.getElementById('summarySubtotal').textContent = formatPrice(subtotal);
-            document.getElementById('summaryDiscount').textContent = formatPrice(discount);
-            document.getElementById('summaryTotal').textContent = formatPrice(total);
-        }
-
-        // Remove product
-        function removeProduct(productId) {
-            selectedProducts = selectedProducts.filter(p => p.id !== productId);
-            
-            if (selectedProducts.length === 0) {
-                window.history.back();
-                return;
-            }
-            
-            generateBrandSections();
-            generateBrandDiscounts();
-            updateDisplay();
-        }
-
-        // Language switching functionality
+        // Language Toggle Functionality
         function initLanguageToggle() {
             const languageSelect = document.getElementById('languageSelect');
             const elementsWithTranslations = document.querySelectorAll('[data-en][data-ru]');
-            const descriptionTextarea = document.getElementById('quoteDescription');
             
-            let currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            
-            // Set initial language dropdown value
-            if (languageSelect) {
-                languageSelect.value = currentLang;
-                languageSelect.addEventListener('change', function() {
-                    const newLang = this.value;
-                    if (newLang !== currentLang) {
-                        switchLanguage(newLang);
-                        currentLang = newLang;
-                        localStorage.setItem('preferredLanguage', newLang);
-                    }
-                });
+            if (!languageSelect) {
+                console.warn('Language select element not found');
+                return;
             }
             
-            // Initialize mobile menu
-            initMobileMenu();
-            
+            let currentLang = localStorage.getItem('preferredLanguage') || 'ru';
+            languageSelect.value = currentLang;
             switchLanguage(currentLang);
+            
+            languageSelect.addEventListener('change', function() {
+                const newLang = this.value;
+                if (newLang !== currentLang) {
+                    switchLanguage(newLang);
+                    currentLang = newLang;
+                    localStorage.setItem('preferredLanguage', newLang);
+                }
+            });
             
             function switchLanguage(lang) {
                 elementsWithTranslations.forEach(element => {
                     const translation = element.getAttribute(`data-${lang}`);
                     if (translation) {
-                        if (element.tagName === 'INPUT' && element.type !== 'submit') {
-                            element.placeholder = translation;
-                        } else {
-                            element.innerHTML = translation;
-                        }
+                        element.innerHTML = translation;
                     }
                 });
                 
-                // Update textarea placeholder
-                if (descriptionTextarea) {
-                    const placeholder = descriptionTextarea.getAttribute(`data-${lang}-placeholder`);
-                    if (placeholder) {
-                        descriptionTextarea.placeholder = placeholder;
-                    }
-                }
-                
+                // Update document language
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
-                
-                // Update display after language change
-                updateDisplay();
+            }
+        }
+
+        // Load quotes on page load
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize global quote data
+            globalQuoteData = JSON.parse(localStorage.getItem('globalQuoteData') || '{}');
+            
+            loadQuotes();
+            updateCartBadge();
+            initSearchModal();
+            initLanguageToggle();
+            initCartButton();
+        });
+        
+        // Initialize cart button click handler
+        function initCartButton() {
+            const cartBtn = document.getElementById('cartBtn');
+            if (cartBtn) {
+                cartBtn.addEventListener('click', function() {
+                    window.open('cart.html', '_blank');
+                });
             }
         }
         
-        // Initialize mobile menu
-        function initMobileMenu() {
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuToggle && mobileMenu) {
-                mobileMenuToggle.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                });
-                
-                // Close mobile menu when clicking menu items
-                const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
-                mobileMenuItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                    });
-                });
-                
-                // Close mobile menu when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!mobileMenuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
-                        mobileMenuToggle.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                    }
-                });
+        // Close cart when clicking escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCart();
             }
-        }
-
-        // PDF Generation (placeholder)
-        document.getElementById('generatePdfBtn').addEventListener('click', function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const message = currentLang === 'en' ? 
-                'PDF generation functionality will be implemented soon.' :
-                'Функция генерации PDF будет реализована в ближайшее время.';
-            alert(message);
-        });
-
-        // Save Quote (placeholder)
-        document.getElementById('saveQuoteBtn').addEventListener('click', function() {
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
-            const message = currentLang === 'en' ? 
-                'Quote saved successfully!' :
-                'КП успешно сохранено!';
-            alert(message);
-        });
-
-        // Search button functionality
-        document.getElementById('searchBtn').addEventListener('click', function() {
-            window.location.href = 'index.html';
-        });
-
-        // Cart button functionality
-        document.getElementById('cartBtn').addEventListener('click', function() {
-            window.open('cart.html', '_blank');
-        });
-
-        // Update cart badge based on selected products count
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
-            const productCount = selectedProducts.reduce((sum, product) => sum + (product.quantity || 1), 0);
-            badge.textContent = productCount;
-        }
-
-        // Update cart badge on page load and when products change
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartBadge();
-            
-            // Add platform navigation functionality
-            const letters = document.querySelectorAll('.hvac-letter');
-            letters.forEach(letter => {
-                letter.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const platform = this.getAttribute('data-platform');
-                    
-                    // Navigate to the appropriate platform page
-                    switch(platform) {
-                        case 'heating':
-                            window.location.href = '../heating.html';
-                            break;
-                        case 'ventilation':
-                            window.location.href = '../ventilation.html';
-                            break;
-                        case 'airconditioning':
-                            window.location.href = '../air-conditioning.html';
-                            break;
-                        default:
-                            window.location.href = '../index.html';
-                    }
-                });
-            });
         });
     </script>
 </body>

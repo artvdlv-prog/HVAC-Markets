@@ -310,6 +310,94 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        /* Cart Tabs */
+        .cart-tabs {
+            display: flex;
+            background: var(--warm-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .cart-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .cart-tab.active {
+            background: white;
+            color: var(--signature-blue);
+            border-bottom-color: var(--signature-blue);
+        }
+        .cart-tab:hover {
+            background: rgba(20, 100, 244, 0.1);
+            color: var(--signature-blue);
+        }
+
+        /* Cart Tab Contents */
+        .cart-tab-content {
+            display: none;
+        }
+        .cart-tab-content.active {
+            display: block;
+        }
+
+        /* Quote Builder Styles */
+        .quote-builder h3 {
+            color: var(--signature-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .quote-settings {
+            background: var(--warm-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .settings-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .setting-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .setting-group label {
+            font-weight: 600;
+            color: var(--deep-graphite);
+            min-width: 120px;
+        }
+        .setting-group input {
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            width: 80px;
+        }
+        .setting-unit {
+            color: #666;
+            font-weight: 500;
+        }
+        .quote-summary h4 {
+            color: var(--signature-blue);
+            margin-bottom: 1rem;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--warm-gray);
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--success-green);
+        }
+
         .cart-body {
             padding: 2rem;
             max-height: 70vh;
@@ -4205,8 +4293,8 @@
             <!-- Language Selection Dropdown -->
             <div class="nav-dropdown">
                 <select class="nav-select" id="languageSelect">
-                    <option value="en" selected>EN</option>
-                    <option value="ru">RU</option>
+                    <option value="en">EN</option>
+                    <option value="ru" selected>RU</option>
                 </select>
             </div>
             
@@ -5133,33 +5221,74 @@
                 <button class="cart-close" onclick="closeCart()" title="Закрыть">×</button>
             </div>
             
+            <!-- Cart Tabs -->
+            <div class="cart-tabs">
+                <button class="cart-tab active" data-tab="cart" data-en="Cart" data-ru="Корзина">Корзина</button>
+                <button class="cart-tab" data-tab="quote" data-en="Commercial Proposal" data-ru="Коммерческое предложение">Коммерческое предложение</button>
+            </div>
+            
             <div class="cart-body">
-                <!-- Cart Items by Brand -->
-                <div class="cart-items" id="cartItems">
-                    <!-- Items will be dynamically generated here -->
+                <!-- Cart Tab Content -->
+                <div class="cart-tab-content active" id="cartTabContent">
+                    <!-- Cart Items by Brand -->
+                    <div class="cart-items" id="cartItems">
+                        <!-- Items will be dynamically generated here -->
+                    </div>
+                    
+                    <!-- Cart Summary -->
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
+                            <span id="cartTotalProducts">0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span data-en="Total Brands:" data-ru="Всего брендов:">Всего брендов:</span>
+                            <span id="cartTotalBrands">0</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span data-en="Total Price:" data-ru="Общая стоимость:">Общая стоимость:</span>
+                            <span id="cartTotalPrice">$0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Cart Actions -->
+                    <div class="cart-actions">
+                        <button class="btn-cart-action btn-primary" onclick="generatePDFQuote()" data-en="Generate PDF Quote" data-ru="Создать PDF КП">Создать PDF КП</button>
+                        <button class="btn-cart-action btn-secondary" onclick="sendQuoteRequest()" data-en="Send Request" data-ru="Отправить запрос">Отправить запрос</button>
+                        <button class="btn-cart-action btn-danger" onclick="clearCart()" data-en="Clear Cart" data-ru="Очистить корзину">Очистить корзину</button>
+                    </div>
                 </div>
                 
-                <!-- Cart Summary -->
-                <div class="cart-summary">
-                    <div class="summary-row">
-                        <span data-en="Total Products:" data-ru="Всего товаров:">Всего товаров:</span>
-                        <span id="cartTotalProducts">0</span>
+                <!-- Quote Tab Content -->
+                <div class="cart-tab-content" id="quoteTabContent">
+                    <div class="quote-builder">
+                        <h3 data-en="Commercial Proposal Builder" data-ru="Конструктор коммерческого предложения">Конструктор коммерческого предложения</h3>
+                        
+                        <!-- Quote Settings -->
+                        <div class="quote-settings">
+                            <div class="settings-row">
+                                <div class="setting-group">
+                                    <label data-en="Client Discount:" data-ru="Скидка клиента:">Скидка клиента:</label>
+                                    <input type="number" id="clientDiscount" placeholder="0" min="0" max="100" step="0.1">
+                                    <span class="setting-unit">%</span>
+                                </div>
+                                <div class="setting-group">
+                                    <label data-en="Profitability:" data-ru="Доходность:">Доходность:</label>
+                                    <input type="number" id="profitability" placeholder="15" min="0" max="100" step="0.1">
+                                    <span class="setting-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quote Summary -->
+                        <div class="quote-summary">
+                            <h4 data-en="Quote Summary" data-ru="Итоги КП">Итоги КП</h4>
+                            <div class="summary-line">
+                                <span data-en="Final Amount:" data-ru="Итоговая сумма:">Итоговая сумма:</span>
+                                <span id="quoteFinalAmount">$0.00</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="summary-row">
-                        <span data-en="Total Brands:" data-ru="Всего брендов:">Всего брендов:</span>
-                        <span id="cartTotalBrands">0</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span data-en="Total Price:" data-ru="Общая стоимость:">Общая стоимость:</span>
-                        <span id="cartTotalPrice">$0</span>
-                    </div>
-                </div>
-                
-                <!-- Cart Actions -->
-                <div class="cart-actions">
-                    <button class="btn-cart-action btn-primary" onclick="generatePDFQuote()" data-en="Generate PDF Quote" data-ru="Создать PDF КП">Создать PDF КП</button>
-                    <button class="btn-cart-action btn-secondary" onclick="sendQuoteRequest()" data-en="Send Request" data-ru="Отправить запрос">Отправить запрос</button>
-                    <button class="btn-cart-action btn-danger" onclick="clearCart()" data-en="Clear Cart" data-ru="Очистить корзину">Очистить корзину</button>
                 </div>
             </div>
         </div>
@@ -5344,7 +5473,7 @@
 
             function addChatAIResponse(userMessage) {
                 const lowerMessage = userMessage.toLowerCase();
-                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
                 let response = '';
 
                 if (lowerMessage.includes('quiet') || lowerMessage.includes('тихий')) {
@@ -5404,7 +5533,7 @@
         // Process AI query and apply filters
         function processAIQuery(query) {
             const lowerQuery = query.toLowerCase();
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
 
             // Reset all filters first
             document.querySelectorAll('.filter-checkbox.checked').forEach(cb => {
@@ -6031,7 +6160,7 @@
             
             if (selectedProducts.length > 0) {
                 const total = selectedProducts.reduce((sum, product) => sum + product.price * 1.25, 0);
-                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
                 
                 countElement.textContent = currentLang === 'en' ? 
                     `${selectedProducts.length} items selected` : 
@@ -6046,7 +6175,7 @@
         function updateResultsCount(count) {
             const countElement = document.querySelector('.results-count-box');
             if (countElement) {
-                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
                 countElement.textContent = currentLang === 'en' ? 
                     `${count} products` : 
                     `${count} товаров`;
@@ -6682,7 +6811,7 @@
                 return;
             }
             
-            let currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            let currentLang = localStorage.getItem('preferredLanguage') || 'ru';
             languageSelect.value = currentLang;
             switchLanguage(currentLang);
             
@@ -6778,7 +6907,7 @@
             function addAIResponse(userMessage) {
                 let response = '';
                 const lowerMessage = userMessage.toLowerCase();
-                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
                 
                 if (lowerMessage.includes('scout') || lowerMessage.includes('поиск')) {
                     response = currentLang === 'en' ? 
@@ -7261,7 +7390,7 @@
             const technologyFilter = document.querySelector('#technologyFilter');
             if (!technologyFilter) return;
             
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
             
             // Clear existing options except "All"
             technologyFilter.innerHTML = `<option value="">${currentLang === 'en' ? 'All' : 'Все'}</option>`;
@@ -7295,7 +7424,7 @@
             const heatPumpFilter = document.querySelector('#heatPumpFilter');
             if (!heatPumpFilter) return;
             
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
             
             // Clear existing options except "All"
             heatPumpFilter.innerHTML = `<option value="">${currentLang === 'en' ? 'All' : 'Все'}</option>`;
@@ -7325,7 +7454,7 @@
             const wifiFilter = document.querySelector('#wifiFilter');
             if (!wifiFilter) return;
             
-            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const currentLang = localStorage.getItem('preferredLanguage') || 'ru';
             
             // Wi-Fi options are usually the same for all equipment types
             wifiFilter.innerHTML = `
@@ -7493,10 +7622,10 @@
                 searchModalClose.addEventListener('click', closeSearchModal);
             }
             
-            // Cart functionality - open cart modal
+            // Cart functionality - open cart page
             if (cartBtn) {
                 cartBtn.addEventListener('click', function() {
-                    window.open('cart.html', '_blank');
+                    window.open('air-conditioning/cart.html', '_blank');
                 });
             }
             
@@ -7637,6 +7766,7 @@
                 
                 populateCartItems();
                 updateCartSummary();
+                initCartTabs(); // Initialize tab switching
                 console.log('Cart opened with', Object.keys(globalQuoteData).length, 'brands');
             } else {
                 console.error('Cart modal element not found!');
@@ -7919,6 +8049,38 @@
             if (e.key === 'Escape') {
                 closeCart();
             }
+        });
+
+        // Cart Tab Switching Functionality
+        function initCartTabs() {
+            const cartTabs = document.querySelectorAll('.cart-tab');
+            const cartTabContents = document.querySelectorAll('.cart-tab-content');
+
+            cartTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs
+                    cartTabs.forEach(t => t.classList.remove('active'));
+                    cartTabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const targetContent = document.getElementById(targetTab + 'TabContent');
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
+                    
+                    console.log('Switched to tab:', targetTab);
+                });
+            });
+        }
+
+        // Initialize cart tabs when modal opens
+        document.addEventListener('DOMContentLoaded', function() {
+            initCartTabs();
         });
     </script>
 </body>
