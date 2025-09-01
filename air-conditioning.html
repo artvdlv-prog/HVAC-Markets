@@ -4386,6 +4386,11 @@
                             <input type="number" class="discount-input" id="clientDiscount" placeholder="0" min="0" max="100" step="0.1">
                             <span class="setting-unit">%</span>
                         </div>
+                        <div class="setting-group">
+                            <button class="refresh-brands-btn" onclick="forceRefreshBrands()" title="Refresh brand settings from account" data-en="🔄 Refresh Brands" data-ru="🔄 Обновить бренды">
+                                🔄
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -5356,6 +5361,8 @@
                 console.log('✓ initEquipmentSidebar completed');
                 initQuoteSystem();
                 console.log('✓ initQuoteSystem completed');
+                initBrandSynchronization();
+                console.log('✓ initBrandSynchronization completed');
             } catch (error) {
                 console.error('Initialization error:', error);
             }
@@ -8113,6 +8120,272 @@
                 });
             }, 1000);
         });
+
+        // Brand synchronization with account settings
+        function initBrandSynchronization() {
+            console.log('Initializing brand synchronization...');
+            
+            // Wait for DOM to be fully ready, then apply brand settings
+            setTimeout(() => {
+                loadAndApplyBrandSettings();
+            }, 500);
+            
+            // Also apply settings after a longer delay to ensure all components are loaded
+            setTimeout(() => {
+                console.log('Secondary brand settings application...');
+                loadAndApplyBrandSettings();
+            }, 1500);
+        }
+
+        function loadAndApplyBrandSettings() {
+            console.log('🔍 Checking for brand settings in localStorage...');
+            const brandSettings = localStorage.getItem('brandSettings');
+            
+            if (brandSettings) {
+                try {
+                    const settings = JSON.parse(brandSettings);
+                    console.log('✅ Found brand settings:', settings);
+                    console.log('Selected brands:', settings.selectedBrands);
+                    console.log('Anchor brand:', settings.anchorBrand);
+                    
+                    if (settings.selectedBrands && settings.selectedBrands.length > 0) {
+                        console.log('🎯 Applying brand visibility settings...');
+                        updateBrandTabsVisibility(settings.selectedBrands, settings.anchorBrand);
+                    } else {
+                        console.log('⚠️ No selected brands found in settings');
+                    }
+                } catch (error) {
+                    console.error('❌ Error parsing brand settings:', error);
+                    console.log('Raw brand settings data:', brandSettings);
+                }
+            } else {
+                console.log('ℹ️ No brand settings found in localStorage, showing all brands');
+                
+                // Show a notification that no settings were found
+                const notification = document.createElement('div');
+                notification.textContent = 'No brand settings found. Configure brands in your account.';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 20px;
+                    background: #FF9800;
+                    color: white;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    z-index: 9999;
+                    font-size: 14px;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        function updateBrandTabsVisibility(selectedBrands, anchorBrand) {
+            console.log('Updating brand tabs visibility...', { selectedBrands, anchorBrand });
+            const brandTabsContainer = document.querySelector('.brand-tabs-left');
+            
+            if (!brandTabsContainer) {
+                console.error('Brand tabs container not found');
+                return;
+            }
+
+            const allBrandTabs = document.querySelectorAll('.brand-tab');
+            console.log('Found brand tabs:', allBrandTabs.length);
+
+            // First, hide all tabs and clean up
+            allBrandTabs.forEach(tab => {
+                tab.style.display = 'none';
+                tab.classList.remove('active', 'anchor-brand');
+                const existingIcon = tab.querySelector('.anchor-icon');
+                if (existingIcon) {
+                    existingIcon.remove();
+                }
+            });
+
+            if (selectedBrands.length === 0) {
+                console.log('No brands selected, keeping all visible');
+                allBrandTabs.forEach(tab => {
+                    tab.style.display = 'inline-block';
+                });
+                return;
+            }
+
+            // Create arrays to organize tabs
+            let anchorTab = null;
+            let otherVisibleTabs = [];
+
+            // Find and organize selected tabs
+            allBrandTabs.forEach(tab => {
+                const brandId = tab.getAttribute('data-brand');
+                
+                if (selectedBrands.includes(brandId)) {
+                    // Clean tab content and add anchor icon if needed
+                    const existingIcon = tab.querySelector('.anchor-icon');
+                    if (existingIcon) {
+                        existingIcon.remove();
+                    }
+                    
+                    if (brandId === anchorBrand) {
+                        anchorTab = tab;
+                        // Add mini anchor icon
+                        const anchorIcon = document.createElement('span');
+                        anchorIcon.className = 'anchor-icon';
+                        anchorIcon.textContent = '⚓';
+                        tab.appendChild(anchorIcon);
+                        console.log('Found anchor brand:', brandId);
+                    } else {
+                        otherVisibleTabs.push(tab);
+                    }
+                }
+            });
+
+            console.log('Anchor tab:', anchorTab?.getAttribute('data-brand'));
+            console.log('Other visible tabs:', otherVisibleTabs.map(t => t.getAttribute('data-brand')));
+
+            // Reorder tabs: anchor first, then others
+            let tabsToShow = [];
+            if (anchorTab) {
+                tabsToShow.push(anchorTab);
+            }
+            tabsToShow = tabsToShow.concat(otherVisibleTabs);
+
+            // Remove all tabs from container and re-add in correct order
+            const allTabsInContainer = Array.from(brandTabsContainer.children);
+            allTabsInContainer.forEach(tab => {
+                if (tab.classList.contains('brand-tab')) {
+                    brandTabsContainer.removeChild(tab);
+                }
+            });
+
+            // Add visible tabs in the correct order
+            tabsToShow.forEach((tab, index) => {
+                tab.style.display = 'inline-block';
+                tab.style.visibility = 'visible';
+                brandTabsContainer.appendChild(tab);
+                
+                console.log(`Added tab ${index + 1}:`, tab.getAttribute('data-brand'), 
+                           tab === anchorTab ? '(ANCHOR)' : '');
+            });
+
+            // Activate the first visible tab (which is now the anchor brand if it exists)
+            if (tabsToShow.length > 0) {
+                const firstTab = tabsToShow[0];
+                allBrandTabs.forEach(tab => tab.classList.remove('active'));
+                firstTab.classList.add('active');
+                
+                console.log('Activated tab:', firstTab.getAttribute('data-brand'));
+                
+                // Simulate click to trigger existing brand switching logic
+                setTimeout(() => {
+                    if (firstTab.click) {
+                        firstTab.click();
+                    }
+                }, 100);
+            }
+
+            console.log(`✓ Brand tabs reordered. Total visible: ${tabsToShow.length}, First: ${tabsToShow[0]?.getAttribute('data-brand')} ${anchorTab ? '(anchor first)' : ''}`);
+            
+            // Force a refresh of the product display
+            setTimeout(() => {
+                if (typeof generateSampleProducts === 'function') {
+                    console.log('Refreshing products...');
+                    generateSampleProducts();
+                }
+            }, 200);
+        }
+
+        // Force refresh brands function
+        function forceRefreshBrands() {
+            console.log('🔄 Force refreshing brands...');
+            
+            // Visual feedback
+            const btn = document.querySelector('.refresh-brands-btn');
+            if (btn) {
+                btn.style.transform = 'rotate(360deg)';
+                btn.style.transition = 'transform 0.5s ease';
+                setTimeout(() => {
+                    btn.style.transform = 'rotate(0deg)';
+                }, 500);
+            }
+            
+            // Reload and apply brand settings
+            loadAndApplyBrandSettings();
+            
+            // Show confirmation
+            setTimeout(() => {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'Brand settings refreshed!' : 
+                    'Настройки брендов обновлены!';
+                
+                // Create a temporary notification
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    right: 20px;
+                    background: #4CAF50;
+                    color: white;
+                    padding: 10px 15px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    z-index: 9999;
+                    font-size: 14px;
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 2000);
+            }, 600);
+        }
+
+        // Add CSS for anchor brand mini-icon and refresh button
+        const anchorBrandStyles = document.createElement('style');
+        anchorBrandStyles.textContent = `
+            .brand-tab .anchor-icon {
+                font-size: 0.7rem;
+                margin-left: 0.3rem;
+                opacity: 0.8;
+                color: #FF6B35;
+                font-weight: bold;
+            }
+            
+            .refresh-brands-btn {
+                background: #1464F4;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-left: 10px;
+                min-width: 40px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .refresh-brands-btn:hover {
+                background: #0D4ED4;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(20, 100, 244, 0.3);
+            }
+            
+            .refresh-brands-btn:active {
+                transform: translateY(0px);
+            }
+        `;
+        document.head.appendChild(anchorBrandStyles);
     </script>
 </body>
 </html>

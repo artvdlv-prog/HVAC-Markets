@@ -242,6 +242,121 @@
             color: #666;
         }
 
+        /* Brand Selection Grid */
+        .brand-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--warm-gray);
+            border-radius: 8px;
+        }
+
+        .brand-checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--primary-white);
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brand-checkbox-item:hover {
+            border-color: var(--signature-blue);
+            transform: translateY(-1px);
+        }
+
+        .brand-checkbox-item.selected {
+            border-color: var(--signature-blue);
+            background: rgba(20, 100, 244, 0.05);
+        }
+
+        .brand-checkbox-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .brand-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--signature-blue);
+        }
+
+        .brand-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--deep-graphite);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-logo {
+            width: 30px;
+            height: 20px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--deep-graphite);
+        }
+
+        .selected-brands-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(20, 100, 244, 0.05);
+            border: 1px solid var(--signature-blue);
+            border-radius: 8px;
+        }
+
+        .selected-brands-preview h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--signature-blue);
+        }
+
+        .selected-brands-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .selected-brand-tag {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .anchor-brand-highlight {
+            background: var(--orange) !important;
+            position: relative;
+        }
+
+        .anchor-brand-highlight::before {
+            content: '⚓';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--primary-white);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
         /* Suppliers Tabs */
         .suppliers-tabs {
             display: flex;
@@ -1352,7 +1467,7 @@
     <nav class="nav">
         <a href="index.html" class="nav-logo">HVAC MARKETS</a>
         <div class="nav-menu">
-            <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="air-conditioning.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
             <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
             <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
             <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
@@ -1398,7 +1513,7 @@
             <button class="account-tab active" data-account-section="dashboard" data-en="Dashboard" data-ru="Главная">Dashboard</button>
             <button class="account-tab" data-account-section="profile" data-en="Company Details" data-ru="Реквизиты компании">Company Details</button>
             <button class="account-tab" data-account-section="letterhead" data-en="Company Letterhead" data-ru="Бланк компании">Company Letterhead</button>
-            <button class="account-tab" data-account-section="suppliers" data-en="Suppliers" data-ru="Поставщики">Suppliers</button>
+            <button class="account-tab" data-account-section="suppliers" data-en="Brands" data-ru="Бренды">Brands</button>
             <button class="account-tab" data-account-section="staff" data-en="Staff Management" data-ru="Управление персоналом">Staff Management</button>
         </div>
 
@@ -1502,7 +1617,7 @@
                 <div class="quick-actions-card">
                     <h3 class="card-title" data-en="Quick Actions" data-ru="Быстрые действия">Quick Actions</h3>
                     <div class="quick-actions-grid">
-                        <a href="dashboard.html" class="quick-action-item">
+                        <a href="air-conditioning.html" class="quick-action-item">
                             <div class="quick-action-icon">🔍</div>
                             <span data-en="Search Products" data-ru="Поиск продуктов">Search Products</span>
                         </a>
@@ -1512,7 +1627,7 @@
                         </a>
                         <button class="quick-action-item" onclick="switchToSuppliers()">
                             <div class="quick-action-icon">👥</div>
-                            <span data-en="Manage Suppliers" data-ru="Управление поставщиками">Manage Suppliers</span>
+                            <span data-en="Manage Brands" data-ru="Управление брендами">Manage Brands</span>
                         </button>
                         <button class="quick-action-item" onclick="switchToProfile()">
                             <div class="quick-action-icon">🏢</div>
@@ -1673,19 +1788,52 @@
             </div>
         </div>
 
-        <!-- Suppliers by Brands -->
+        <!-- Brands Management -->
         <div class="account-content" data-account-content="suppliers">
-            <div class="suppliers-tabs">
-                <button class="supplier-brand-tab active" data-brand="daikin">Daikin</button>
-                <button class="supplier-brand-tab" data-brand="mitsubishi">Mitsubishi</button>
-                <button class="supplier-brand-tab" data-brand="lg">LG</button>
-                <button class="supplier-brand-tab" data-brand="panasonic">Panasonic</button>
-                <button class="supplier-brand-tab" data-brand="toshiba">Toshiba</button>
-                <button class="supplier-brand-tab" data-brand="fujitsu">Fujitsu</button>
+            <!-- Brand Selection Section -->
+            <div class="form-section">
+                <h2 class="section-title" data-en="Brand Display Settings" data-ru="Настройки отображения брендов">Brand Display Settings</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label" data-en="Select Brands for Search Page:" data-ru="Выберите бренды для страницы поиска:">Select Brands for Search Page:</label>
+                        <div class="brand-selection-grid" id="brandSelectionGrid">
+                            <!-- Brand selection checkboxes will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-top: 2rem;">
+                    <div class="form-group">
+                        <label class="form-label" data-en="Anchor Brand for Comparison:" data-ru="Якорный бренд для сравнения:">Anchor Brand for Comparison:</label>
+                        <select class="form-select" id="anchorBrandSelect">
+                            <option value="" data-en="Select anchor brand..." data-ru="Выберите якорный бренд...">Select anchor brand...</option>
+                        </select>
+                        <small data-en="The anchor brand will be used as base for price comparisons" data-ru="Якорный бренд будет использоваться для сравнения цен">The anchor brand will be used as base for price comparisons</small>
+                    </div>
+                </div>
+
+                <div class="action-buttons" style="margin-top: 2rem; padding: 0;">
+                    <button class="btn-action btn-primary" onclick="saveBrandSettings()" data-en="Save Brand Settings" data-ru="Сохранить настройки брендов">Save Brand Settings</button>
+                </div>
             </div>
 
-            <div class="supplier-brand-content" id="suppliersContainer">
-                <!-- Supplier content for each brand will be generated here -->
+            <!-- Brand Suppliers Management Section -->
+            <div class="form-section">
+                <h2 class="section-title" data-en="Supplier Management by Brand" data-ru="Управление поставщиками по брендам">Supplier Management by Brand</h2>
+                
+                <div class="suppliers-tabs">
+                    <button class="supplier-brand-tab active" data-brand="daikin">Daikin</button>
+                    <button class="supplier-brand-tab" data-brand="mitsubishi">Mitsubishi</button>
+                    <button class="supplier-brand-tab" data-brand="lg">LG</button>
+                    <button class="supplier-brand-tab" data-brand="panasonic">Panasonic</button>
+                    <button class="supplier-brand-tab" data-brand="toshiba">Toshiba</button>
+                    <button class="supplier-brand-tab" data-brand="fujitsu">Fujitsu</button>
+                </div>
+
+                <div class="supplier-brand-content" id="suppliersContainer">
+                    <!-- Supplier content for each brand will be generated here -->
+                </div>
             </div>
         </div>
 
@@ -1720,6 +1868,7 @@
             loadAccountData();
             generateSuppliersByBrand();
             generateUsersList();
+            initBrandSelection();
         });
 
         // Initialize account tabs
@@ -2161,6 +2310,197 @@
                 document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
             }
         }
+
+        // Brand selection management functions
+        function initBrandSelection() {
+            generateBrandSelectionGrid();
+            loadBrandSettings();
+        }
+
+        function generateBrandSelectionGrid() {
+            const container = document.getElementById('brandSelectionGrid');
+            const anchorSelect = document.getElementById('anchorBrandSelect');
+            
+            const availableBrands = [
+                { id: 'daikin', name: 'Daikin', logo: 'DAI' },
+                { id: 'mitsubishi', name: 'Mitsubishi', logo: 'MIT' },
+                { id: 'lg', name: 'LG', logo: 'LG' },
+                { id: 'panasonic', name: 'Panasonic', logo: 'PAN' },
+                { id: 'toshiba', name: 'Toshiba', logo: 'TOS' },
+                { id: 'fujitsu', name: 'Fujitsu', logo: 'FUJ' },
+                { id: 'samsung', name: 'Samsung', logo: 'SAM' },
+                { id: 'gree', name: 'Gree', logo: 'GRE' },
+                { id: 'midea', name: 'Midea', logo: 'MID' },
+                { id: 'haier', name: 'Haier', logo: 'HAI' }
+            ];
+
+            let html = '';
+            let optionsHtml = '<option value="" data-en="Select anchor brand..." data-ru="Выберите якорный бренд...">Select anchor brand...</option>';
+            
+            availableBrands.forEach(brand => {
+                html += `
+                    <div class="brand-checkbox-item" data-brand="${brand.id}" onclick="toggleBrandSelection('${brand.id}')">
+                        <input type="checkbox" class="brand-checkbox" id="brand_${brand.id}" onchange="handleBrandCheckbox('${brand.id}')">
+                        <label class="brand-label" for="brand_${brand.id}">
+                            <div class="brand-logo">${brand.logo}</div>
+                            ${brand.name}
+                        </label>
+                    </div>
+                `;
+                
+                optionsHtml += `<option value="${brand.id}">${brand.name}</option>`;
+            });
+
+            container.innerHTML = html;
+            anchorSelect.innerHTML = optionsHtml;
+            
+            // Add preview container
+            container.insertAdjacentHTML('afterend', `
+                <div class="selected-brands-preview" id="selectedBrandsPreview" style="display: none;">
+                    <h4 data-en="Selected Brands for Search Page:" data-ru="Выбранные бренды для страницы поиска:">Selected Brands for Search Page:</h4>
+                    <div class="selected-brands-list" id="selectedBrandsList"></div>
+                </div>
+            `);
+        }
+
+        function toggleBrandSelection(brandId) {
+            const checkbox = document.getElementById(`brand_${brandId}`);
+            checkbox.checked = !checkbox.checked;
+            handleBrandCheckbox(brandId);
+        }
+
+        function handleBrandCheckbox(brandId) {
+            const checkbox = document.getElementById(`brand_${brandId}`);
+            const item = document.querySelector(`[data-brand="${brandId}"]`);
+            const selectedBrands = getSelectedBrands();
+
+            if (checkbox.checked) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+                // Remove from anchor selection if it was selected
+                const anchorSelect = document.getElementById('anchorBrandSelect');
+                if (anchorSelect.value === brandId) {
+                    anchorSelect.value = '';
+                }
+            }
+
+            updateBrandCheckboxStates();
+            updateSelectedBrandsPreview();
+            updateAnchorBrandOptions();
+        }
+
+        function getSelectedBrands() {
+            return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.id.replace('brand_', ''));
+        }
+
+        function updateBrandCheckboxStates() {
+            // No longer need to disable checkboxes - unlimited selection allowed
+        }
+
+        function updateSelectedBrandsPreview() {
+            const selectedBrands = getSelectedBrands();
+            const preview = document.getElementById('selectedBrandsPreview');
+            const list = document.getElementById('selectedBrandsList');
+            const anchorBrand = document.getElementById('anchorBrandSelect').value;
+
+            if (selectedBrands.length > 0) {
+                preview.style.display = 'block';
+                let html = '';
+                
+                selectedBrands.forEach(brandId => {
+                    const brandName = document.querySelector(`[data-brand="${brandId}"] .brand-label`).textContent.trim();
+                    const isAnchor = brandId === anchorBrand;
+                    html += `<span class="selected-brand-tag ${isAnchor ? 'anchor-brand-highlight' : ''}">${brandName}</span>`;
+                });
+                
+                list.innerHTML = html;
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        function updateAnchorBrandOptions() {
+            const selectedBrands = getSelectedBrands();
+            const anchorSelect = document.getElementById('anchorBrandSelect');
+            const currentValue = anchorSelect.value;
+            
+            // Disable options for non-selected brands
+            Array.from(anchorSelect.options).forEach(option => {
+                if (option.value && !selectedBrands.includes(option.value)) {
+                    option.disabled = true;
+                } else {
+                    option.disabled = false;
+                }
+            });
+            
+            // Clear selection if current anchor is not in selected brands
+            if (currentValue && !selectedBrands.includes(currentValue)) {
+                anchorSelect.value = '';
+            }
+        }
+
+        function saveBrandSettings() {
+            const selectedBrands = getSelectedBrands();
+            const anchorBrand = document.getElementById('anchorBrandSelect').value;
+            
+            if (selectedBrands.length === 0) {
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                const message = currentLang === 'en' ? 
+                    'Please select at least one brand' :
+                    'Пожалуйста, выберите хотя бы один бренд';
+                alert(message);
+                return;
+            }
+
+            const brandSettings = {
+                selectedBrands: selectedBrands,
+                anchorBrand: anchorBrand,
+                timestamp: new Date().toISOString()
+            };
+
+            // Save to localStorage (in real app, would send to API)
+            localStorage.setItem('brandSettings', JSON.stringify(brandSettings));
+            
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            const message = currentLang === 'en' ? 
+                `Brand settings saved! Selected: ${selectedBrands.length} brands${anchorBrand ? ', Anchor: ' + anchorBrand : ''}` :
+                `Настройки брендов сохранены! Выбрано: ${selectedBrands.length} брендов${anchorBrand ? ', Якорный: ' + anchorBrand : ''}`;
+            alert(message);
+        }
+
+        function loadBrandSettings() {
+            const savedSettings = localStorage.getItem('brandSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                // Restore selected brands
+                settings.selectedBrands.forEach(brandId => {
+                    const checkbox = document.getElementById(`brand_${brandId}`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                        document.querySelector(`[data-brand="${brandId}"]`).classList.add('selected');
+                    }
+                });
+                
+                // Restore anchor brand
+                if (settings.anchorBrand) {
+                    document.getElementById('anchorBrandSelect').value = settings.anchorBrand;
+                }
+                
+                updateBrandCheckboxStates();
+                updateSelectedBrandsPreview();
+                updateAnchorBrandOptions();
+            }
+        }
+
+        // Add event listener for anchor brand selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const anchorSelect = document.getElementById('anchorBrandSelect');
+            if (anchorSelect) {
+                anchorSelect.addEventListener('change', updateSelectedBrandsPreview);
+            }
+        });
     </script>
 </body>
 </html>
