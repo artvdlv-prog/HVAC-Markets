@@ -26,19 +26,27 @@
             overflow-x: hidden;
         }
 
-        /* Color variables */
+        /* Color variables - Pastel theme */
         :root {
             --primary-white: #FFFFFF;
             --deep-graphite: #1A1A1A;
-            --signature-blue: #1464F4;
+            --signature-blue: rgba(20, 100, 244, 0.15);
+            --signature-blue-text: #1464F4;
+            --signature-blue-border: rgba(20, 100, 244, 0.3);
             --warm-gray: #F4F4F4;
-            --lemon: #F4E146;
-            --turquoise: #46F4E1;
+            --lemon: rgba(244, 225, 70, 0.15);
+            --turquoise: rgba(70, 244, 225, 0.15);
             --light-gray: #E5E5E5;
-            --orange: #FF6B35;
-            --success-green: #4CAF50;
-            --warning-yellow: #FF9800;
-            --error-red: #F44336;
+            --orange: rgba(255, 107, 53, 0.15);
+            --orange-text: #FF6B35;
+            --orange-border: rgba(255, 107, 53, 0.3);
+            --success-green: rgba(76, 175, 80, 0.15);
+            --success-green-text: #4CAF50;
+            --success-green-border: rgba(76, 175, 80, 0.3);
+            --warning-yellow: rgba(255, 152, 0, 0.15);
+            --warning-yellow-text: #FF9800;
+            --error-red: rgba(244, 67, 54, 0.15);
+            --error-red-text: #F44336;
         }
 
         /* Main Container */
@@ -98,13 +106,391 @@
         }
 
         .account-tab:hover {
-            color: var(--signature-blue);
+            color: var(--signature-blue-text);
+            background: var(--signature-blue);
         }
 
         .account-tab.active {
-            color: var(--signature-blue);
-            border-bottom-color: var(--signature-blue);
-            background: rgba(20, 100, 244, 0.05);
+            color: var(--signature-blue-text);
+            border-bottom-color: var(--signature-blue-border);
+            background: var(--signature-blue);
+        }
+
+        /* Platform Sub-tabs */
+        .platform-subtabs {
+            display: flex;
+            gap: 0;
+            margin: 1.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .platform-subtab {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: #666;
+            padding: 0.8rem 1.5rem;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .platform-subtab:hover {
+            color: var(--signature-blue-text);
+            background: var(--signature-blue);
+        }
+
+        .platform-subtab.active {
+            color: var(--signature-blue-text);
+            border-bottom-color: var(--signature-blue-border);
+            background: var(--signature-blue);
+            font-weight: 600;
+        }
+
+        /* Platform specific colors */
+        .platform-subtab[data-platform="heating"].active {
+            color: var(--orange-text);
+            border-bottom-color: var(--orange-border);
+            background: var(--orange);
+        }
+
+        .platform-subtab[data-platform="ventilation"].active {
+            color: var(--success-green-text);
+            border-bottom-color: var(--success-green-border);
+            background: var(--success-green);
+        }
+
+        .platform-subtab[data-platform="airconditioning"].active {
+            color: var(--signature-blue-text);
+            border-bottom-color: var(--signature-blue-border);
+            background: var(--signature-blue);
+        }
+
+        /* Navigation - Copied from air-conditioning.html */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+        }
+
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: default;
+        }
+
+        .logo-main {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .hvac-letters {
+            display: flex;
+            gap: 0.05rem;
+            align-items: center;
+        }
+
+        .hvac-letter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.1rem;
+            border-radius: 4px;
+            position: relative;
+            margin: 0;
+        }
+
+        .markets-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0.1em;
+        }
+
+        /* Heating platform styles */
+        .hvac-letter[data-platform="heating"]:hover {
+            background: var(--orange);
+            color: var(--orange-text);
+        }
+
+        /* Ventilation platform styles */
+        .hvac-letter[data-platform="ventilation"]:hover {
+            background: var(--success-green);
+            color: var(--success-green-text);
+        }
+
+        /* Air Conditioning platform styles (default) */
+        .hvac-letter[data-platform="airconditioning"] {
+            background: var(--signature-blue);
+            color: var(--signature-blue-text);
+        }
+
+        .hvac-letter[data-platform="airconditioning"]:hover {
+            background: var(--signature-blue-border);
+            color: var(--signature-blue-text);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--deep-graphite);
+            font-weight: 500;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--signature-blue-text);
+        }
+
+        .nav-item.active {
+            color: var(--signature-blue-text);
+        }
+
+        /* Navigation Right Side */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue-border);
+            transform: scale(1.05);
+        }
+
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--deep-graphite);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .profile-icon:hover {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue-border);
+            transform: scale(1.05);
+        }
+
+        .profile-icon.active {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+            border-color: var(--signature-blue-border);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--signature-blue-text);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            min-width: 18px;
+            transition: all 0.3s ease;
+        }
+
+        /* Language Dropdown */
+        .nav-dropdown {
+            position: relative;
+        }
+
+        .nav-select {
+            background: var(--primary-white);
+            border: 2px solid var(--light-gray);
+            color: var(--deep-graphite);
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            text-transform: uppercase;
+            min-width: 80px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1em;
+        }
+
+        .nav-select:hover {
+            border-color: var(--signature-blue-border);
+            color: var(--signature-blue-text);
+        }
+
+        .nav-select:focus {
+            outline: none;
+            border-color: var(--signature-blue-border);
+            box-shadow: 0 0 0 3px var(--signature-blue);
+        }
+
+        /* Search Modal */
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--signature-blue);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+        }
+
+        .search-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-modal-content {
+            background: transparent;
+            border-radius: 0;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            overflow: visible;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .search-modal-title {
+            margin: 0;
+            color: var(--deep-graphite);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 1rem;
+            white-space: nowrap;
+        }
+
+        .search-modal-body {
+            padding: 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ai-search-bar-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--primary-white);
+            border-radius: 25px;
+            padding: 8px 12px;
+            border: 2px solid var(--signature-blue-border);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px var(--signature-blue);
+        }
+
+        .ai-search-bar-input:hover,
+        .ai-search-bar-input:focus-within {
+            border-color: var(--signature-blue-border);
+            box-shadow: 0 4px 12px var(--signature-blue);
+        }
+
+        .ai-search-input-bar {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 8px 12px;
+            font-size: 1rem;
+            color: var(--deep-graphite);
+            background: transparent;
+            font-family: inherit;
+        }
+
+        .ai-search-input-bar::placeholder {
+            color: #999;
+        }
+
+        .ai-search-send-bar {
+            background: var(--signature-blue-text);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .ai-search-send-bar:hover {
+            background: var(--signature-blue-border);
+            transform: scale(1.05);
         }
 
         /* Account Content */
@@ -174,7 +560,8 @@
         .form-textarea:focus,
         .form-select:focus {
             outline: none;
-            border-color: var(--signature-blue);
+            border-color: var(--signature-blue-border);
+            background: var(--signature-blue);
         }
 
         .form-textarea {
@@ -266,13 +653,14 @@
         }
 
         .brand-checkbox-item:hover {
-            border-color: var(--signature-blue);
+            border-color: var(--signature-blue-border);
             transform: translateY(-1px);
+            background: var(--signature-blue);
         }
 
         .brand-checkbox-item.selected {
-            border-color: var(--signature-blue);
-            background: rgba(20, 100, 244, 0.05);
+            border-color: var(--signature-blue-border);
+            background: var(--signature-blue);
         }
 
         .brand-checkbox-item.disabled {
@@ -283,7 +671,7 @@
         .brand-checkbox {
             width: 20px;
             height: 20px;
-            accent-color: var(--signature-blue);
+            accent-color: var(--signature-blue-text);
         }
 
         .brand-label {
@@ -295,18 +683,6 @@
             gap: 0.5rem;
         }
 
-        .brand-logo {
-            width: 30px;
-            height: 20px;
-            background: var(--light-gray);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--deep-graphite);
-        }
 
         .selected-brands-preview {
             margin-top: 1rem;
@@ -464,22 +840,24 @@
 
         .btn-primary {
             background: var(--signature-blue);
-            color: var(--primary-white);
+            color: var(--signature-blue-text);
+            border: 1px solid var(--signature-blue-border);
         }
 
         .btn-primary:hover {
-            background: var(--deep-graphite);
+            background: var(--signature-blue-border);
+            color: var(--signature-blue-text);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--signature-blue);
-            border: 2px solid var(--signature-blue);
+            color: var(--signature-blue-text);
+            border: 2px solid var(--signature-blue-border);
         }
 
         .btn-secondary:hover {
             background: var(--signature-blue);
-            color: var(--primary-white);
+            color: var(--signature-blue-text);
         }
 
         .btn-small {
@@ -1465,15 +1843,24 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <a href="index.html" class="nav-logo">HVAC MARKETS</a>
+        <div class="nav-logo">
+            <div class="logo-main">
+                <div class="hvac-letters">
+                    <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
+                    <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
+                    <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+                </div>
+                <span class="markets-text">MARKETS</span>
+            </div>
+        </div>
         <div class="nav-menu">
-            <a href="air-conditioning.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
-            <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="air-conditioning.html#scout" class="nav-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="air-conditioning.html#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="air-conditioning/sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="air-conditioning/design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="air-conditioning/service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="air-conditioning/forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="air-conditioning/installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <!-- AI Search Button -->
@@ -1491,16 +1878,19 @@
             </a>
             
             <!-- Quote Cart -->
-            <button class="nav-icon" id="cartBtn" title="Quote Cart / Корзина КП">
+            <button class="nav-icon" id="cartBtn" title="Quote Cart - Click to view multi-brand quote / Корзина КП - Нажмите для просмотра многобрендового КП">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                 </svg>
                 <span class="cart-badge" id="cartBadge">0</span>
             </button>
             
-            <div class="language-toggle">
-                <button class="lang-btn active" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="ru">RU</button>
+            <!-- Language Selection Dropdown -->
+            <div class="nav-dropdown">
+                <select class="nav-select" id="languageSelect">
+                    <option value="en">EN</option>
+                    <option value="ru" selected>RU</option>
+                </select>
             </div>
         </div>
     </nav>
@@ -1621,7 +2011,7 @@
                             <div class="quick-action-icon">🔍</div>
                             <span data-en="Search Products" data-ru="Поиск продуктов">Search Products</span>
                         </a>
-                        <a href="quote.html" class="quick-action-item">
+                        <a href="air-conditioning.html" class="quick-action-item">
                             <div class="quick-action-icon">📝</div>
                             <span data-en="Create Quote" data-ru="Создать КП">Create Quote</span>
                         </a>
@@ -1794,6 +2184,13 @@
             <div class="form-section">
                 <h2 class="section-title" data-en="Brand Display Settings" data-ru="Настройки отображения брендов">Brand Display Settings</h2>
                 
+                <!-- Platform Sub-tabs -->
+                <div class="platform-subtabs">
+                    <button class="platform-subtab active" data-platform="heating" data-en="Heating (H)" data-ru="Отопление (H)">H - Heating</button>
+                    <button class="platform-subtab" data-platform="ventilation" data-en="Ventilation (V)" data-ru="Вентиляция (V)">V - Ventilation</button>
+                    <button class="platform-subtab" data-platform="airconditioning" data-en="Air Conditioning (AC)" data-ru="Кондиционирование (AC)">AC - Air Conditioning</button>
+                </div>
+                
                 <div class="form-grid">
                     <div class="form-group" style="grid-column: 1 / -1;">
                         <label class="form-label" data-en="Select Brands for Search Page:" data-ru="Выберите бренды для страницы поиска:">Select Brands for Search Page:</label>
@@ -1841,6 +2238,13 @@
         <div class="account-content" data-account-content="staff">
             <div class="form-section">
                 <h2 class="section-title" data-en="System Users" data-ru="Пользователи системы">System Users</h2>
+                
+                <!-- Platform Sub-tabs -->
+                <div class="platform-subtabs">
+                    <button class="platform-subtab active" data-platform="heating" data-en="Heating (H)" data-ru="Отопление (H)">H - Heating</button>
+                    <button class="platform-subtab" data-platform="ventilation" data-en="Ventilation (V)" data-ru="Вентиляция (V)">V - Ventilation</button>
+                    <button class="platform-subtab" data-platform="airconditioning" data-en="Air Conditioning (AC)" data-ru="Кондиционирование (AC)">AC - Air Conditioning</button>
+                </div>
                 
                 <div class="action-buttons" style="margin-bottom: 2rem; padding: 0;">
                     <button class="btn-action btn-primary" onclick="addNewUser()" data-en="Add New User" data-ru="Добавить пользователя">Add New User</button>
@@ -2322,16 +2726,16 @@
             const anchorSelect = document.getElementById('anchorBrandSelect');
             
             const availableBrands = [
-                { id: 'daikin', name: 'Daikin', logo: 'DAI' },
-                { id: 'mitsubishi', name: 'Mitsubishi', logo: 'MIT' },
-                { id: 'lg', name: 'LG', logo: 'LG' },
-                { id: 'panasonic', name: 'Panasonic', logo: 'PAN' },
-                { id: 'toshiba', name: 'Toshiba', logo: 'TOS' },
-                { id: 'fujitsu', name: 'Fujitsu', logo: 'FUJ' },
-                { id: 'samsung', name: 'Samsung', logo: 'SAM' },
-                { id: 'gree', name: 'Gree', logo: 'GRE' },
-                { id: 'midea', name: 'Midea', logo: 'MID' },
-                { id: 'haier', name: 'Haier', logo: 'HAI' }
+                { id: 'daikin', name: 'Daikin' },
+                { id: 'mitsubishi', name: 'Mitsubishi' },
+                { id: 'lg', name: 'LG' },
+                { id: 'panasonic', name: 'Panasonic' },
+                { id: 'toshiba', name: 'Toshiba' },
+                { id: 'fujitsu', name: 'Fujitsu' },
+                { id: 'samsung', name: 'Samsung' },
+                { id: 'gree', name: 'Gree' },
+                { id: 'midea', name: 'Midea' },
+                { id: 'haier', name: 'Haier' }
             ];
 
             let html = '';
@@ -2342,7 +2746,6 @@
                     <div class="brand-checkbox-item" data-brand="${brand.id}" onclick="toggleBrandSelection('${brand.id}')">
                         <input type="checkbox" class="brand-checkbox" id="brand_${brand.id}" onchange="handleBrandCheckbox('${brand.id}')">
                         <label class="brand-label" for="brand_${brand.id}">
-                            <div class="brand-logo">${brand.logo}</div>
                             ${brand.name}
                         </label>
                     </div>
@@ -2459,14 +2862,99 @@
                 timestamp: new Date().toISOString()
             };
 
-            // Save to localStorage (in real app, would send to API)
+            console.log('💾 SAVE: Saving brand settings...', brandSettings);
+            
+            // Сохраняем в localStorage
             localStorage.setItem('brandSettings', JSON.stringify(brandSettings));
+            
+            // Принудительно обновляем timestamp для детекции изменений
+            localStorage.setItem('brandSettingsTimestamp', Date.now().toString());
+            
+            console.log('💾 SAVE: Настройки сохранены, попытка синхронизации...');
+            
+            // Множественная отправка через BroadcastChannel
+            try {
+                const bc = new BroadcastChannel('hvac-brand-sync');
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        bc.postMessage({
+                            type: 'BRAND_SETTINGS_UPDATED',
+                            data: brandSettings,
+                            timestamp: Date.now()
+                        });
+                    }, i * 100);
+                }
+                setTimeout(() => bc.close(), 500);
+                console.log('📡 SAVE: Множественные BroadcastChannel сообщения отправлены');
+            } catch (e) {
+                console.log('⚠️ SAVE: BroadcastChannel недоступен');
+            }
             
             const currentLang = localStorage.getItem('preferredLanguage') || 'en';
             const message = currentLang === 'en' ? 
-                `Brand settings saved! Selected: ${selectedBrands.length} brands${anchorBrand ? ', Anchor: ' + anchorBrand : ''}` :
-                `Настройки брендов сохранены! Выбрано: ${selectedBrands.length} брендов${anchorBrand ? ', Якорный: ' + anchorBrand : ''}`;
-            alert(message);
+                `✅ Настройки сохранены! Выбрано: ${selectedBrands.length} брендов` :
+                `✅ Settings saved! Selected: ${selectedBrands.length} brands`;
+            
+            showNotification(message, 'success');
+        }
+
+        // Modern notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            
+            const colors = {
+                success: 'rgba(76, 175, 80, 0.15)',
+                info: 'rgba(20, 100, 244, 0.15)',
+                warning: 'rgba(255, 152, 0, 0.15)',
+                error: 'rgba(244, 67, 54, 0.15)'
+            };
+            
+            const textColors = {
+                success: '#4CAF50',
+                info: '#1464F4',
+                warning: '#FF9800',
+                error: '#F44336'
+            };
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${colors[type] || colors.info};
+                color: ${textColors[type] || textColors.info};
+                border: 1px solid ${textColors[type] || textColors.info};
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 9999;
+                font-size: 14px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+                max-width: 400px;
+                line-height: 1.4;
+                opacity: 0;
+                transform: translateX(100%);
+                transition: all 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         function loadBrandSettings() {
@@ -2501,6 +2989,160 @@
                 anchorSelect.addEventListener('change', updateSelectedBrandsPreview);
             }
         });
+
+        // Platform sub-tabs functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformSubtabs = document.querySelectorAll('.platform-subtab');
+            
+            platformSubtabs.forEach(subtab => {
+                subtab.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    const parentSection = this.closest('.account-content');
+                    
+                    // Remove active class from all subtabs in this section
+                    const siblingSubtabs = parentSection.querySelectorAll('.platform-subtab');
+                    siblingSubtabs.forEach(tab => tab.classList.remove('active'));
+                    
+                    // Add active class to clicked subtab
+                    this.classList.add('active');
+                    
+                    // Update content based on platform
+                    updatePlatformContent(platform, parentSection);
+                    
+                    console.log('🎯 Platform switched to:', platform);
+                });
+            });
+        });
+
+        function updatePlatformContent(platform, section) {
+            // Get the section type (brands or staff)
+            const sectionType = section.getAttribute('data-account-content');
+            
+            // Platform-specific content updates
+            if (sectionType === 'suppliers') {
+                // Update brand selection for different platforms
+                // For now, we'll show all brands for all platforms
+                // In future, this can be customized per platform
+                console.log(`📋 Brands section updated for ${platform} platform`);
+            } else if (sectionType === 'staff') {
+                // Update staff management for different platforms
+                console.log(`👥 Staff section updated for ${platform} platform`);
+            }
+            
+            // Show platform-specific notice
+            showPlatformNotice(platform, sectionType);
+        }
+
+        function showPlatformNotice(platform, sectionType) {
+            const platformNames = {
+                heating: 'Отопление (H)',
+                ventilation: 'Вентиляция (V)', 
+                airconditioning: 'Кондиционирование (AC)'
+            };
+            
+            const sectionNames = {
+                suppliers: 'брендов',
+                staff: 'персонала'
+            };
+            
+            const message = `Настройки ${sectionNames[sectionType]} для платформы: ${platformNames[platform]}`;
+            
+            // Remove existing notices
+            const existingNotices = document.querySelectorAll('.platform-notice');
+            existingNotices.forEach(notice => notice.remove());
+            
+            // Show new notice
+            const notice = document.createElement('div');
+            notice.className = 'platform-notice';
+            notice.style.cssText = `
+                background: rgba(20, 100, 244, 0.15);
+                border: 1px solid rgba(20, 100, 244, 0.3);
+                padding: 0.8rem 1.2rem;
+                border-radius: 8px;
+                margin-bottom: 1.5rem;
+                color: #1464F4;
+                font-weight: 500;
+                font-size: 0.9rem;
+            `;
+            notice.textContent = message;
+            
+            const section = document.querySelector(`[data-account-content="${sectionType}"]`);
+            const formGrid = section.querySelector('.form-grid');
+            if (formGrid) {
+                formGrid.parentNode.insertBefore(notice, formGrid);
+            }
+        }
+
+        // AI Search Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchModal = document.getElementById('searchModal');
+            const aiSearchInput = document.getElementById('aiSearchInput');
+            const aiSearchSendBtn = document.getElementById('aiSearchSendBtn');
+            
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function() {
+                    if (searchModal) {
+                        searchModal.style.display = 'block';
+                        setTimeout(() => {
+                            aiSearchInput.focus();
+                        }, 100);
+                    }
+                });
+            }
+            
+            // Close modal on outside click
+            if (searchModal) {
+                searchModal.addEventListener('click', function(e) {
+                    if (e.target === searchModal) {
+                        searchModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Send search on Enter or button click
+            function performSearch() {
+                const query = aiSearchInput.value.trim();
+                if (query) {
+                    // Redirect to search page with query
+                    window.location.href = `air-conditioning.html?search=${encodeURIComponent(query)}`;
+                }
+            }
+            
+            if (aiSearchInput) {
+                aiSearchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+            
+            if (aiSearchSendBtn) {
+                aiSearchSendBtn.addEventListener('click', performSearch);
+            }
+        });
     </script>
+
+    <!-- AI Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <div class="search-modal-body">
+                <h3 class="search-modal-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                    </svg>
+                    <span data-en="AI Search" data-ru="ИИ Поиск">ИИ Поиск</span>
+                </h3>
+                <div class="ai-search-bar-input">
+                    <input type="text" class="ai-search-input-bar" id="aiSearchInput" placeholder="Спросите меня о HVAC оборудовании..." data-en-placeholder="Ask me anything about HVAC equipment..." data-ru-placeholder="Спросите меня о HVAC оборудовании...">
+                    <button class="ai-search-send-bar" id="aiSearchSendBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
