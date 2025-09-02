@@ -67,11 +67,67 @@
         }
 
         .nav-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            cursor: default;
+        }
+
+        .logo-main {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .hvac-letters {
+            display: flex;
+            gap: 0.05rem;
+            align-items: center;
+        }
+
+        .hvac-letter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--deep-graphite);
+            letter-spacing: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.1rem;
+            border-radius: 4px;
+            position: relative;
+            margin: 0;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        .markets-text {
             font-size: 1.5rem;
             font-weight: 900;
             color: var(--deep-graphite);
             letter-spacing: 0.1em;
-            text-decoration: none;
+        }
+
+        /* Heating platform styles */
+        .hvac-letter[data-platform="heating"]:hover {
+            background: rgba(255, 107, 53, 0.15);
+            color: #FF6B35;
+        }
+
+        /* Ventilation platform styles */
+        .hvac-letter[data-platform="ventilation"]:hover {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        /* Air Conditioning platform styles (default) */
+        .hvac-letter[data-platform="airconditioning"] {
+            background: rgba(20, 100, 244, 0.15);
+            color: var(--signature-blue);
+        }
+
+        .hvac-letter[data-platform="airconditioning"]:hover {
+            background: rgba(20, 100, 244, 0.25);
+            color: var(--signature-blue);
         }
 
         .nav-menu {
@@ -195,33 +251,36 @@
         }
 
         .nav-select {
-            background: transparent;
-            border: 1px solid rgba(26, 26, 26, 0.2);
+            background: var(--primary-white);
+            border: 2px solid var(--light-gray);
             color: var(--deep-graphite);
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 0.5rem 2rem 0.5rem 1rem;
             font-family: inherit;
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
+            border-radius: 6px;
+            text-transform: uppercase;
+            min-width: 80px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
+            background-position: right 0.7rem center;
+            background-size: 1em;
         }
 
         .nav-select:hover {
             border-color: var(--signature-blue);
-            background-color: rgba(20, 100, 244, 0.05);
+            color: var(--signature-blue);
         }
 
         .nav-select:focus {
             outline: none;
             border-color: var(--signature-blue);
-            background-color: rgba(20, 100, 244, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         /* Mobile Menu Toggle */
@@ -1137,15 +1196,24 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <a href="index.html" class="nav-logo">HVAC MARKETS</a>
+        <div class="nav-logo">
+            <div class="logo-main">
+                <div class="hvac-letters">
+                    <span class="hvac-letter" data-platform="heating" data-letter="h">H</span>
+                    <span class="hvac-letter" data-platform="ventilation" data-letter="v">V</span>
+                    <span class="hvac-letter" data-platform="airconditioning" data-letter="ac">AC</span>
+                </div>
+                <span class="markets-text">MARKETS</span>
+            </div>
+        </div>
         <div class="nav-menu">
-            <a href="index.html" class="nav-item" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
-            <a href="index.html#match" class="nav-item" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
-            <a href="quote.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
-            <a href="design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
-            <a href="service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
-            <a href="forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
-            <a href="installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
+            <a href="air-conditioning.html#scout" class="nav-item" data-module="scout" data-en="SEARCH" data-ru="ПОИСК">SEARCH</a>
+            <a href="air-conditioning.html#match" class="nav-item" data-module="match" data-en="ANALYSIS" data-ru="АНАЛИЗ">ANALYSIS</a>
+            <a href="air-conditioning/sales.html" class="nav-item" data-en="SALES" data-ru="ПРОДАЖА">SALES</a>
+            <a href="air-conditioning/design.html" class="nav-item" data-en="DESIGN" data-ru="ПРОЕКТ">DESIGN</a>
+            <a href="air-conditioning/service.html" class="nav-item" data-en="SERVICE" data-ru="СЕРВИС">SERVICE</a>
+            <a href="air-conditioning/forecast.html" class="nav-item" data-en="FORECAST" data-ru="ПРОГНОЗ">FORECAST</a>
+            <a href="air-conditioning/installation.html" class="nav-item" data-en="INSTALLATION" data-ru="МОНТАЖ">INSTALLATION</a>
         </div>
         <div class="nav-right">
             <!-- AI Search Button -->
@@ -2303,6 +2371,38 @@
                 });
             }
         }
+
+        // HVAC Navigation System
+        function initHVACNavigation() {
+            console.log('Initializing HVAC navigation...');
+            
+            // Add click events to HVAC letters
+            const letters = document.querySelectorAll('.hvac-letter');
+            console.log('Found HVAC letters:', letters.length);
+            
+            letters.forEach(letter => {
+                letter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const platform = this.getAttribute('data-platform');
+                    console.log('Letter clicked:', this.textContent, 'navigating to platform:', platform);
+                    
+                    // Navigate to respective platform file
+                    if (platform === 'heating') {
+                        window.location.href = 'heating.html';
+                    } else if (platform === 'ventilation') {
+                        window.location.href = 'ventilation.html';
+                    } else if (platform === 'airconditioning') {
+                        window.location.href = 'air-conditioning.html';
+                    }
+                });
+            });
+        }
+
+        // Initialize navigation on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initHVACNavigation();
+        });
     </script>
 </body>
 </html>

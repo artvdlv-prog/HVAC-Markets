@@ -5360,6 +5360,8 @@
                 console.log('✓ initQuoteSystem completed');
                 initBrandSynchronization();
                 console.log('✓ initBrandSynchronization completed');
+                initDealerDiscountSync();
+                console.log('✓ initDealerDiscountSync completed');
             } catch (error) {
                 console.error('Initialization error:', error);
             }
@@ -5996,9 +5998,9 @@
                 return;
             }
 
-            grid.innerHTML = products.map(product => {
+            const html = products.map(product => {
                 return `
-                <div class="product-card" data-product-id="${product.id}">
+                <div class="product-card" data-product-id="${product.id}" data-brand="${product.brand}">
                     <div class="product-image" title="Hover to enlarge">🌀</div>
                     <div class="product-info">
                         <div class="product-details">
@@ -6026,15 +6028,15 @@
                         <div class="product-prices">
                             <div class="price-item">
                                 <span class="price-label">Розница:</span>
-                                <span class="price-value price-retail">${formatPrice(product.price * 1.4)}</span>
+                                <span class="price-value price-retail" data-original-price="${product.price * 1.4}">${formatPrice(product.price * 1.4)}</span>
                             </div>
                             <div class="price-item">
                                 <span class="price-label">Закупка:</span>
-                                <span class="price-value price-purchase">${formatPrice(product.price)}</span>
+                                <span class="price-value price-purchase" data-original-price="${product.price}">${formatPrice(product.price)}</span>
                             </div>
                             <div class="price-item">
                                 <span class="price-label">Клиент:</span>
-                                <span class="price-value price-sale">${formatPrice(applyDiscounts(product.price * 1.4, true))}</span>
+                                <span class="price-value price-sale" data-original-price="${applyDiscounts(product.price * 1.4, true)}">${formatPrice(applyDiscounts(product.price * 1.4, true))}</span>
                             </div>
                         </div>
                         
@@ -6056,6 +6058,13 @@
                 </div>
                 `;
             }).join('');
+            
+            grid.innerHTML = html;
+            
+            // Apply dealer discounts to rendered prices
+            setTimeout(() => {
+                recalculateAllPrices();
+            }, 100);
         }
 
         let favoriteProducts = [];
@@ -7824,14 +7833,14 @@
                         </div>
                         <div class="cart-brand-products">
                             ${products.map((product, index) => `
-                                <div class="cart-product-item">
+                                <div class="cart-product-item" data-brand="${brand}">
                                     <div class="cart-product-icon">🌀</div>
                                     <div class="cart-product-info">
                                         <div class="cart-product-name">${product.title || product.model || product.name || 'Unnamed Product'}</div>
                                         <div class="cart-product-specs">${formatProductSpecs(product)}</div>
                                         ${product.isAnalog ? '<div class="cart-product-analog">🔄 Analog Match</div>' : ''}
                                     </div>
-                                    <div class="cart-product-price">${formatPrice(product.price || 0)}</div>
+                                    <div class="cart-product-price" data-original-price="${product.price || 0}">${formatPrice(product.price || 0)}</div>
                                     <button class="cart-product-remove" onclick="removeFromCart('${brand}', ${index})" title="Удалить товар">×</button>
                                 </div>
                             `).join('')}
@@ -7841,6 +7850,11 @@
             });
 
             cartItems.innerHTML = html;
+            
+            // Apply dealer discounts to cart prices after rendering
+            setTimeout(() => {
+                recalculateCartPrices();
+            }, 50);
         }
 
         function getBrandInfo(brand) {
@@ -8080,6 +8094,183 @@
                 });
             }, 1000);
         });
+
+        // Dealer discount synchronization system
+        let dealerDiscounts = {};
+        
+        function initDealerDiscountSync() {
+            console.log('💰 INIT: Dealer discount synchronization...');
+            loadDealerDiscounts();
+            
+            // Create test discounts if none exist (for development)
+            if (Object.keys(dealerDiscounts).length === 0) {
+                console.log('🧪 Creating test dealer discounts...');
+                const testDiscounts = {
+                    daikin: { discount: 15, timestamp: new Date().toISOString() },
+                    mitsubishi: { discount: 12, timestamp: new Date().toISOString() },
+                    lg: { discount: 18, timestamp: new Date().toISOString() }
+                };
+                localStorage.setItem('dealerDiscounts', JSON.stringify(testDiscounts));
+                dealerDiscounts = testDiscounts;
+                console.log('🧪 Test discounts created:', testDiscounts);
+            }
+            
+            // Replace fallback with real function
+            window.applyDealerDiscount = applyDealerDiscount;
+            
+            // Listen for discount updates from personal account
+            const bc = new BroadcastChannel('hvac-dealer-discounts');
+            bc.onmessage = (event) => {
+                if (event.data.type === 'DEALER_DISCOUNT_UPDATED') {
+                    console.log('🔄 Received dealer discount update:', event.data);
+                    loadDealerDiscounts();
+                    recalculateAllPrices();
+                }
+            };
+            
+            // Periodic check for discount changes
+            let lastDiscountTimestamp = localStorage.getItem('dealerDiscountsTimestamp') || '0';
+            setInterval(() => {
+                const currentTimestamp = localStorage.getItem('dealerDiscountsTimestamp') || '0';
+                if (currentTimestamp !== lastDiscountTimestamp) {
+                    console.log('⏰ Dealer discounts timestamp changed, reloading...');
+                    lastDiscountTimestamp = currentTimestamp;
+                    loadDealerDiscounts();
+                    recalculateAllPrices();
+                }
+            }, 500);
+        }
+
+        // Load dealer discounts from localStorage
+        function loadDealerDiscounts() {
+            const savedDiscounts = localStorage.getItem('dealerDiscounts');
+            console.log('📥 Loading dealer discounts from localStorage:', savedDiscounts);
+            
+            if (savedDiscounts) {
+                try {
+                    dealerDiscounts = JSON.parse(savedDiscounts);
+                    console.log('💰 Successfully loaded dealer discounts:', dealerDiscounts);
+                    
+                    // Log individual brand discounts
+                    Object.keys(dealerDiscounts).forEach(brand => {
+                        const discount = dealerDiscounts[brand].discount;
+                        console.log(`   ${brand}: ${discount}%`);
+                    });
+                } catch (error) {
+                    console.error('❌ Error loading dealer discounts:', error);
+                    dealerDiscounts = {};
+                }
+            } else {
+                console.log('📭 No dealer discounts found in localStorage');
+                dealerDiscounts = {};
+            }
+        }
+
+        // Get discount for a specific brand
+        function getBrandDiscount(brand) {
+            if (!brand) {
+                console.log('⚠️ getBrandDiscount: No brand provided');
+                return 0;
+            }
+            
+            const brandKey = brand.toLowerCase();
+            const discount = dealerDiscounts[brandKey] ? dealerDiscounts[brandKey].discount : 0;
+            
+            if (discount > 0) {
+                console.log(`💰 getBrandDiscount: ${brand} -> ${discount}%`);
+            }
+            
+            return discount;
+        }
+
+        // Apply dealer discount to price
+        function applyDealerDiscount(originalPrice, brand) {
+            if (typeof originalPrice !== 'number' || isNaN(originalPrice)) {
+                return 0;
+            }
+            if (!brand) {
+                return originalPrice;
+            }
+            
+            const discount = getBrandDiscount(brand);
+            if (discount > 0) {
+                const discountedPrice = originalPrice * (1 - discount / 100);
+                return Math.round(discountedPrice);
+            }
+            return originalPrice;
+        }
+
+        // Fallback function for early calls before init
+        if (typeof window.applyDealerDiscount === 'undefined') {
+            window.applyDealerDiscount = function(price, brand) {
+                return price; // No discount initially
+            };
+        }
+
+        // Recalculate all visible prices
+        function recalculateAllPrices() {
+            console.log('🔄 Recalculating all prices with dealer discounts...');
+            
+            // Update prices in product cards
+            const priceElements = document.querySelectorAll('.price-value');
+            priceElements.forEach(priceElement => {
+                const productCard = priceElement.closest('.product-card');
+                if (productCard) {
+                    const brand = productCard.getAttribute('data-brand');
+                    const originalPrice = parseFloat(priceElement.getAttribute('data-original-price'));
+                    
+                    if (brand && !isNaN(originalPrice)) {
+                        const discount = getBrandDiscount(brand);
+                        const discountedPrice = applyDealerDiscount(originalPrice, brand);
+                        
+                        // Update price with formatting
+                        priceElement.textContent = formatPrice(discountedPrice);
+                        
+                        // Remove existing discount indicator
+                        const existingIndicator = priceElement.parentElement.querySelector('.discount-indicator');
+                        if (existingIndicator) {
+                            existingIndicator.remove();
+                        }
+                        
+                        // Add discount indicator if discount applied
+                        if (discount > 0) {
+                            const indicator = document.createElement('span');
+                            indicator.className = 'discount-indicator';
+                            indicator.textContent = `-${discount}%`;
+                            indicator.style.cssText = 'color: #4CAF50; font-size: 0.8rem; font-weight: 600; margin-left: 0.5rem;';
+                            priceElement.parentElement.appendChild(indicator);
+                        }
+                        
+                        console.log(`💰 Updated ${brand} price: ${formatPrice(originalPrice)} → ${formatPrice(discountedPrice)} (${discount}% discount)`);
+                    }
+                }
+            });
+            
+            // Update prices in cart
+            recalculateCartPrices();
+        }
+
+        // Recalculate cart prices
+        function recalculateCartPrices() {
+            const cartProductPrices = document.querySelectorAll('.cart-product-price');
+            console.log(`🛒 Recalculating ${cartProductPrices.length} cart prices...`);
+            
+            cartProductPrices.forEach(priceElement => {
+                const cartProduct = priceElement.closest('.cart-product-item');
+                if (cartProduct) {
+                    const brand = cartProduct.getAttribute('data-brand');
+                    const originalPrice = parseFloat(priceElement.getAttribute('data-original-price'));
+                    
+                    if (brand && !isNaN(originalPrice)) {
+                        const discount = getBrandDiscount(brand);
+                        const discountedPrice = applyDealerDiscount(originalPrice, brand);
+                        priceElement.textContent = formatPrice(discountedPrice);
+                        
+                        console.log(`🛒 Updated cart ${brand} price: ${formatPrice(originalPrice)} → ${formatPrice(discountedPrice)} (${discount}% discount)`);
+                    }
+                }
+            });
+        }
 
         // Brand synchronization with account settings
         function initBrandSynchronization() {

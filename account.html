@@ -683,6 +683,110 @@
             gap: 0.5rem;
         }
 
+        /* Brand selection tabs */
+        .brand-selection-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.1rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            background: var(--primary-white);
+            border-radius: 8px;
+            padding: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .brand-selection-tab {
+            background: transparent;
+            border: none;
+            color: var(--deep-graphite);
+            padding: 0.75rem 1.5rem;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .brand-selection-tab:hover {
+            background: var(--warm-gray);
+        }
+
+        .brand-selection-tab.selected {
+            background: var(--signature-blue);
+            color: var(--primary-white);
+        }
+
+        /* Platform-specific brand tab colors - lighter pastel versions */
+        [data-current-platform="heating"] .brand-selection-tab.selected {
+            background: rgba(255, 107, 53, 0.3) !important;
+            color: #D2691E !important;
+        }
+
+        [data-current-platform="ventilation"] .brand-selection-tab.selected {
+            background: rgba(76, 175, 80, 0.3) !important;
+            color: #2E7D32 !important;
+        }
+
+        [data-current-platform="airconditioning"] .brand-selection-tab.selected {
+            background: rgba(20, 100, 244, 0.3) !important;
+            color: #1565C0 !important;
+        }
+
+        .brand-selection-content {
+            background: var(--primary-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .selected-brands-info {
+            margin-bottom: 1rem;
+        }
+
+        .selected-count {
+            font-weight: 600;
+            color: var(--deep-graphite);
+            margin: 0;
+        }
+
+        .selected-count span {
+            color: var(--signature-blue);
+            font-weight: 700;
+        }
+
+        .anchor-indicator {
+            background: var(--signature-blue);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            position: absolute;
+            top: -3px;
+            right: -3px;
+        }
+
+        /* Responsive brand selection tabs */
+        @media (max-width: 768px) {
+            .brand-selection-tabs {
+                padding: 0.3rem;
+                gap: 0.05rem;
+                flex-wrap: wrap;
+            }
+            .brand-selection-tab {
+                min-width: 80px;
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
 
         .selected-brands-preview {
             margin-top: 1rem;
@@ -1913,8 +2017,8 @@
                 <!-- User Profile Card -->
                 <div class="profile-card">
                     <div class="profile-avatar">
-                        <div class="avatar-circle">AD</div>
-                        <h2 class="profile-name" data-en="AIR Dealer User" data-ru="Пользователь AIR Dealer">AIR Dealer User</h2>
+                        <div class="avatar-circle">HM</div>
+                        <h2 class="profile-name" data-en="HVAC markets User" data-ru="Пользователь HVAC markets">HVAC markets User</h2>
                         <p class="profile-role" data-en="HVAC Equipment Specialist" data-ru="Специалист по HVAC оборудованию">HVAC Equipment Specialist</p>
                         <p class="profile-company" data-en="HVAC Solutions Pro" data-ru="HVAC Solutions Pro">HVAC Solutions Pro</p>
                     </div>
@@ -2191,22 +2295,24 @@
                     <button class="platform-subtab" data-platform="airconditioning" data-en="Air Conditioning (AC)" data-ru="Кондиционирование (AC)">AC - Air Conditioning</button>
                 </div>
                 
-                <div class="form-grid">
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label" data-en="Select Brands for Search Page:" data-ru="Выберите бренды для страницы поиска:">Select Brands for Search Page:</label>
-                        <div class="brand-selection-grid" id="brandSelectionGrid">
-                            <!-- Brand selection checkboxes will be generated here -->
-                        </div>
-                    </div>
+                <!-- Brand Selection Tabs -->
+                <div class="brand-selection-tabs" id="brandSelectionTabs">
+                    <!-- Brand selection tabs will be generated here -->
                 </div>
 
-                <div class="form-grid" style="margin-top: 2rem;">
-                    <div class="form-group">
-                        <label class="form-label" data-en="Anchor Brand for Comparison:" data-ru="Якорный бренд для сравнения:">Anchor Brand for Comparison:</label>
-                        <select class="form-select" id="anchorBrandSelect">
-                            <option value="" data-en="Select anchor brand..." data-ru="Выберите якорный бренд...">Select anchor brand...</option>
-                        </select>
-                        <small data-en="The anchor brand will be used as base for price comparisons" data-ru="Якорный бренд будет использоваться для сравнения цен">The anchor brand will be used as base for price comparisons</small>
+                <div class="brand-selection-content">
+                    <div class="selected-brands-info">
+                        <p class="selected-count" data-en="Selected Brands:" data-ru="Выбранные бренды:">Selected Brands: <span id="selectedBrandsCount">0</span></p>
+                    </div>
+                    
+                    <div class="form-grid" style="margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label class="form-label" data-en="Anchor Brand for Comparison:" data-ru="Якорный бренд для сравнения:">Anchor Brand for Comparison:</label>
+                            <select class="form-select" id="anchorBrandSelect">
+                                <option value="" data-en="Select anchor brand..." data-ru="Выберите якорный бренд...">Select anchor brand...</option>
+                            </select>
+                            <small data-en="The anchor brand will be used as base for price comparisons" data-ru="Якорный бренд будет использоваться для сравнения цен">The anchor brand will be used as base for price comparisons</small>
+                        </div>
                     </div>
                 </div>
 
@@ -2318,6 +2424,25 @@
         // Generate suppliers by brand
         function generateSuppliersByBrand() {
             loadSuppliersForBrand('daikin'); // Load default brand
+            loadDealerDiscounts(); // Load saved dealer discounts
+        }
+
+        function loadDealerDiscounts() {
+            const savedDiscounts = localStorage.getItem('dealerDiscounts');
+            if (!savedDiscounts) return;
+            
+            try {
+                const dealerDiscounts = JSON.parse(savedDiscounts);
+                console.log('📊 Loaded dealer discounts:', dealerDiscounts);
+                
+                // Apply discounts to supplier management forms when they are loaded
+                Object.keys(dealerDiscounts).forEach(brand => {
+                    const discountData = dealerDiscounts[brand];
+                    console.log(`💰 Restored discount for ${brand}: ${discountData.discount}%`);
+                });
+            } catch (error) {
+                console.error('Error loading dealer discounts:', error);
+            }
         }
 
         // Load suppliers for specific brand
@@ -2352,14 +2477,21 @@
             
             let html = `<h3 class="section-title">${brand.charAt(0).toUpperCase() + brand.slice(1)} Suppliers</h3>`;
             
+            // Get saved discount for this brand
+            const savedDiscounts = JSON.parse(localStorage.getItem('dealerDiscounts') || '{}');
+            const brandDiscount = savedDiscounts[brand] ? savedDiscounts[brand].discount : null;
+
             suppliers.forEach((supplier, index) => {
+                // Use saved discount if available, otherwise use default
+                const discountToShow = brandDiscount !== null ? brandDiscount : supplier.discount;
+                
                 html += `
                     <div class="supplier-card">
                         <div class="supplier-header">
                             <div class="supplier-name">${supplier.name}</div>
                             <div class="supplier-discount">
                                 <span data-en="Discount:" data-ru="Скидка:">Discount:</span>
-                                <input type="number" class="discount-input" value="${supplier.discount}" min="0" max="100" step="0.1" onchange="updateSupplierDiscount('${brand}', ${index}, this.value)">
+                                <input type="number" class="discount-input" value="${discountToShow}" min="0" max="100" step="0.1" onchange="updateSupplierDiscount('${brand}', ${index}, this.value)">
                                 <span>%</span>
                             </div>
                         </div>
@@ -2430,6 +2562,42 @@
         // Supplier management functions
         function updateSupplierDiscount(brand, index, discount) {
             console.log(`Updated ${brand} supplier ${index} discount to ${discount}%`);
+            
+            // Save dealer discount for this brand
+            saveDealerDiscount(brand, parseFloat(discount) || 0);
+        }
+
+        function saveDealerDiscount(brand, discount) {
+            // Get existing dealer discounts
+            const dealerDiscounts = JSON.parse(localStorage.getItem('dealerDiscounts') || '{}');
+            
+            // Update discount for this brand
+            dealerDiscounts[brand] = {
+                discount: discount,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('dealerDiscounts', JSON.stringify(dealerDiscounts));
+            localStorage.setItem('dealerDiscountsTimestamp', Date.now().toString());
+            
+            // Broadcast change to search page for automatic recalculation
+            const bc = new BroadcastChannel('hvac-dealer-discounts');
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    bc.postMessage({
+                        type: 'DEALER_DISCOUNT_UPDATED',
+                        data: {
+                            brand: brand,
+                            discount: discount,
+                            allDiscounts: dealerDiscounts
+                        },
+                        timestamp: Date.now()
+                    });
+                }, i * 100);
+            }
+            
+            console.log(`💰 Dealer discount saved: ${brand} = ${discount}%`);
         }
 
         function updateSupplierData(brand, index, field, value) {
@@ -2722,7 +2890,7 @@
         }
 
         function generateBrandSelectionGrid() {
-            const container = document.getElementById('brandSelectionGrid');
+            const container = document.getElementById('brandSelectionTabs');
             const anchorSelect = document.getElementById('anchorBrandSelect');
             
             const availableBrands = [
@@ -2743,12 +2911,10 @@
             
             availableBrands.forEach(brand => {
                 html += `
-                    <div class="brand-checkbox-item" data-brand="${brand.id}" onclick="toggleBrandSelection('${brand.id}')">
-                        <input type="checkbox" class="brand-checkbox" id="brand_${brand.id}" onchange="handleBrandCheckbox('${brand.id}')">
-                        <label class="brand-label" for="brand_${brand.id}">
-                            ${brand.name}
-                        </label>
-                    </div>
+                    <button class="brand-selection-tab" data-brand="${brand.id}" onclick="toggleBrandSelection('${brand.id}')">
+                        ${brand.name}
+                        <span class="anchor-indicator" id="anchor_${brand.id}" style="display: none;">⚓</span>
+                    </button>
                 `;
                 
                 optionsHtml += `<option value="${brand.id}">${brand.name}</option>`;
@@ -2757,48 +2923,55 @@
             container.innerHTML = html;
             anchorSelect.innerHTML = optionsHtml;
             
-            // Add preview container
-            container.insertAdjacentHTML('afterend', `
-                <div class="selected-brands-preview" id="selectedBrandsPreview" style="display: none;">
-                    <h4 data-en="Selected Brands for Search Page:" data-ru="Выбранные бренды для страницы поиска:">Selected Brands for Search Page:</h4>
-                    <div class="selected-brands-list" id="selectedBrandsList"></div>
-                </div>
-            `);
+            updateSelectedBrandsCount();
         }
 
         function toggleBrandSelection(brandId) {
-            const checkbox = document.getElementById(`brand_${brandId}`);
-            checkbox.checked = !checkbox.checked;
-            handleBrandCheckbox(brandId);
-        }
-
-        function handleBrandCheckbox(brandId) {
-            const checkbox = document.getElementById(`brand_${brandId}`);
-            const item = document.querySelector(`[data-brand="${brandId}"]`);
-            const selectedBrands = getSelectedBrands();
-
-            if (checkbox.checked) {
-                item.classList.add('selected');
-            } else {
-                item.classList.remove('selected');
-                // Remove from anchor selection if it was selected
+            const tab = document.querySelector(`[data-brand="${brandId}"]`);
+            const isSelected = tab.classList.contains('selected');
+            
+            if (isSelected) {
+                tab.classList.remove('selected');
+                // Remove anchor indicator if it was anchor brand
+                document.getElementById(`anchor_${brandId}`).style.display = 'none';
+                
+                // If this was the anchor brand, clear the selection
                 const anchorSelect = document.getElementById('anchorBrandSelect');
                 if (anchorSelect.value === brandId) {
                     anchorSelect.value = '';
                 }
+            } else {
+                tab.classList.add('selected');
             }
-
-            updateBrandCheckboxStates();
-            updateSelectedBrandsPreview();
+            
+            updateSelectedBrandsCount();
             updateAnchorBrandOptions();
+            updatePlatformColors();
         }
 
         function getSelectedBrands() {
-            return Array.from(document.querySelectorAll('.brand-checkbox:checked')).map(cb => cb.id.replace('brand_', ''));
+            return Array.from(document.querySelectorAll('.brand-selection-tab.selected')).map(tab => tab.getAttribute('data-brand'));
         }
 
-        function updateBrandCheckboxStates() {
-            // No longer need to disable checkboxes - unlimited selection allowed
+        function updateSelectedBrandsCount() {
+            const selectedBrands = getSelectedBrands();
+            const countElement = document.getElementById('selectedBrandsCount');
+            if (countElement) {
+                countElement.textContent = selectedBrands.length;
+            }
+        }
+
+        function updatePlatformColors() {
+            const currentPlatform = getCurrentPlatform();
+            const container = document.querySelector('.account-content[data-account-content="suppliers"]');
+            if (container) {
+                container.setAttribute('data-current-platform', currentPlatform);
+            }
+        }
+
+        function getCurrentPlatform() {
+            const activePlatformTab = document.querySelector('.platform-subtab.active');
+            return activePlatformTab ? activePlatformTab.getAttribute('data-platform') : 'airconditioning';
         }
 
         function updateSelectedBrandsPreview() {
@@ -2840,6 +3013,23 @@
             // Clear selection if current anchor is not in selected brands
             if (currentValue && !selectedBrands.includes(currentValue)) {
                 anchorSelect.value = '';
+                // Hide all anchor indicators
+                document.querySelectorAll('.anchor-indicator').forEach(indicator => {
+                    indicator.style.display = 'none';
+                });
+            }
+            
+            // Show anchor indicator for selected anchor brand
+            if (anchorSelect.value) {
+                // Hide all indicators first
+                document.querySelectorAll('.anchor-indicator').forEach(indicator => {
+                    indicator.style.display = 'none';
+                });
+                // Show current anchor indicator
+                const anchorIndicator = document.getElementById(`anchor_${anchorSelect.value}`);
+                if (anchorIndicator) {
+                    anchorIndicator.style.display = 'flex';
+                }
             }
         }
 
@@ -2964,10 +3154,9 @@
                 
                 // Restore selected brands
                 settings.selectedBrands.forEach(brandId => {
-                    const checkbox = document.getElementById(`brand_${brandId}`);
-                    if (checkbox) {
-                        checkbox.checked = true;
-                        document.querySelector(`[data-brand="${brandId}"]`).classList.add('selected');
+                    const tab = document.querySelector(`[data-brand="${brandId}"]`);
+                    if (tab) {
+                        tab.classList.add('selected');
                     }
                 });
                 
@@ -2976,9 +3165,9 @@
                     document.getElementById('anchorBrandSelect').value = settings.anchorBrand;
                 }
                 
-                updateBrandCheckboxStates();
-                updateSelectedBrandsPreview();
+                updateSelectedBrandsCount();
                 updateAnchorBrandOptions();
+                updatePlatformColors();
             }
         }
 
@@ -2986,8 +3175,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const anchorSelect = document.getElementById('anchorBrandSelect');
             if (anchorSelect) {
-                anchorSelect.addEventListener('change', updateSelectedBrandsPreview);
+                anchorSelect.addEventListener('change', function() {
+                    updateAnchorBrandOptions();
+                });
             }
+            
+            // Initialize platform colors
+            updatePlatformColors();
         });
 
         // Platform sub-tabs functionality
@@ -3008,6 +3202,11 @@
                     
                     // Update content based on platform
                     updatePlatformContent(platform, parentSection);
+                    
+                    // Update brand colors if in suppliers section
+                    if (parentSection.getAttribute('data-account-content') === 'suppliers') {
+                        updatePlatformColors();
+                    }
                     
                     console.log('🎯 Platform switched to:', platform);
                 });
